@@ -14,13 +14,13 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Block search engines on staging
         if: github.ref_name != 'main'
-        run: printf 'User-agent: *\nDisallow: /\n' > robots.txt
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > robots.txt
 
       - name: Upload over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
