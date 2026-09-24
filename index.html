@@ -3765,6 +3765,12 @@
             z-index: 30;
         }
 
+        .hero-anim:not(.hero-in) .conveyor-item,
+        .hero-anim:not(.hero-in) .shred-heap,
+        .hero-anim:not(.hero-in) .shred-fall {
+            visibility: hidden;
+        }
+
         .hero-anim.intro-done .hero-card--headline {
             opacity: 1;
             animation: none;
@@ -5903,8 +5909,9 @@
                 currentStage = index;
             }
 
+            let pileShown = false;
             function update(y) {
-                if (y > 2) item.classList.add('has-pile');
+                if (y > 2 && pileShown) item.classList.add('has-pile');
                 const center = itemStart + y + ITEM_H / 2;
                 let stage = 0;
                 stationCenters.forEach((c, i) => { if (center >= c) stage = i + 1; });
@@ -5938,7 +5945,6 @@
             }
 
             // Shredding
-            let pileShown = false;
             function shredBurst() {
                 shredder.classList.add('is-shredding');
                 clearTimeout(shredBurst.t);
