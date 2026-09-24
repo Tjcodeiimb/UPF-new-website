@@ -1,0 +1,31 @@
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# OS Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node (if added in future)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Build outputs (if build process added)
+dist/
+build/
