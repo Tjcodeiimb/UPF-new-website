@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Thank You — UpForge Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --coffee: #3a2b22; --coffee-deep: #271d17; --charcoal: #171514; --cream: #efe4d2;
+      --cream-dim: rgba(239, 228, 210, 0.72); --tan: #b9a384; --accent: #2f4fd1; --blue-soft: #9db0ff;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--cream);
+      background:
+        radial-gradient(ellipse 60% 50% at 88% 0%, rgba(29, 53, 147, 0.28), transparent 70%),
+        linear-gradient(160deg, var(--coffee) 0%, var(--coffee-deep) 100%);
+    }
+    .card {
+      position: relative; width: min(560px, 100%); padding: clamp(28px, 5vw, 48px);
+      border-radius: 24px; background: var(--charcoal); border: 1px solid rgba(239, 228, 210, 0.08);
+      box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9); overflow: hidden;
+      animation: rise 1.1s var(--ease) both;
+    }
+    .card::before {
+      content: ''; position: absolute; left: 12%; right: 12%; top: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue-soft), transparent);
+    }
+    .check { width: 64px; height: 64px; margin-bottom: 24px; color: var(--blue-soft); }
+    .check circle { stroke-dasharray: 176; stroke-dashoffset: 176; animation: draw 1s var(--ease) 0.3s forwards; }
+    .check path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw 0.6s var(--ease) 1s forwards; }
+    .logo { position: absolute; top: 24px; right: 24px; height: 34px; padding: 6px 12px; border-radius: 999px; background: #ece1ce; }
+    h1 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(38px, 6vw, 54px); line-height: 1; margin-bottom: 14px; }
+    h1 em { color: var(--blue-soft); }
+    p { color: var(--cream-dim); line-height: 1.65; margin-bottom: 14px; }
+    .note { font-size: 13px; color: rgba(239, 228, 210, 0.5); }
+    .retry { display: none; padding: 12px 14px; border-radius: 12px; background: rgba(224, 144, 127, 0.1); border: 1px solid rgba(224, 144, 127, 0.3); color: #f0b9ab; font-size: 14px; }
+    .retry.show { display: block; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; border-radius: 999px;
+      font-weight: 700; font-size: 14px; text-decoration: none; transition: transform 0.4s var(--ease), background 0.3s;
+    }
+    .btn.primary { background: var(--accent); color: #fff; }
+    .btn.primary:hover { background: #2744b8; transform: translateY(-2px); }
+    .btn.ghost { color: var(--cream); border: 1px solid rgba(239, 228, 210, 0.2); }
+    .btn.ghost:hover { border-color: var(--blue-soft); }
+    footer { margin-top: 28px; font-size: 12px; color: rgba(239, 228, 210, 0.45); display: flex; flex-wrap: wrap; gap: 14px; }
+    footer a { color: inherit; }
+    @keyframes rise { from { opacity: 0; transform: translateY(30px) rotate(-0.6deg); } to { opacity: 1; transform: none; } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .card, .check circle, .check path { animation: none; stroke-dashoffset: 0; } }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="/assets/logo-Daz97ldJ.png" alt="UpForge">
+    <svg class="check" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="32" cy="32" r="28" />
+      <path d="M20 33l8 8 16-17" />
+    </svg>
+    <h1>Thank <em>you.</em></h1>
+    <p>Your diagnostic answers are in. A member of the UpForge team will review them before your call, so we can skip the small talk and get to what matters.</p>
+    <p class="retry" id="retry">We couldn't confirm your answers were sent. Please pick a time below and mention them on the call, or email outreach@upforgeconsulting.com.</p>
+    <p>The last step is to choose a time that suits you.</p>
+    <div class="actions">
+      <a class="btn primary" id="book" href="https://calendly.com/shardulsingh166/30min">Choose a time on Calendly &rarr;</a>
+      <a class="btn ghost" href="/">Back to the site</a>
+    </div>
+    <p class="note" style="margin-top:18px">We only use your details to respond to this request, as described in our Privacy Policy.</p>
+    <footer>
+      <a href="/legal/privacy-policy.html">Privacy Policy</a>
+      <a href="/legal/terms-conditions.html">Terms</a>
+      <a href="/legal/cookie-policy.html">Cookie Policy</a>
+      <span>&copy; 2026 UpForge Consulting LLP</span>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var next = q.get('next');
+      if (next && /^https:\/\/calendly\.com\//.test(next)) document.getElementById('book').href = next;
+      if (q.get('status') === 'retry') document.getElementById('retry').classList.add('show');
+    })();
+  </script>
+  <script src="/assets/site-consent.js" defer></script>
+</body>
+</html>

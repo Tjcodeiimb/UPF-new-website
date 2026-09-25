@@ -3223,6 +3223,7 @@
 
   <footer class="footer">
     <p><strong>Data integrity note:</strong> This dashboard reports only publicly disclosed commitments, dates and structure; it does not estimate undisclosed equity splits, deal economics, or unaudited performance claims. Figures are drawn from public reporting; where outlets disagree, the range or the more conservative figure is shown.</p>
+      <p class="legal-links" style="margin-top:10px;font-size:12px;opacity:.8">Independent analysis of public information, not investment, legal or tax advice. Trademarks belong to their owners; no affiliation or endorsement is implied. <a href="/legal/disclaimer.html">Disclaimer</a> · <a href="/legal/privacy-policy.html">Privacy</a> · <a href="/legal/cookie-policy.html">Cookies</a> · <a href="#cookie-settings" data-cookie-settings>Cookie settings</a></p>
   </footer>
 
   <button class="icon-button back-to-top tooltip-wrap" id="backToTop" type="button" aria-label="Back to top" data-tip="Back to top">
@@ -3359,9 +3360,9 @@
         });
       });
       gsap.utils.toArray(".dashboard-grid, .stakeholder-grid, .takeaway-grid, .source-grid").forEach((grid) => {
-        gsap.from(grid.children, {
-          opacity: 0,
-          y: 18,
+        gsap.fromTo(grid.children, { opacity: 0, y: 18 }, {
+          opacity: 1,
+          y: 0,
           duration: 0.55,
           stagger: 0.045,
           ease: "power2.out",
@@ -3705,5 +3706,6 @@
     }
     runParticles();
   </script>
+  <script src="/assets/site-consent.js" defer></script>
 </body>
 </html>
