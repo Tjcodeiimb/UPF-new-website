@@ -1,0 +1,3709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anthropic–Blackstone–Goldman Sachs AI Venture | Upforge Consulting Case Study</title>
+  <meta name="description" content="Anthropic, Blackstone, Hellman &amp; Friedman and Goldman Sachs formed a $1.5B AI-native enterprise-services firm to embed Claude and engineers inside private-equity-owned companies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, Helvetica, Arial, sans-serif;
+      --bg: #092d53;
+      --bg-2: #092d53;
+      --bg-3: #061f3b;
+      --panel: #ffffff;
+      --panel-strong: #ffffff;
+      --panel-soft: rgba(52, 98, 252, 0.11);
+      --line: rgba(255, 255, 255, 0.2);
+      --line-strong: rgba(52, 98, 252, 0.55);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.78);
+      --muted-2: rgba(255, 255, 255, 0.55);
+      --card-text: #092d53;
+      --card-muted: #47556a;
+      --kpmg: #00338d;
+      --anthropic: #d97757;
+      --cyan: #3462fc;
+      --green: #1f9d6a;
+      --red: #d74b40;
+      --amber: #3462fc;
+      --blue-soft: rgba(52, 98, 252, 0.14);
+      --orange-soft: rgba(217, 119, 87, 0.13);
+      --cyan-soft: rgba(52, 98, 252, 0.11);
+      --shadow: 0 22px 70px rgba(3, 16, 33, 0.28);
+      --radius: 8px;
+      --radius-sm: 6px;
+      --nav-h: 72px;
+      --max: 1220px;
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f2e9;
+      --bg-2: #eee6da;
+      --bg-3: #e7ddd0;
+      --panel: rgba(255, 255, 255, 0.82);
+      --panel-strong: rgba(255, 255, 255, 0.96);
+      --panel-soft: rgba(24, 32, 40, 0.055);
+      --line: rgba(40, 38, 34, 0.14);
+      --line-strong: rgba(40, 38, 34, 0.24);
+      --text: #181715;
+      --muted: #5d544c;
+      --muted-2: #82776b;
+      --shadow: 0 24px 70px rgba(76, 61, 45, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-h) + 28px);
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 30rem),
+        linear-gradient(135deg, var(--bg), var(--bg-2) 54%, var(--bg));
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.55;
+      letter-spacing: 0;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    body.print-mode {
+      --bg: #ffffff;
+      --bg-2: #f6f8fb;
+      --panel: rgba(255, 255, 255, 0.98);
+      --panel-strong: #ffffff;
+      --text: #07111f;
+      --muted: #31435f;
+      --line: rgba(12, 24, 39, 0.16);
+      background: #ffffff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.1;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 48px);
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: var(--nav-h);
+      backdrop-filter: blur(22px);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .progress-shell {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--kpmg), var(--anthropic));
+      box-shadow: none;
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      min-height: var(--nav-h);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: max-content;
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(244, 238, 228, 0.14), rgba(184, 121, 66, 0.12));
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 10px 0;
+      min-width: 0;
+    }
+
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 650;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--panel-soft);
+      border-color: var(--line);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .icon-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      background: var(--panel-strong);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+      margin-right: 12px;
+    }
+    .back-link:hover {
+      color: var(--text);
+      background: var(--panel-soft);
+    }
+    .tooltip-wrap {
+      position: relative;
+    }
+
+    .tooltip-wrap::after,
+    .term-tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      transform: translateX(-50%) translateY(4px);
+      max-width: min(280px, 80vw);
+      width: max-content;
+      background: var(--panel-strong);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      line-height: 1.35;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+      z-index: 80;
+    }
+
+    .nav-actions .tooltip-wrap::after,
+    .back-to-top.tooltip-wrap::after {
+      left: auto;
+      right: 0;
+      transform: translateY(4px);
+    }
+
+    .nav-actions .tooltip-wrap:hover::after,
+    .back-to-top.tooltip-wrap:hover::after {
+      transform: translateY(0);
+    }
+
+    .tooltip-wrap:hover::after,
+    .term-tip:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .term-tip {
+      position: relative;
+      color: var(--cyan);
+      border-bottom: 1px dotted rgba(201, 167, 108, 0.72);
+      cursor: help;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 84px 0;
+      position: relative;
+    }
+
+    .hero {
+      width: 100%;
+      min-height: calc(100vh - var(--nav-h));
+      display: grid;
+      align-items: end;
+      padding: 0;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.35), transparent 18rem),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px);
+      transform: scale(1.03);
+    }
+
+    :root[data-theme="light"] .hero-media,
+    body.print-mode .hero-media {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.18), transparent 18rem),
+        repeating-linear-gradient(90deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px);
+    }
+
+    .hero-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 86px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.55fr);
+      gap: 34px;
+      align-items: end;
+    }
+
+    .hero-copy {
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .date-badge,
+    .chip,
+    .source-pill,
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 7px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .date-badge {
+      color: var(--anthropic);
+      background: rgba(184, 121, 66, 0.14);
+      border-color: rgba(184, 121, 66, 0.32);
+    }
+
+    .chip {
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-sans);
+      letter-spacing: 0;
+      line-height: 1.02;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 5.7rem);
+      font-weight: 600;
+      max-width: 1100px;
+      text-wrap: balance;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      text-wrap: balance;
+    }
+
+    h3 {
+      font-size: clamp(1.18rem, 1.7vw, 1.55rem);
+    }
+
+    .hero-subtitle {
+      margin: 22px 0 0;
+      max-width: 880px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 42px;
+      border-radius: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, #f1e7d7, #c9a76c);
+      color: #17130f;
+      border-color: transparent;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+    }
+
+    .hero-panel {
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 88%, transparent);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .alliance-logos {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .logo-tile {
+      min-height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid rgba(24, 23, 21, 0.12);
+      background: #ffffff;
+      padding: 12px;
+      text-align: center;
+      color: #171717;
+      overflow: hidden;
+    }
+
+    .logo-tile.compact {
+      min-height: 50px;
+      min-width: 120px;
+      padding: 9px 11px;
+    }
+
+    .logo-tile img {
+      max-height: 42px;
+      max-width: 150px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .logo-fallback {
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 1.02rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      color: #171717;
+    }
+
+    .logo-sub {
+      display: block;
+      color: #5a5a5a;
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .plus-line {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .panel-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .kpi-card,
+    .card,
+    .glass-table,
+    .metric-card,
+    .source-card,
+    .stakeholder-card,
+    .risk-card,
+    .known-panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(6px);
+      border-radius: var(--radius);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .kpi-card {
+      min-height: 150px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(244, 238, 228, 0.08), transparent);
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .kpi-card:hover::before { opacity: 1; }
+
+    .kpi-value {
+      position: relative;
+      font-family: var(--font-sans);
+      font-size: clamp(1.65rem, 2.7vw, 2.45rem);
+      line-height: 1;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .kpi-label {
+      position: relative;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 650;
+    }
+
+    .source-link {
+      position: relative;
+      color: var(--cyan);
+      font-size: 0.74rem;
+      font-weight: 750;
+      margin-top: 12px;
+      width: fit-content;
+    }
+
+    .source-link:hover { text-decoration: underline; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.48fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    .section-kicker {
+      color: #b7c7ff;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+      margin: 0 0 10px;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .source-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .source-pill {
+      color: var(--cyan);
+      background: rgba(201, 167, 108, 0.08);
+      border-color: rgba(201, 167, 108, 0.22);
+    }
+
+    .source-pill:hover { border-color: rgba(201, 167, 108, 0.42); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .card {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card.accent-blue {
+      background:
+        linear-gradient(135deg, rgba(66, 105, 157, 0.12), transparent 46%),
+        var(--panel);
+    }
+
+    .card.accent-orange {
+      background:
+        linear-gradient(135deg, rgba(184, 121, 66, 0.14), transparent 48%),
+        var(--panel);
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .lead {
+      color: var(--text);
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .quote-card {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .callout {
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(184, 121, 66, 0.25);
+      background: rgba(184, 121, 66, 0.1);
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .visual-band {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .image-card {
+      min-height: 220px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-3);
+    }
+
+    .image-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 9, 20, 0.05), rgba(5, 9, 20, 0.74)),
+        var(--bg-img) center / cover;
+      transition: transform 600ms ease;
+    }
+
+    .image-card:hover::before { transform: scale(1.05); }
+
+    :root[data-theme="light"] .image-card::before,
+    body.print-mode .image-card::before {
+      background:
+        linear-gradient(180deg, rgba(246, 248, 251, 0.02), rgba(7, 17, 31, 0.64)),
+        var(--bg-img) center / cover;
+    }
+
+    .image-card span {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.94rem;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+    }
+
+    .glass-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 860px;
+    }
+
+    th,
+    td {
+      padding: 15px 16px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      color: var(--text);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      background: rgba(255, 255, 255, 0.055);
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .table-primary {
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .status-badge {
+      font-size: 0.68rem;
+      padding: 5px 8px;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      display: inline-flex;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .status-confirmed {
+      color: #064e3b;
+      background: #e5f8ee;
+      border-color: #8bd8b1;
+    }
+
+    .status-partial {
+      color: #6a3c00;
+      background: #fff1d6;
+      border-color: #e4ba63;
+    }
+
+    .status-undisclosed {
+      color: #7c1f1b;
+      background: #ffe4e1;
+      border-color: #e79b95;
+    }
+
+    .rationale-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .bullet-list li {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .bullet-list li::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 8px;
+      background: var(--amber);
+      box-shadow: none;
+    }
+
+    .accent-orange .bullet-list li::before {
+      background: linear-gradient(135deg, var(--anthropic), var(--amber));
+      box-shadow: none;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .chart-card {
+      grid-column: span 6;
+      min-height: 420px;
+    }
+
+    .chart-card.large {
+      grid-column: span 7;
+    }
+
+    .chart-card.side {
+      grid-column: span 5;
+    }
+
+    .chart-shell {
+      height: 280px;
+      margin-top: 18px;
+    }
+
+    .chart-shell canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .metric-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .metric-card {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .metric-number {
+      font-family: var(--font-sans);
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: var(--cyan);
+      min-width: 94px;
+    }
+
+    .metric-card p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .impact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .impact-row {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.46fr) minmax(220px, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .impact-track {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .impact-bar {
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--kpmg), var(--anthropic));
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    .claim-note {
+      margin-top: 16px;
+      color: var(--amber);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(var(--kpmg), var(--anthropic));
+      opacity: 0.65;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 18px;
+      position: relative;
+    }
+
+    .timeline-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: var(--panel-strong);
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      box-shadow: none;
+      z-index: 1;
+    }
+
+    .timeline-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .timeline-card:hover {
+      transform: translateX(4px);
+      border-color: var(--line-strong);
+    }
+
+    .timeline-date {
+      color: var(--anthropic);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .timeline-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .arch-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(66, 105, 157, 0.08), transparent 42%),
+        linear-gradient(315deg, rgba(184, 121, 66, 0.1), transparent 44%),
+        var(--panel);
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .arch-flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(145px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .arch-box {
+      min-height: 132px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+      padding: 16px;
+      position: relative;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .arch-box:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      width: 18px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+
+    .arch-box h3,
+    .mini-branch h3 {
+      font-size: 1rem;
+      line-height: 1.18;
+    }
+
+    .arch-box p,
+    .mini-branch p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .arch-label {
+      margin-top: 18px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      font-weight: 800;
+      border: 1px solid rgba(255, 209, 102, 0.24);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255, 209, 102, 0.08);
+    }
+
+    .mini-branches {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .mini-branch {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 18px 44px 18px 18px;
+      color: var(--text);
+      font-weight: 800;
+      position: relative;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cyan);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    details[open] summary::after { content: "-"; }
+
+    details p {
+      margin: 0;
+      padding: 0 18px 18px;
+      color: var(--muted);
+    }
+
+    .stakeholder-map {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .network-core {
+      min-height: 500px;
+      position: sticky;
+      top: calc(var(--nav-h) + 22px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(244, 238, 228, 0.06), transparent),
+        var(--panel);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .network-core svg {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .node-label {
+      fill: var(--text);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stakeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stakeholder-card {
+      padding: 16px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .stakeholder-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      background: var(--panel-strong);
+    }
+
+    .stakeholder-card h3 {
+      font-size: 1.04rem;
+      margin-bottom: 10px;
+    }
+
+    .stakeholder-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .label {
+      color: var(--cyan);
+      font-weight: 850;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .party-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .party-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .pc-column {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pc-column:last-child { border-bottom: 0; }
+
+    .pc-title {
+      color: var(--text);
+      font-weight: 850;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pc-column ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .pc-column li + li { margin-top: 8px; }
+
+    .heatmap {
+      min-width: 940px;
+    }
+
+    .heatmap .risk-likelihood,
+    .heatmap .risk-impact {
+      color: #06111d;
+      font-weight: 850;
+      border-radius: 6px;
+      display: inline-flex;
+      justify-content: center;
+      min-width: 92px;
+      padding: 5px 8px;
+    }
+
+    .heat-high { background: #ff7676; }
+    .heat-medhigh { background: #ffad66; }
+    .heat-medium { background: #ffd166; }
+
+    .risk-note {
+      margin-top: 14px;
+      color: var(--amber);
+      font-weight: 750;
+      font-size: 0.9rem;
+    }
+
+    .risk-details-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .risk-card summary {
+      font-size: 0.94rem;
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .known-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .known-panel {
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .known-panel.known {
+      background:
+        linear-gradient(135deg, rgba(114, 230, 165, 0.13), transparent 42%),
+        var(--panel);
+    }
+
+    .known-panel.unknown {
+      background:
+        linear-gradient(135deg, rgba(255, 118, 118, 0.13), transparent 42%),
+        var(--panel);
+    }
+
+    .known-panel h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .known-panel ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .known-panel li {
+      color: var(--muted);
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+    }
+
+    .known-panel li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 8px;
+      background: var(--green);
+    }
+
+    .unknown li::before { background: var(--red); }
+
+    .takeaway-hero {
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 16% 26%, rgba(52, 98, 252, 0.36), transparent 20rem),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 74px),
+        #061f3b;
+      display: grid;
+      align-items: end;
+      padding: 32px;
+      overflow: hidden;
+    }
+
+    :root[data-theme="light"] .takeaway-hero,
+    body.print-mode .takeaway-hero {
+      background:
+        radial-gradient(circle at 16% 26%, rgba(52, 98, 252, 0.22), transparent 20rem),
+        repeating-linear-gradient(90deg, rgba(9,45,83,0.08) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(0deg, rgba(9,45,83,0.08) 0 1px, transparent 1px 74px),
+        #092d53;
+      color: #fff;
+    }
+
+    .takeaway-hero h2 {
+      color: #fff;
+      max-width: 940px;
+    }
+
+    .takeaway-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .takeaway-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--muted);
+      font-weight: 700;
+      min-height: 122px;
+    }
+
+    .source-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .search-box {
+      width: min(520px, 100%);
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 0 12px;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      min-height: 46px;
+      font: inherit;
+    }
+
+    .search-box input::placeholder { color: var(--muted-2); }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .source-card {
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+      min-height: 132px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .source-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      background: var(--panel-strong);
+    }
+
+    .source-card strong {
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
+    }
+
+    .source-card span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      word-break: break-word;
+    }
+
+    .source-card .source-type {
+      color: var(--cyan);
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .footer {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 0.88rem;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    /* Upforge Consulting visual alignment */
+    body {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(52, 98, 252, 0.22), transparent 18rem),
+        radial-gradient(circle at 92% 10%, rgba(255, 255, 255, 0.09), transparent 20rem),
+        linear-gradient(135deg, #092d53 0%, #0b3a68 48%, #092d53 100%);
+    }
+
+    .ambient {
+      display: block;
+      z-index: 0;
+      opacity: 0.28;
+      background:
+        linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.08) 42% 42.25%, transparent 42.25% 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 82px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 82px);
+      animation: ambientDrift 18s linear infinite alternate;
+    }
+
+    @keyframes ambientDrift {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-22px, -18px, 0); }
+    }
+
+    .top-nav {
+      position: fixed;
+      width: 100%;
+      background: #ffffff;
+      color: var(--card-text);
+      border-bottom: 3px solid #3462fc;
+      backdrop-filter: none;
+    }
+
+    main {
+      padding-top: var(--nav-h);
+    }
+
+    .brand {
+      gap: 12px;
+      color: var(--card-text);
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: auto;
+      height: auto;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .brand-mark img {
+      width: 118px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-links a {
+      color: #092d53;
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #3462fc;
+      background: rgba(52, 98, 252, 0.08);
+      border-color: rgba(52, 98, 252, 0.22);
+    }
+
+    .icon-button {
+      width: auto;
+      background: #ffffff;
+      color: #092d53;
+      border: 1.5px solid rgba(9, 45, 83, 0.14);
+      box-shadow: none;
+      padding: 0 12px;
+      gap: 7px;
+      grid-auto-flow: column;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero {
+      min-height: calc(92vh - var(--nav-h));
+      background: #092d53;
+    }
+
+    .hero-media {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.35), transparent 18rem),
+        linear-gradient(115deg, rgba(255,255,255,0.1) 0 1px, transparent 1px 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px) !important;
+      opacity: 0.62;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+      align-items: end;
+    }
+
+    .hero-copy {
+      max-width: 1120px;
+    }
+
+    .case-brand {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      color: rgba(255, 255, 255, 0.86);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .case-brand img {
+      width: 136px;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-logo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .heading-logo {
+      width: clamp(145px, 17vw, 235px);
+      min-height: 82px;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      border-radius: 4px;
+      padding: 18px 22px;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    .heading-logo img {
+      max-height: 48px;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    .heading-logo-separator {
+      width: 42px;
+      height: 42px;
+      border: 2px solid rgba(255, 255, 255, 0.28);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(4rem, 13vw, 10.5rem);
+      line-height: 0.92;
+      max-width: 1260px;
+    }
+
+    h2 {
+      font-size: clamp(2.7rem, 6vw, 5.1rem);
+      line-height: 0.96;
+    }
+
+    .hero-subtitle,
+    .section-copy {
+      color: rgba(255, 255, 255, 0.82);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.22rem);
+    }
+
+    .section-kicker,
+    .label,
+    .source-type,
+    .pc-title,
+    .timeline-date {
+      font-family: var(--font-sans);
+      letter-spacing: 0.06em;
+    }
+
+    .date-badge,
+    .chip {
+      border-radius: 4px;
+      border: 1.5px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .button {
+      border-radius: 4px;
+      font-family: "Inter", Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .button.primary {
+      background: #3462fc;
+      color: #ffffff;
+    }
+
+    .hero-actions .button:not(.primary) {
+      background: #ffffff;
+      color: #092d53;
+      border: 2px solid #ffffff;
+    }
+
+    .hero-actions .button:not(.primary):hover {
+      background: #f5f7ff;
+      border-color: #3462fc;
+      color: #092d53;
+    }
+
+    .section {
+      padding: 78px 0;
+    }
+
+    .section-head {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 100%;
+    }
+
+    .section-head h2 {
+      max-width: min(100%, 1380px);
+    }
+
+    .card,
+    .kpi-card,
+    .metric-card,
+    .source-card,
+    .stakeholder-card,
+    .risk-card,
+    .known-panel,
+    .timeline-card,
+    .arch-wrap,
+    .mini-branch,
+    details,
+    .takeaway-card,
+    .table-wrap {
+      background: #ffffff;
+      color: var(--card-text);
+      border: 2px solid rgba(52, 98, 252, 0.18);
+      border-radius: 4px;
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.13);
+      backdrop-filter: none;
+    }
+
+    .card p,
+    .card li,
+    .metric-card p,
+    .stakeholder-card p,
+    .timeline-card p,
+    .arch-box p,
+    .mini-branch p,
+    details p,
+    td,
+    .known-panel li,
+    .pc-column ul,
+    .takeaway-card,
+    .source-card span,
+    .kpi-label,
+    .impact-row {
+      color: var(--card-muted);
+      font-family: "Inter", Arial, sans-serif;
+    }
+
+    .card h3,
+    .kpi-value,
+    .metric-number,
+    .source-card strong,
+    .stakeholder-card h3,
+    .known-panel h3,
+    summary,
+    th,
+    .table-primary {
+      color: var(--card-text);
+    }
+
+    .lead,
+    .callout,
+    .party-head,
+    .pc-title,
+    .risk-note,
+    .claim-note {
+      color: var(--card-text) !important;
+    }
+
+    .callout {
+      background: #f5f7ff;
+      border-color: rgba(52, 98, 252, 0.2);
+    }
+
+    .risk-note {
+      display: block;
+      background: #ffffff;
+      color: #092d53 !important;
+      border: 2px solid rgba(52, 98, 252, 0.24);
+      border-left: 8px solid #3462fc;
+      border-radius: 4px;
+      padding: 16px 18px;
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.13);
+    }
+
+    th {
+      background: #f5f7ff;
+      color: var(--card-text);
+    }
+
+    .glass-table,
+    table {
+      background: #ffffff;
+    }
+
+    .section:not(#sources) .source-link,
+    .section:not(#sources) .source-stack,
+    main > section:not(#sources) .source-link,
+    main > section:not(#sources) .source-stack {
+      display: none !important;
+    }
+
+    .kpi-grid {
+      margin-top: 34px;
+    }
+
+    .kpi-card .kpi-value {
+      overflow-wrap: anywhere;
+    }
+
+    .kpi-card:last-child .kpi-value {
+      font-size: clamp(2rem, 3.3vw, 3.1rem);
+      line-height: 0.95;
+    }
+
+    .source-card {
+      min-height: 148px;
+    }
+
+    #sources .section-head h2 {
+      max-width: 1180px;
+    }
+
+    #sources .source-grid {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-auto-flow: row dense;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    #sources .source-card {
+      min-height: 188px;
+      height: 100%;
+      align-content: start;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    #sources .source-card strong {
+      font-size: clamp(1.18rem, 1.5vw, 1.58rem);
+      line-height: 1;
+    }
+
+    #sources .source-card span:not(.source-type) {
+      font-size: 0.92rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    #sources .search-box {
+      background: #ffffff;
+      border: 2px solid rgba(52, 98, 252, 0.18);
+      color: var(--card-text);
+    }
+
+    #sources .search-box input,
+    #sources .search-box svg {
+      color: var(--card-text);
+    }
+
+    #sources .search-box input::placeholder {
+      color: #66758b;
+    }
+
+    .card,
+    .kpi-card,
+    .metric-card,
+    .stakeholder-card,
+    .known-panel,
+    .takeaway-card,
+    .source-card,
+    .timeline-card {
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .card:hover,
+    .kpi-card:hover,
+    .metric-card:hover,
+    .stakeholder-card:hover,
+    .known-panel:hover,
+    .takeaway-card:hover,
+    .timeline-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(52, 98, 252, 0.42);
+      box-shadow: 0 24px 64px rgba(3, 16, 33, 0.2);
+    }
+
+    .glossary-grid,
+    .risk-details-grid {
+      align-items: start;
+    }
+
+    details {
+      align-self: start;
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    details[open] {
+      border-color: rgba(52, 98, 252, 0.55);
+      box-shadow: 0 20px 52px rgba(3, 16, 33, 0.18);
+    }
+
+    details:not([open]) p {
+      display: none;
+    }
+
+    .risk-card summary {
+      min-height: auto;
+    }
+
+    .network-core {
+      background: #ffffff;
+      border: 2px solid rgba(52, 98, 252, 0.18);
+    }
+
+    .stakeholder-map {
+      grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.55fr);
+      align-items: start;
+    }
+
+    .network-core {
+      position: relative;
+      top: 0;
+      min-height: 420px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+    }
+
+    .network-core svg {
+      color: #092d53;
+      min-height: 360px;
+      max-height: 430px;
+    }
+
+    .network-core::after {
+      content: "Workflow owner  +  model provider  +  infrastructure  +  governance  +  users";
+      display: block;
+      color: #47556a;
+      background: #f5f7ff;
+      border: 1px solid rgba(52, 98, 252, 0.16);
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .stakeholder-grid {
+      align-content: start;
+    }
+
+    .stakeholder-card {
+      min-height: 172px;
+    }
+
+    .stakeholder-insights {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .insight-tile {
+      background: #ffffff;
+      color: #092d53;
+      border: 2px solid rgba(52, 98, 252, 0.18);
+      border-radius: 4px;
+      padding: 18px;
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.13);
+      min-height: 132px;
+    }
+
+    .insight-tile span {
+      display: block;
+      color: #3462fc;
+      font-family: var(--font-sans);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+
+    .insight-tile p {
+      margin: 0;
+      color: #47556a;
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    .control-panel {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 26px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .control-panel-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      border-radius: 4px;
+      padding: 16px;
+      color: #ffffff;
+      min-height: 134px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .control-panel-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -25% -40% auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 22px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .control-panel-card strong {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .control-panel-card span {
+      color: rgba(255, 255, 255, 0.82);
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .node-label {
+      fill: #092d53 !important;
+      font-size: 13px;
+      paint-order: stroke;
+      stroke: #ffffff;
+      stroke-width: 3px;
+      stroke-linejoin: round;
+    }
+
+    .network-core circle:first-of-type {
+      fill: rgba(52, 98, 252, 0.1);
+      stroke: rgba(52, 98, 252, 0.55);
+    }
+
+    .chart-card {
+      position: relative;
+    }
+
+    .chart-note-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chart-note {
+      background: #f5f7ff;
+      border: 1px solid rgba(52, 98, 252, 0.16);
+      border-radius: 4px;
+      padding: 12px;
+      color: var(--card-text);
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+      min-height: 84px;
+    }
+
+    .chart-note span {
+      display: block;
+      color: #3462fc;
+      font-family: var(--font-sans);
+      font-size: 1.9rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    :root[data-theme="light"] {
+      --bg: #ffffff;
+      --text: #092d53;
+      --muted: #42526a;
+      --muted-2: #66758b;
+      --line: rgba(9, 45, 83, 0.14);
+      --line-strong: rgba(52, 98, 252, 0.5);
+    }
+
+    :root[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(52, 98, 252, 0.12), transparent 18rem),
+        linear-gradient(135deg, #ffffff 0%, #f5f7ff 52%, #ffffff 100%);
+    }
+
+    :root[data-theme="light"] .top-nav {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    :root[data-theme="light"] .hero,
+    :root[data-theme="light"] .section:not(#sources) {
+      color: #092d53;
+    }
+
+    :root[data-theme="light"] .section-kicker {
+      color: #3462fc;
+    }
+
+    :root[data-theme="light"] .hero-subtitle,
+    :root[data-theme="light"] .section-copy {
+      color: #42526a;
+    }
+
+    :root[data-theme="light"] .case-brand,
+    :root[data-theme="light"] .date-badge,
+    :root[data-theme="light"] .chip {
+      color: #092d53;
+      border-color: rgba(9, 45, 83, 0.18);
+      background: rgba(52, 98, 252, 0.08);
+    }
+
+    :root[data-theme="light"] .case-brand img {
+      filter: none;
+    }
+
+    :root[data-theme="light"] .control-panel-card {
+      background: #ffffff;
+      color: #092d53;
+      border-color: rgba(52, 98, 252, 0.2);
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.1);
+    }
+
+    :root[data-theme="light"] .control-panel-card span {
+      color: #47556a;
+    }
+
+    /* Final polish layer: readable system typography and complete theme states. */
+    body,
+    button,
+    input,
+    textarea,
+    select,
+    .brand,
+    .button,
+    .logo-fallback,
+    .logo-sub,
+    .hero-subtitle,
+    .section-copy,
+    .card p,
+    .card li,
+    .metric-card p,
+    .stakeholder-card p,
+    .timeline-card p,
+    .arch-box p,
+    .mini-branch p,
+    details p,
+    td,
+    .known-panel li,
+    .pc-column ul,
+    .takeaway-card,
+    .source-card span,
+    .kpi-label,
+    .impact-row,
+    .insight-tile p,
+    .control-panel-card span,
+    .chart-note {
+      font-family: var(--font-sans) !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    .kpi-value,
+    .metric-number,
+    .chart-note span,
+    .source-card strong,
+    .insight-tile span,
+    .control-panel-card strong,
+    .section-kicker,
+    .label,
+    .source-type,
+    .pc-title,
+    .timeline-date,
+    .date-badge,
+    .chip,
+    summary,
+    th {
+      font-family: var(--font-sans) !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 800;
+      line-height: 1.04;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 6.4vw, 5.3rem);
+      max-width: 1120px;
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 3.8vw, 3.4rem);
+      max-width: 1180px;
+    }
+
+    h3 {
+      font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+      line-height: 1.18;
+    }
+
+    .kpi-value,
+    .metric-number,
+    .chart-note span,
+    .insight-tile span,
+    .control-panel-card strong {
+      font-weight: 800;
+      line-height: 1.02;
+    }
+
+    .kpi-value {
+      font-size: clamp(1.55rem, 2vw, 2.15rem);
+    }
+
+    .kpi-card:last-child .kpi-value {
+      font-size: clamp(1.35rem, 1.8vw, 1.9rem);
+      line-height: 1.05;
+    }
+
+    .control-panel-card strong {
+      font-size: clamp(1.35rem, 1.9vw, 2rem);
+    }
+
+    .date-badge,
+    .chip {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .section-kicker,
+    .label,
+    .source-type,
+    .timeline-date {
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 10% 8%, rgba(52, 98, 252, 0.12), transparent 20rem),
+        linear-gradient(135deg, #ffffff 0%, #f6f8ff 48%, #ffffff 100%) !important;
+      color: #092d53;
+    }
+
+    html[data-theme="light"] .ambient {
+      background:
+        linear-gradient(180deg, rgba(52, 98, 252, 0.055), transparent 44%),
+        repeating-linear-gradient(0deg, rgba(9, 45, 83, 0.035) 0 1px, transparent 1px 48px);
+    }
+
+    html[data-theme="light"] #particle-canvas {
+      opacity: 0.06;
+    }
+
+    html[data-theme="light"] .hero,
+    html[data-theme="light"] .section:not(#sources) {
+      color: #092d53;
+    }
+
+    html[data-theme="light"] .hero {
+      background: linear-gradient(180deg, #f7f9ff 0%, #ffffff 92%);
+    }
+
+    html[data-theme="light"] .hero-media {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.16), transparent 18rem),
+        repeating-linear-gradient(90deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px);
+    }
+
+    html[data-theme="light"] .hero-subtitle,
+    html[data-theme="light"] .section-copy {
+      color: #42526a;
+    }
+
+    html[data-theme="light"] .case-brand,
+    html[data-theme="light"] .date-badge,
+    html[data-theme="light"] .chip {
+      color: #092d53;
+      background: rgba(52, 98, 252, 0.08);
+      border-color: rgba(9, 45, 83, 0.18);
+    }
+
+    html[data-theme="light"] .control-panel-card {
+      background: #ffffff;
+      color: #092d53;
+      border-color: rgba(52, 98, 252, 0.2);
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.1);
+    }
+
+    html[data-theme="light"] .control-panel-card span {
+      color: #47556a;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .section-head,
+      .two-col,
+      .stakeholder-map {
+        grid-template-columns: 1fr;
+      }
+
+      .source-stack { justify-content: flex-start; }
+      .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+      .chart-card,
+      .chart-card.large,
+      .chart-card.side {
+        grid-column: span 12;
+      }
+
+      .network-core { position: relative; top: 0; min-height: 360px; }
+      .network-core svg { min-height: 360px; }
+      .visual-band { grid-template-columns: repeat(2, 1fr); }
+      .arch-flow { grid-template-columns: repeat(3, minmax(145px, 1fr)); }
+      .arch-box:nth-child(3)::after { display: none; }
+      .glossary-grid,
+      .source-grid,
+      .comparison-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .risk-details-grid,
+      .takeaway-grid,
+      .control-panel,
+      .stakeholder-insights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root { --nav-h: 64px; }
+
+      .nav-inner {
+        width: min(100% - 20px, var(--max));
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+
+      .brand span:last-child { display: none; }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        order: 3;
+        padding: 0 0 10px;
+      }
+
+      .hero { min-height: auto; }
+      .hero-inner { padding-top: 62px; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-card { min-height: 132px; }
+      .alliance-logos { grid-template-columns: 1fr; }
+      .plus-line { margin: 0 auto; }
+      .section { padding: 58px 0; width: min(100% - 22px, var(--max)); }
+      .hero-inner { width: min(100% - 22px, var(--max)); }
+      .rationale-grid,
+      .known-grid,
+      .stakeholder-grid,
+      .visual-band,
+      .glossary-grid,
+      .comparison-grid,
+      .mini-branches,
+      .takeaway-grid,
+      .risk-details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .control-panel,
+      .stakeholder-insights {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #sources .source-grid,
+      .source-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .dashboard-grid { gap: 14px; }
+      .card { padding: 18px; }
+      .chart-card { min-height: auto; }
+      .chart-shell { height: 250px; }
+      .impact-row {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .arch-flow { grid-template-columns: 1fr; }
+      .arch-box::after { display: none; }
+      .takeaway-hero { padding: 22px; min-height: 420px; }
+      .source-controls { align-items: stretch; flex-direction: column; }
+      .footer { width: min(100% - 22px, var(--max)); }
+    }
+
+    @media (max-width: 460px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .control-panel,
+      .stakeholder-insights { grid-template-columns: 1fr; }
+      .nav-actions { gap: 5px; }
+      .icon-button { width: 36px; height: 36px; }
+    }
+
+    /* Final spacing pass: reduce empty stretches while keeping exhibits breathable. */
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-inner {
+      padding: 64px 0 34px;
+    }
+
+    .hero-grid {
+      gap: 26px;
+      align-items: start;
+    }
+
+    .section {
+      padding: 64px 0;
+    }
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
+    .hero-subtitle {
+      margin-top: 16px;
+    }
+
+    .hero-actions {
+      margin-top: 22px;
+    }
+
+    .kpi-grid {
+      margin-top: 24px;
+    }
+
+    .kpi-card {
+      min-height: 126px;
+    }
+
+    .control-panel {
+      margin-top: 20px;
+    }
+
+    .control-panel-card,
+    .insight-tile {
+      min-height: 112px;
+    }
+
+    .chart-card {
+      min-height: 380px;
+    }
+
+    .chart-shell {
+      height: 250px;
+    }
+
+    .timeline {
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .stakeholder-card {
+      min-height: 144px;
+    }
+
+    .network-core {
+      min-height: 360px;
+    }
+
+    .network-core svg {
+      min-height: 310px;
+    }
+
+    @media (max-width: 760px) {
+      .section {
+        padding: 44px 0;
+      }
+
+      .hero-inner {
+        padding: 38px 0 28px;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 12vw, 3.6rem);
+      }
+
+      h2 {
+        font-size: clamp(1.7rem, 9vw, 3rem);
+      }
+
+      .hero-subtitle,
+      .section-copy {
+        font-size: 0.98rem;
+      }
+
+      .date-badge,
+      .chip {
+        white-space: normal;
+        min-height: 36px;
+      }
+
+      .kpi-grid,
+      .control-panel,
+      .stakeholder-insights,
+      .dashboard-grid {
+        gap: 10px;
+      }
+
+      .kpi-grid,
+      .control-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      .kpi-card,
+      .control-panel-card,
+      .insight-tile,
+      .stakeholder-card {
+        min-height: auto;
+      }
+
+      .kpi-card {
+        padding: 12px;
+      }
+
+      .kpi-value {
+        font-size: 1.35rem !important;
+      }
+
+      .kpi-card:last-child .kpi-value {
+        font-size: 1.08rem !important;
+      }
+
+      .kpi-label {
+        font-size: 0.76rem;
+      }
+
+      .control-panel-card {
+        padding: 12px;
+      }
+
+      .control-panel-card strong {
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+      }
+
+      .control-panel-card span {
+        font-size: 0.76rem;
+        line-height: 1.35;
+      }
+
+      .chart-shell {
+        height: 230px;
+      }
+
+      .network-core {
+        min-height: auto;
+      }
+
+      .network-core svg {
+        min-height: 280px;
+      }
+
+      .takeaway-hero {
+        min-height: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      #particle-canvas { display: none; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media print {
+      @page { margin: 0.45in; }
+      body {
+        background: #fff !important;
+        color: #07111f !important;
+      }
+      .top-nav,
+      #particle-canvas,
+      .ambient,
+      .back-to-top,
+      .hero-actions,
+      .nav-actions {
+        display: none !important;
+      }
+      .hero,
+      .section,
+      .footer {
+        width: 100% !important;
+        padding: 20px 0 !important;
+        min-height: auto !important;
+      }
+      .card,
+      .kpi-card,
+      .source-card,
+      .known-panel,
+      .table-wrap,
+      .arch-wrap,
+      details,
+      .timeline-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        background: #fff !important;
+        border-color: #ccd6e3 !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      a { color: #004b91 !important; text-decoration: underline; }
+    }
+  
+    .heading-wordmark { font-weight: 800; font-size: clamp(20px, 2.4vw, 30px); letter-spacing: 0.04em; color: #0b1a3a; display: flex; align-items: center; justify-content: center; padding: 0 18px; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="brand" href="../" aria-label="Back to case studies">
+        <span class="brand-mark"><img src="/assets/logo-Daz97ldJ.png" alt="Upforge Consulting logo" /></span>
+        <span>Case Study</span>
+      </a>
+      <nav class="nav-links" aria-label="Section navigation">
+        <a href="#summary">Summary</a>
+        <a href="#breakdown">Deal</a>
+        <a href="#rationale">Rationale</a>
+        <a href="#data">Metrics</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#stakeholders">Stakeholders</a>
+        <a href="#risks">Risks</a>
+        <a href="#competitive">Landscape</a>
+        <a href="#known">Diligence</a>
+        <a href="#takeaways">Takeaways</a>
+        <a href="#sources">Sources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="../" class="back-link">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> All Case Studies
+        </a>
+        <button class="icon-button tooltip-wrap" id="themeToggle" type="button" aria-label="Toggle theme" data-tip="Toggle full theme">
+          <i data-lucide="sun-moon"></i>
+          <span>Theme</span>
+        </button>
+        <button class="icon-button tooltip-wrap" id="printModeToggle" type="button" aria-label="Print dashboard" data-tip="Print or save PDF">
+          <i data-lucide="file-down"></i>
+          <span>Print</span>
+        </button>
+      </div>
+    </div>
+    <div class="progress-shell" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="case-brand reveal">
+              <img src="/assets/logo-Daz97ldJ.png" alt="Upforge Consulting logo" />
+              <span>A Case Study by Upforge Consulting.</span>
+            </div>
+            <div class="hero-logo-row reveal" aria-label="Anthropic and Blackstone">
+              <div class="heading-logo heading-wordmark">Anthropic</div>
+              <div class="heading-logo-separator">+</div>
+              <div class="heading-logo heading-wordmark">Blackstone</div>
+            </div>
+            <div class="eyebrow reveal">
+              <span class="date-badge"><i data-lucide="calendar-days"></i>Announced: 4 May 2026</span>
+              <span class="chip">Enterprise AI services</span><span class="chip">Private equity</span><span class="chip">Claude deployment</span><span class="chip">Forward-deployed engineers</span><span class="chip">Consulting disruption</span>
+            </div>
+            <h1 class="reveal">Anthropic–Blackstone–Goldman Sachs AI Venture</h1>
+            <p class="hero-subtitle reveal">Anthropic, Blackstone, Hellman &amp; Friedman and Goldman Sachs formed a $1.5B AI-native enterprise-services firm to embed Claude and engineers inside private-equity-owned companies.</p>
+            <div class="hero-actions reveal">
+              <a class="button primary" href="#summary"><i data-lucide="arrow-down-right"></i>Read the case</a>
+              <a class="button" href="#known"><i data-lucide="list-checks"></i>Diligence view</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">$<span class="counter" data-target="1.5" data-decimals="1">0</span>B</div>
+              <div class="kpi-label">Total committed capital in the venture</div>
+            </div>
+            <a class="source-link" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">$<span class="counter" data-target="300">0</span>M</div>
+              <div class="kpi-label">Anthropic, Blackstone, H&amp;F commitment each</div>
+            </div>
+            <a class="source-link" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">$<span class="counter" data-target="150">0</span>M</div>
+              <div class="kpi-label">Goldman Sachs founding-investor commitment</div>
+            </div>
+            <a class="source-link" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value"><span class="counter" data-target="270">0</span>+</div>
+              <div class="kpi-label">Blackstone portfolio companies (potential first customers)</div>
+            </div>
+            <a class="source-link" href="https://www.blackstone.com/the-firm/" target="_blank" rel="noopener">Source: Blackstone</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value"><span class="counter" data-target="55">0</span></div>
+              <div class="kpi-label">Hellman &amp; Friedman portfolio companies</div>
+            </div>
+            <a class="source-link" href="https://tracxn.com/d/private-equity/hellman-friedman/__LY7qaf6b7AC5zL6hgjaNIjEcpXi9JivE57kDm9niLxs" target="_blank" rel="noopener">Source: Tracxn</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">May → Jul 2026</div>
+              <div class="kpi-label">Time from JV announcement to Ode brand launch</div>
+            </div>
+            <a class="source-link" href="https://www.businesswire.com/news/home/20260715205134/en/Anthropic-Blackstone-and-Hellman-Friedman-Introduce-Ode-with-Anthropic-an-Enterprise-AI-Services-Firm" target="_blank" rel="noopener">Source: BusinessWire</a>
+          </article>
+        </div>
+        <div class="control-panel reveal" aria-label="Case control panel">
+          <div class="control-panel-card">
+            <strong>Standalone firm</strong>
+            <span>Separate company, not a product line inside Anthropic.</span>
+          </div>
+          <div class="control-panel-card">
+            <strong>PE-anchored</strong>
+            <span>Launch customers are Blackstone and H&amp;F portfolio companies.</span>
+          </div>
+          <div class="control-panel-card">
+            <strong>Built on Fractional AI</strong>
+            <span>Acquired applied-AI shop supplies the operating team.</span>
+          </div>
+          <div class="control-panel-card">
+            <strong>Branded &#x27;Ode&#x27;</strong>
+            <span>Officially named &#x27;Ode with Anthropic&#x27; in July 2026.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="summary" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Summary</p>
+          <h2>Not a chatbot license. A forward-deployed-engineering firm built to out-consult the consultants.</h2>
+        </div>
+        <div class="source-stack"><a class="source-pill" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a><a class="source-pill" href="https://fortune.com/2026/05/04/anthropic-claude-consulting-industry-joint-venture-blackstone-goldman-sachs/" target="_blank" rel="noopener">Source: Fortune</a><a class="source-pill" href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank" rel="noopener">Source: Anthropic</a><a class="source-pill" href="https://www.businesswire.com/news/home/20260715205134/en/Anthropic-Blackstone-and-Hellman-Friedman-Introduce-Ode-with-Anthropic-an-Enterprise-AI-Services-Firm" target="_blank" rel="noopener">Source: BusinessWire (Ode launch)</a></div>
+      </div>
+      <div class="two-col">
+        <article class="card accent-blue reveal">
+          <p class="lead">On 4 May 2026, Anthropic, Blackstone, Hellman &amp; Friedman and Goldman Sachs announced a roughly $1.5B joint venture to embed Anthropic engineers and Claude models inside private-equity-owned companies. The venture was later branded &#x27;Ode with Anthropic&#x27; on 15 July 2026, built around Fractional AI, an applied-AI services firm Anthropic&#x27;s partners acquired in May 2026.</p>
+          <p>The structure mirrors OpenAI&#x27;s near-simultaneous move: on 11 May 2026 OpenAI launched its own &#x27;Deployment Company&#x27; with $4B+ from a 19-investor consortium led by TPG, and acquired the applied-AI firm Tomoro for forward-deployed engineering talent. Both labs concluded that model access alone doesn&#x27;t change enterprise workflows — someone has to rebuild the workflow, which is exactly the work traditional consultancies and Big Four value-creation practices sell to PE-owned companies.</p><p>The venture leans on its PE sponsors&#x27; captive customer base: Blackstone (270+ portfolio companies, ~$1.35T AUM) and Hellman &amp; Friedman (55 portfolio companies, ~$115B AUM) can hand Ode a pipeline of mid-sized companies without a sales cycle. Two weeks later, on 19 May 2026, Anthropic separately named KPMG its preferred consulting partner for private equity — a parallel, Big-Four-facing channel that runs alongside, not through, Ode.</p>
+        </article>
+        <aside class="card quote-card accent-orange reveal">
+          <h3>What this deal really is</h3>
+          <div class="callout">A vertically integrated AI-implementation firm that lets Anthropic sell services, not just model access, directly into the private-equity portfolio-company market.</div>
+          <p>Ode and the KPMG alliance are two different, seemingly overlapping go-to-market motions for the same underlying goal (get Claude embedded in PE portfolio companies); how Anthropic will avoid the two channels competing for the same accounts is not publicly explained.</p>
+        </aside>
+      </div>
+    </section>
+    <section id="breakdown" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Deal Breakdown</p>
+          <h2>Deal anatomy</h2>
+        </div>
+        <div class="source-stack"><a class="source-pill" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a><a class="source-pill" href="https://www.blackstone.com/news/press/anthropic-partners-with-blackstone-hellman-friedman-and-goldman-sachs-to-launch-enterprise-ai-services-firm/" target="_blank" rel="noopener">Source: Blackstone press release</a><a class="source-pill" href="https://www.businesswire.com/news/home/20260520809828/en/The-AI-Native-Enterprise-Services-Firm-Backed-by-Anthropic-Blackstone-and-Hellman-Friedman-Announces-Acquisition-of-Fractional-AI" target="_blank" rel="noopener">Source: BusinessWire (Fractional AI acquisition)</a></div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Dimension</th><th>Publicly Disclosed Detail</th><th>Strategic Meaning</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="table-primary">Structure</td><td>Standalone company, not an Anthropic business unit</td><td>Anthropic supplies models/engineers but does not fully own or control it</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Total capital</td><td>~$1.5B committed</td><td>Funds engineering hires, client delivery, and the Fractional AI acquisition</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Anchor investors</td><td>Anthropic, Blackstone, Hellman &amp; Friedman ~$300M each; Goldman Sachs ~$150M</td><td>Anthropic is a minority co-investor, not sole owner</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Other backers</td><td>General Atlantic (~$150M), Leonard Green, Apollo Global Management, GIC, Sequoia Capital</td><td>Broad alternative-asset-manager consortium, not just the three anchors</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Operating base</td><td>Built on Fractional AI (acquired ~May 2026), led by co-founders Chris Taylor (CEO) and Eddie Siegel (CTO)</td><td>Buys an existing applied-AI delivery team rather than hiring from scratch</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Brand name</td><td>&#x27;Ode with Anthropic&#x27;, announced 15 Jul 2026</td><td>Public launch lagged the capital announcement by ~10 weeks</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Initial customers</td><td>Blackstone and H&amp;F portfolio companies first, before wider mid-market</td><td>Sponsor portfolios function as a guaranteed pilot base</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+            <tr><td class="table-primary">Ownership split / governance</td><td>Not disclosed</td><td>Unclear who has board control or how profits/equity are allocated among the four anchors</td><td><span class="status-badge status-undisclosed">Not publicly disclosed</span></td></tr>
+            <tr><td class="table-primary">Revenue model</td><td>Not disclosed (services fees vs. Claude usage economics)</td><td>Unclear how consulting-style fees interact with Anthropic&#x27;s API revenue</td><td><span class="status-badge status-undisclosed">Not publicly disclosed</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="rationale" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Strategic Rationale</p>
+          <h2>Why each side signed on</h2>
+        </div>
+        <div class="source-stack"><a class="source-pill" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a><a class="source-pill" href="https://fortune.com/2026/05/04/anthropic-claude-consulting-industry-joint-venture-blackstone-goldman-sachs/" target="_blank" rel="noopener">Source: Fortune</a></div>
+      </div>
+      <div class="rationale-grid">
+        <article class="card accent-blue reveal">
+          <h3>Why Anthropic did this</h3>
+          <ul class="bullet-list"><li>Model access alone doesn&#x27;t change enterprise workflows — someone has to do the implementation work</li><li>Captures services revenue that would otherwise go to consultancies reselling Claude</li><li>Gets a guaranteed distribution channel into hundreds of PE-owned mid-market companies</li><li>Matches OpenAI&#x27;s parallel Deployment Company / Tomoro move within a week</li><li>Builds reference deployments and case studies to sell Claude enterprise-wide</li><li>Diversifies revenue beyond API/subscription pricing amid intense compute spend</li></ul>
+        </article>
+        <article class="card accent-orange reveal">
+          <h3>Why Blackstone, H&amp;F and Goldman did this</h3>
+          <ul class="bullet-list"><li>AI-driven productivity gains raise portfolio-company valuations and exit multiples</li><li>Early, preferential access to frontier Claude capabilities for their own holdings</li><li>A captive vehicle to standardize AI transformation across dozens of portfolio companies at once</li><li>Positions the sponsors ahead of rivals also racing to bring AI into their holdings</li><li>Equity upside in Ode itself if the services firm scales and is later sold or IPO&#x27;d</li><li>Goldman Sachs gains a foothold as founding investor with a smaller check than the PE anchors</li></ul>
+        </article>
+      </div>
+    </section>
+    <section id="data" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Data Visuals</p>
+          <h2>The numbers</h2>
+        </div>
+        <p class="section-copy">Capital commitments and comparable venture scale, as disclosed by the parties and reported by outlets that saw term details.</p>
+      </div>
+      <div class="dashboard-grid">
+        <article class="card chart-card reveal">
+          <h3>Capital commitments by investor</h3>
+          <p>Anchor commitments as reported; other backers&#x27; exact amounts not disclosed.</p>
+          <div class="chart-shell"><canvas id="revenueChart" aria-label="Capital commitments by investor chart"></canvas></div>
+          <div class="chart-note-grid"><div class="chart-note"><span>$300M</span>Anthropic</div><div class="chart-note"><span>$300M</span>Blackstone</div><div class="chart-note"><span>$300M</span>Hellman &amp; Friedman</div></div>
+          <a class="source-link" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a>
+        </article>
+        <article class="card chart-card reveal">
+          <h3>Comparable AI-services JVs: total committed capital</h3>
+          <p>Anthropic/Ode vs. OpenAI Deployment Company, both launched within a week of each other in May 2026.</p>
+          <div class="chart-shell"><canvas id="growthChart" aria-label="Comparable AI-services JVs: total committed capital chart"></canvas></div>
+          <div class="chart-note-grid"><div class="chart-note"><span>$1.5B</span>Ode with Anthropic</div><div class="chart-note"><span>$4B</span>OpenAI Deployment Co.</div></div>
+          <a class="source-link" href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank" rel="noopener">Source: TechCrunch / Cooley</a>
+        </article>
+        <article class="card chart-card side reveal">
+          <h3>Scale of the sponsor ecosystem</h3>
+          <p>Assets and portfolio scale available to Ode as a pipeline.</p>
+          <div class="metric-stack"><div class="metric-card"><div class="metric-number">$1.35T</div><p>Blackstone AUM (Jun 2026)</p></div><div class="metric-card"><div class="metric-number">270+</div><p>Blackstone portfolio companies</p></div><div class="metric-card"><div class="metric-number">~$115B</div><p>Hellman &amp; Friedman AUM</p></div></div>
+          <a class="source-link" href="https://www.blackstone.com/the-firm/" target="_blank" rel="noopener">Source: Blackstone / Tracxn</a>
+        </article>
+        <article class="card chart-card large reveal">
+          <h3>Claimed strategic impact</h3>
+          <p>Company and sponsor framing, not audited outcomes.</p>
+          <div class="impact-list"><div class="impact-row"><strong>Portfolio-company AI adoption speed</strong><div class="impact-track"><div class="impact-bar" style="--w: 70%"></div></div><span>Sponsors say Ode should &#x27;rapidly&#x27; bring Claude into core operations</span></div><div class="impact-row"><strong>Talent-bottleneck relief</strong><div class="impact-track"><div class="impact-bar" style="--w: 55%"></div></div><span>Embedded engineers meant to address shortage of in-house AI implementers</span></div><div class="impact-row"><strong>Consulting-market disruption</strong><div class="impact-track"><div class="impact-bar" style="--w: 40%"></div></div><span>Framed by press as direct competition with Big Four/MBB on AI transformation work</span></div></div>
+          <div class="claim-note">Label: public company claims / reported figures, not audited outcomes.</div>
+          <div class="source-stack" style="justify-content: flex-start; margin-top: 12px;"><a class="source-pill" href="https://fortune.com/2026/05/04/anthropic-claude-consulting-industry-joint-venture-blackstone-goldman-sachs/" target="_blank" rel="noopener">Source: Fortune</a></div>
+        </article>
+        <article class="card chart-card reveal">
+          <h3>Diligence Visibility</h3>
+          <p>Known facts help, but the diligence gap is material.</p>
+          <div class="chart-shell"><canvas id="visibilityChart" aria-label="Publicly known versus not disclosed chart"></canvas></div>
+          <div class="chart-note-grid"><div class="chart-note"><span>9</span>Publicly known items</div><div class="chart-note"><span>10</span>Not publicly disclosed items</div></div>
+        </article>
+        <article class="card chart-card reveal">
+          <h3>Risk Exposure Profile</h3>
+          <p>Analytical scoring from public disclosures, not company ratings.</p>
+          <div class="chart-shell"><canvas id="riskProfileChart" aria-label="Risk exposure profile chart"></canvas></div>
+          <div class="chart-note-grid"><div class="chart-note"><span>4/5</span>Ode and the KPMG PE alliance are unreconciled parallel channels into the same client base</div><div class="chart-note"><span>5/5</span>OpenAI&#x27;s Deployment Company/Tomoro launched within a week at nearly 3x the capital</div><div class="chart-note"><span>4/5</span>Ownership/governance split among four anchor investors is not public</div></div>
+        </article>
+      </div>
+    </section>
+    <section id="timeline" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Timeline</p>
+          <h2>Timeline</h2>
+        </div>
+        <p class="section-copy">From joint-venture announcement to branded launch and acquisition.</p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="handshake"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">4 May 2026</div>
+            <p>Anthropic, Blackstone, Hellman &amp; Friedman and Goldman Sachs announce ~$1.5B enterprise AI services venture <a class="source-link" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener">Source: CNBC</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="newspaper"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">4 May 2026</div>
+            <p>Anthropic publishes &#x27;Building a new enterprise AI services company&#x27; <a class="source-link" href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank" rel="noopener">Source: Anthropic</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="rocket"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">11 May 2026</div>
+            <p>OpenAI launches its own rival Deployment Company, backed by $4B+ and 19 investors led by TPG <a class="source-link" href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank" rel="noopener">Source: TechCrunch</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="building-2"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">19 May 2026</div>
+            <p>Anthropic separately names KPMG its preferred consulting partner for private equity clients <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="bar-chart-3"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">20 May 2026</div>
+            <p>The Anthropic-backed venture announces acquisition of Fractional AI, an applied-AI services firm <a class="source-link" href="https://www.businesswire.com/news/home/20260520809828/en/The-AI-Native-Enterprise-Services-Firm-Backed-by-Anthropic-Blackstone-and-Hellman-Friedman-Announces-Acquisition-of-Fractional-AI" target="_blank" rel="noopener">Source: BusinessWire</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="sparkles"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">15 Jul 2026</div>
+            <p>Venture is formally introduced under the brand &#x27;Ode with Anthropic&#x27;, led by ex-Fractional AI co-founders Chris Taylor (CEO) and Eddie Siegel (CTO) <a class="source-link" href="https://www.businesswire.com/news/home/20260715205134/en/Anthropic-Blackstone-and-Hellman-Friedman-Introduce-Ode-with-Anthropic-an-Enterprise-AI-Services-Firm" target="_blank" rel="noopener">Source: BusinessWire</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="scale"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">Sep 2026</div>
+            <p>Ode with Anthropic is actively hiring engineers, product leaders and operators, including team-based applications <a class="source-link" href="https://jobs.ashbyhq.com/odewithanthropic/5e655487-e0f9-4471-96fd-355b1f5e0185" target="_blank" rel="noopener">Source: Ode with Anthropic (careers)</a></p>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section id="architecture" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">How the Deal Works</p>
+          <h2>How the venture works</h2>
+        </div>
+        <p class="section-copy">Capital, engineers and client access flow from four anchor investors into a standalone delivery firm.</p>
+      </div>
+      <div class="arch-wrap reveal">
+        <div class="arch-flow" aria-label="Deal flow"><div class="arch-box"><h3>Anchor capital</h3><p>Anthropic, Blackstone, H&amp;F (~$300M each) and Goldman Sachs (~$150M) fund the venture</p></div><div class="arch-box"><h3>Broader investor consortium</h3><p>General Atlantic, Leonard Green, Apollo, GIC and Sequoia Capital add further backing</p></div><div class="arch-box"><h3>Operating team</h3><p>Fractional AI&#x27;s acquired team (CEO Chris Taylor, CTO Eddie Siegel) forms the delivery core</p></div><div class="arch-box"><h3>Anthropic engineering embed</h3><p>Applied AI engineers from Anthropic work alongside Ode&#x27;s team on client builds</p></div><div class="arch-box"><h3>Client entry point</h3><p>Blackstone and H&amp;F portfolio companies serve as first customers/pilots</p></div><div class="arch-box"><h3>Delivery model</h3><p>Forward-deployed engineers redesign workflows and embed Claude-based agents into operations</p></div><div class="arch-box"><h3>Expansion</h3><p>Wider mid-market companies outside the sponsor portfolios targeted after initial pilots</p></div></div>
+        <div class="mini-branches"><div class="mini-branch"><h3>Parallel KPMG channel</h3><p>KPMG named Anthropic&#x27;s preferred PE consulting partner two weeks later — a separate, Big-Four-facing route to the same client base</p></div><div class="mini-branch"><h3>Competitive mirror: OpenAI Deployment Co.</h3><p>OpenAI launched an equivalent venture a week later with Tomoro, at roughly 2.7x the capital</p></div></div>
+      </div>
+    </section>
+    <section id="glossary" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Terms Explained</p>
+          <h2>Plain-English glossary for the deal.</h2>
+        </div>
+        
+      </div>
+      <div class="glossary-grid">
+        <details class="reveal"><summary>Forward-deployed engineer</summary><p>An engineer embedded on-site or closely with a client to customize software/AI to that client&#x27;s specific workflows.</p></details>
+        <details class="reveal"><summary>AI-native enterprise services firm</summary><p>A services company built from the ground up around deploying AI/agents, rather than a traditional consultancy adding AI on top.</p></details>
+        <details class="reveal"><summary>Portfolio company</summary><p>A business that a private equity firm owns or has invested in.</p></details>
+        <details class="reveal"><summary>Founding investor</summary><p>An investor that commits capital at a venture&#x27;s launch, often on different terms than later investors.</p></details>
+        <details class="reveal"><summary>AUM (assets under management)</summary><p>The total market value of investments a firm manages on behalf of clients.</p></details>
+        <details class="reveal"><summary>Value-creation practice</summary><p>A PE firm&#x27;s or consultancy&#x27;s internal team focused on improving portfolio-company operations and valuation before exit.</p></details>
+        <details class="reveal"><summary>Applied AI</summary><p>Practical, client-specific implementation of AI models into real business workflows, as opposed to AI research.</p></details>
+      </div>
+    </section>
+    <section id="stakeholders" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Stakeholder Map</p>
+          <h2>Who needs the deal to work, and why.</h2>
+        </div>
+        <p class="section-copy">Analytical view based on public deal structure.</p>
+      </div>
+      <div class="stakeholder-map">
+        <aside class="network-core reveal" aria-label="Stakeholder network diagram">
+          <svg viewBox="0 0 480 520" role="img" aria-label="Stakeholder network">
+            <defs><linearGradient id="nodeLine" x1="0" x2="1"><stop offset="0" stop-color="#42699d" stop-opacity="0.75" /><stop offset="1" stop-color="#b87942" stop-opacity="0.75" /></linearGradient></defs>
+            <g stroke="url(#nodeLine)" stroke-width="1.4" opacity="0.75"><line x1="240" y1="260" x2="240" y2="80" /><line x1="240" y1="260" x2="80" y2="160" /><line x1="240" y1="260" x2="395" y2="160" /><line x1="240" y1="260" x2="86" y2="382" /><line x1="240" y1="260" x2="390" y2="386" /><line x1="240" y1="260" x2="240" y2="452" /></g>
+            <circle cx="240" cy="260" r="64" fill="rgba(97,225,255,0.14)" stroke="rgba(97,225,255,0.55)" />
+            <text x="240" y="256" text-anchor="middle" class="node-label">Anthropic&#x27;s PE</text>
+            <text x="240" y="274" text-anchor="middle" class="node-label">AI Venture</text>
+            <g fill="rgba(255,255,255,0.08)" stroke="rgba(171,206,255,0.28)"><circle cx="240" cy="80" r="44" /><circle cx="80" cy="160" r="44" /><circle cx="395" cy="160" r="44" /><circle cx="86" cy="382" r="44" /><circle cx="390" cy="386" r="44" /><circle cx="240" cy="452" r="44" /></g>
+            <text x="240" y="84" text-anchor="middle" class="node-label">Anthropic</text><text x="80" y="164" text-anchor="middle" class="node-label">Blackstone</text><text x="395" y="164" text-anchor="middle" class="node-label">Hellman &amp; Fri…</text><text x="86" y="386" text-anchor="middle" class="node-label">Goldman Sachs</text><text x="390" y="390" text-anchor="middle" class="node-label">General Atlan…</text><text x="240" y="456" text-anchor="middle" class="node-label">Chris Taylor</text>
+          </svg>
+        </aside>
+        <div class="stakeholder-grid">
+          <article class="stakeholder-card reveal"><h3>Anthropic</h3><p><span class="label">Role</span> Model/technology provider and co-investor</p><p><span class="label">Incentive</span> Capture services revenue and drive Claude enterprise adoption</p><p><span class="label">Concern</span> Diluting focus from core model business; channel conflict with KPMG deal</p></article>
+          <article class="stakeholder-card reveal"><h3>Blackstone</h3><p><span class="label">Role</span> Anchor investor and client-supply source</p><p><span class="label">Incentive</span> Boost portfolio-company valuations via AI-driven productivity</p><p><span class="label">Concern</span> Execution risk if Ode underdelivers on promised transformation</p></article>
+          <article class="stakeholder-card reveal"><h3>Hellman &amp; Friedman</h3><p><span class="label">Role</span> Anchor investor and client-supply source</p><p><span class="label">Incentive</span> Early access to Claude-based transformation for its 55 portfolio companies</p><p><span class="label">Concern</span> Smaller AUM than Blackstone; return on a services-firm bet is unproven</p></article>
+          <article class="stakeholder-card reveal"><h3>Goldman Sachs</h3><p><span class="label">Role</span> Founding investor (smaller check)</p><p><span class="label">Incentive</span> Strategic foothold in AI-driven advisory/implementation market</p><p><span class="label">Concern</span> Minority position with unclear influence over strategy</p></article>
+          <article class="stakeholder-card reveal"><h3>General Atlantic, Apollo, GIC, Sequoia, Leonard Green</h3><p><span class="label">Role</span> Additional backers</p><p><span class="label">Incentive</span> Equity upside if Ode scales or is later sold/IPO&#x27;d</p><p><span class="label">Concern</span> Amounts and governance rights not disclosed</p></article>
+          <article class="stakeholder-card reveal"><h3>Chris Taylor (Ode CEO, ex-Fractional AI co-founder)</h3><p><span class="label">Role</span> Chief executive</p><p><span class="label">Incentive</span> Scale the firm and its brand as leading AI implementation player</p><p><span class="label">Concern</span> Integrating Fractional AI&#x27;s culture with Anthropic and PE-sponsor priorities</p></article>
+          <article class="stakeholder-card reveal"><h3>Eddie Siegel (Ode CTO, ex-Fractional AI co-founder)</h3><p><span class="label">Role</span> Chief technology officer</p><p><span class="label">Incentive</span> Build technical delivery capability at scale</p><p><span class="label">Concern</span> Talent bottleneck in applied AI engineering</p></article>
+          <article class="stakeholder-card reveal"><h3>KPMG</h3><p><span class="label">Role</span> Separately named preferred PE consulting partner for Anthropic</p><p><span class="label">Incentive</span> Co-develop Claude-powered PE products via Digital Gateway</p><p><span class="label">Concern</span> Overlap/competition with Ode for the same PE client base</p></article>
+          <article class="stakeholder-card reveal"><h3>Big Four / MBB consultancies</h3><p><span class="label">Role</span> Incumbent competitors</p><p><span class="label">Incentive</span> Defend AI-transformation consulting revenue</p><p><span class="label">Concern</span> Ode and OpenAI&#x27;s Deployment Co. threaten to disintermediate traditional consulting</p></article>
+          <article class="stakeholder-card reveal"><h3>PE portfolio-company management teams</h3><p><span class="label">Role</span> End clients</p><p><span class="label">Incentive</span> Access frontier AI capability and implementation support</p><p><span class="label">Concern</span> Being a mandated pilot for their PE owner&#x27;s AI bet, regardless of fit</p></article>
+        </div>
+      </div>
+    </section>
+    <section id="pros-cons" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Pros and Cons by Party</p>
+          <h2>Upside is real, but execution has to work.</h2>
+        </div>
+        <p class="section-copy">A concise view of public disclosures and standard diligence.</p>
+      </div>
+      <div class="comparison-grid">
+        <article class="card party-card reveal">
+          <div class="party-head"><h3>Anthropic</h3></div>
+          <div class="pros-cons">
+            <div class="pc-column"><div class="pc-title"><i data-lucide="plus-circle"></i>Pros</div><ul><li>New services revenue stream</li><li>Guaranteed distribution via PE portfolios</li><li>Reference deployments for Claude</li><li>Competes directly with OpenAI&#x27;s move</li><li>Deepens ties with major financial sponsors</li><li>Reduces reliance on third-party consultancies</li></ul></div>
+            <div class="pc-column"><div class="pc-title"><i data-lucide="alert-circle"></i>Cons / Risks</div><ul><li>Governance/ownership split undisclosed</li><li>Overlaps with its own KPMG PE alliance</li><li>Execution risk in a services business it hasn&#x27;t run before</li><li>Capital committed (~$300M) alongside compute-heavy core business</li><li>Reputational risk if implementations underdeliver</li><li>Must compete with better-funded OpenAI Deployment Co.</li></ul></div>
+          </div>
+        </article>
+        <article class="card party-card reveal">
+          <div class="party-head"><h3>Blackstone / H&amp;F / Goldman Sachs</h3></div>
+          <div class="pros-cons">
+            <div class="pc-column"><div class="pc-title"><i data-lucide="plus-circle"></i>Pros</div><ul><li>Early/preferential access to Claude for portfolio companies</li><li>Potential equity upside in a fast-scaling AI services firm</li><li>Standardized AI playbook across many holdings</li><li>Differentiation vs. other PE sponsors</li><li>Uses existing portfolio as low-cost pilot base</li><li>Strengthens relationship with a top AI lab</li></ul></div>
+            <div class="pc-column"><div class="pc-title"><i data-lucide="alert-circle"></i>Cons / Risks</div><ul><li>Real capital at risk (~$300M each for anchors)</li><li>Unproven business model at this scale</li><li>Portfolio companies may not want AI mandated on them</li><li>Governance complexity among four+ investors</li><li>Reputational exposure if AI rollouts fail or cause layoffs backlash</li><li>Smaller sponsors (Goldman, General Atlantic) have less influence</li></ul></div>
+          </div>
+        </article>
+        <article class="card party-card reveal">
+          <div class="party-head"><h3>Clients / Portfolio companies</h3></div>
+          <div class="pros-cons">
+            <div class="pc-column"><div class="pc-title"><i data-lucide="plus-circle"></i>Pros</div><ul><li>Access to frontier Claude models plus dedicated engineers</li><li>Faster AI adoption than building in-house</li><li>Backed by well-resourced sponsors</li><li>Potentially lower cost than hiring Big Four consultants</li><li>Direct line to model-maker&#x27;s own engineering talent</li><li>Case-study companies get outsized attention/support</li></ul></div>
+            <div class="pc-column"><div class="pc-title"><i data-lucide="alert-circle"></i>Cons / Risks</div><ul><li>Pricing/terms for services not disclosed</li><li>Being an early pilot carries execution risk</li><li>Vendor lock-in to Claude/Anthropic stack</li><li>Limited leverage if their PE owner mandates participation</li><li>Unclear SLAs or long-term support commitments</li><li>Workforce disruption concerns from AI-driven workflow redesign</li></ul></div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section id="risks" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Risk Heatmap</p>
+          <h2>Key risks</h2>
+        </div>
+        <p class="section-copy">Analytical judgments from public disclosures; not company risk ratings.</p>
+      </div>
+      <div class="table-wrap reveal">
+        <table class="heatmap">
+          <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+          <tbody>
+            <tr><td class="table-primary">Channel conflict between Ode and the KPMG PE alliance</td><td><span class="risk-likelihood heat-medhigh">Medium-High</span></td><td><span class="risk-likelihood heat-medium">Medium</span></td><td>Not publicly addressed; unclear demarcation of accounts</td></tr>
+            <tr><td class="table-primary">Losing ground to OpenAI&#x27;s better-funded Deployment Company</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-likelihood heat-high">High</span></td><td>Differentiate via PE-sponsor pipeline and Fractional AI&#x27;s existing delivery expertise</td></tr>
+            <tr><td class="table-primary">Execution/talent bottleneck in scaling forward-deployed engineering</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-likelihood heat-medhigh">Medium-High</span></td><td>Active hiring, including team-based (2-5 engineer) applications</td></tr>
+            <tr><td class="table-primary">Client concentration in PE-owned mid-market</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-likelihood heat-medium">Medium</span></td><td>Plan to expand beyond sponsor portfolios over time</td></tr>
+            <tr><td class="table-primary">Governance disputes among four+ investors with differing check sizes</td><td><span class="risk-likelihood heat-low">Low</span></td><td><span class="risk-likelihood heat-medhigh">Medium-High</span></td><td>Not disclosed</td></tr>
+            <tr><td class="table-primary">Backlash over AI-driven job displacement at portfolio companies</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-likelihood heat-medium">Medium</span></td><td>Not addressed in public materials</td></tr>
+            <tr><td class="table-primary">Model/vendor lock-in risk for client companies</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-likelihood heat-low">Low</span></td><td>Not addressed publicly</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="risk-note reveal">Risk ratings here are analytical judgments from public disclosures, not ratings disclosed by the parties.</div>
+      <div class="risk-details-grid"><details class="risk-card reveal"><summary>Two Anthropic PE channels, one client base</summary><p>Ode and the KPMG preferred-partner deal both target private-equity-owned companies; how Anthropic allocates or coordinates leads between them is not explained in any released materials.</p></details><details class="risk-card reveal"><summary>A faster, bigger rival</summary><p>OpenAI&#x27;s Deployment Company launched a week later with more than 2.5x the committed capital and an acquired 150-person forward-deployed engineering team from Tomoro, setting up a direct capability race.</p></details><details class="risk-card reveal"><summary>Undisclosed economics</summary><p>No public term sheet details ownership percentages, revenue-sharing between Anthropic (model usage) and Ode (services fees), or how profits are split among the four anchor investors.</p></details><details class="risk-card reveal"><summary>Reliance on sponsor-mandated pilots</summary><p>Early clients are largely portfolio companies of the PE-firm investors themselves, raising questions about whether uptake reflects genuine demand or ownership-driven mandate.</p></details></div>
+    </section>
+    <section id="competitive" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Competitive Landscape</p>
+          <h2>Comparable moves</h2>
+        </div>
+        <div class="source-stack"><a class="source-pill" href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank" rel="noopener">Source: TechCrunch</a><a class="source-pill" href="https://www.cooley.com/news/coverage/2026/2026-05-12-openai-forms-new-joint-venture-openai-deployment-company-and-acquires-tomoro" target="_blank" rel="noopener">Source: Cooley (OpenAI Deployment Co.)</a><a class="source-pill" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a><a class="source-pill" href="https://www.bain.com/about/media-center/press-releases/2026/bain--company-announces-expansion-of-lead-global-management-consulting-partnership-with-palantir-to-bring-world-industry-leading-ai-transformation-capabilities-to-clients/" target="_blank" rel="noopener">Source: Bain &amp; Company</a></div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Deal / Firm</th><th>Counterparty</th><th>Nature of Relationship</th><th>Strategic Meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="table-primary">OpenAI</td><td>OpenAI Deployment Company (w/ Tomoro acquisition)</td><td>Rival $4B+ enterprise AI deployment JV, led by TPG</td><td>Direct head-to-head competitor launched a week later, larger capital base</td></tr>
+            <tr><td class="table-primary">KPMG</td><td>Anthropic preferred PE consulting partner</td><td>Big Four alliance embedding Claude into Digital Gateway for PE clients</td><td>Parallel Anthropic-affiliated channel into the same PE client universe</td></tr>
+            <tr><td class="table-primary">Palantir</td><td>AIP for Private Equity / Bain &amp; Company partnership</td><td>Software+forward-deployed-engineer model for PE portfolio management and AI transformation</td><td>Established comparable for embedding AI+engineers into PE-linked operations</td></tr>
+            <tr><td class="table-primary">Big Four (Deloitte, EY, PwC, KPMG)</td><td>Internal AI investments ($1-2B+ each)</td><td>Traditional consultancies building AI-augmented value-creation and advisory practices</td><td>Incumbents Ode and OpenAI&#x27;s venture are positioned to disintermediate</td></tr>
+            <tr><td class="table-primary">Bain &amp; Company</td><td>Palantir partnership</td><td>Global consulting partnership for AI-transformation delivery using AIP</td><td>Shows established consultancies also pairing with AI vendors rather than building alone</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="known" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Publicly Known vs. Not Disclosed</p>
+          <h2>The diligence view: known facts versus open questions.</h2>
+        </div>
+        <p class="section-copy">No assumptions are made on undisclosed terms.</p>
+      </div>
+      <div class="known-grid">
+        <article class="known-panel known reveal"><h3><i data-lucide="check-circle-2"></i>Publicly Known</h3><ul><li>Anthropic, Blackstone, Hellman &amp; Friedman and Goldman Sachs announced a ~$1.5B enterprise AI services venture on 4 May 2026</li><li>Anthropic, Blackstone and Hellman &amp; Friedman each committed roughly $300M; Goldman Sachs committed roughly $150M as founding investor</li><li>General Atlantic, Leonard Green, Apollo Global Management, GIC and Sequoia Capital also back the venture</li><li>The venture acquired Fractional AI (announced ~20 May 2026), an applied-AI services firm, to form its operating core</li><li>The venture was branded &#x27;Ode with Anthropic&#x27; on 15 July 2026, led by CEO Chris Taylor and CTO Eddie Siegel (Fractional AI co-founders)</li><li>The stated model is embedding Anthropic engineers and Claude directly into client companies&#x27; workflows, starting with sponsors&#x27; own portfolio companies</li><li>Two weeks after the JV announcement, on 19 May 2026, Anthropic separately named KPMG its preferred consulting partner for private equity clients</li><li>OpenAI launched a rival &#x27;Deployment Company&#x27; on/around 11 May 2026 backed by $4B+ from 19 investors led by TPG, acquiring Tomoro for forward-deployed engineers</li><li>As of September 2026, Ode with Anthropic is publicly hiring engineers, product leaders and operators</li></ul></article>
+        <article class="known-panel unknown reveal"><h3><i data-lucide="circle-help"></i>Not Publicly Disclosed</h3><ul><li>Equity ownership percentages held by each of the four anchor investors</li><li>Governance/board control structure among Anthropic, Blackstone, H&amp;F and Goldman Sachs</li><li>Exact commitment amounts from General Atlantic, Leonard Green, Apollo, GIC and Sequoia Capital</li><li>Revenue-sharing terms between Anthropic (model/API usage) and Ode (services fees)</li><li>Financial terms of the Fractional AI acquisition</li><li>Named first paying clients or completed deployments and their outcomes</li><li>Headcount at Ode as of September 2026</li><li>How overlap with the separate KPMG preferred-PE-partner alliance is managed or divided</li><li>Pricing model offered to client companies</li><li>Long-term ownership/exit plan (IPO, sale, or permanent standalone entity)</li></ul></article>
+      </div>
+    </section>
+    <section id="takeaways" class="section">
+      <div class="takeaway-hero reveal">
+        <div>
+          <p class="section-kicker" style="color:#c9a76c;">Consulting Takeaways</p>
+          <h2>AI labs are moving from selling models to selling transformation — and using financial sponsors&#x27; captive portfolios to do it.</h2>
+        </div>
+      </div>
+      <div class="takeaway-grid">
+        <div class="takeaway-card reveal">Frontier labs increasingly see services/implementation, not just model access, as the real enterprise AI revenue opportunity</div>
+        <div class="takeaway-card reveal">PE sponsors&#x27; portfolio companies are becoming a low-friction distribution channel for AI vendors willing to co-invest</div>
+        <div class="takeaway-card reveal">Consultancies now face AI-lab-backed competitors with direct model access and engineering talent, not just software tools</div>
+        <div class="takeaway-card reveal">Multiple, overlapping go-to-market channels (JV plus separate Big Four alliance) from the same AI lab can create client confusion</div>
+        <div class="takeaway-card reveal">Speed matters: OpenAI matched this move within a week with more capital, showing labs are racing on enterprise deployment, not just model capability</div>
+        <div class="takeaway-card reveal">Buying an existing applied-AI team (Fractional AI, Tomoro) is the preferred way labs are bootstrapping forward-deployed engineering capacity</div>
+        <div class="takeaway-card reveal">Financial terms of these AI-services JVs remain opaque even months after launch, making ROI hard for outsiders to assess</div>
+        <div class="takeaway-card reveal">Consultants and founders should expect AI vendors to compete directly for delivery/implementation engagements, not just remain upstream toolmakers</div>
+      </div>
+    </section>
+    <section id="sources" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Source Library</p>
+          <h2>Primary sources, reporting, and analysis.</h2>
+        </div>
+        <p class="section-copy">Use the filter to find supporting source cards.</p>
+      </div>
+      <div class="source-controls reveal">
+        <label class="search-box">
+          <i data-lucide="search"></i>
+          <input id="sourceSearch" type="search" placeholder="Search source library" aria-label="Search source library" />
+        </label>
+      </div>
+      <div class="source-grid" id="sourceGrid">
+        <a class="source-card reveal" href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>Anthropic — Building a new enterprise AI services company</strong><span>https://www.anthropic.com/news/enterprise-ai-services-company</span></a>
+        <a class="source-card reveal" href="https://www.blackstone.com/news/press/anthropic-partners-with-blackstone-hellman-friedman-and-goldman-sachs-to-launch-enterprise-ai-services-firm/" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>Blackstone press release</strong><span>https://www.blackstone.com/news/press/anthropic-partners-with-blackstone-hellman-friedman-and-goldman-sachs-to-launch-enterprise-ai-services-firm/</span></a>
+        <a class="source-card reveal" href="https://www.businesswire.com/news/home/20260715205134/en/Anthropic-Blackstone-and-Hellman-Friedman-Introduce-Ode-with-Anthropic-an-Enterprise-AI-Services-Firm" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>BusinessWire — Ode with Anthropic launch</strong><span>https://www.businesswire.com/news/home/20260715205134/en/Anthropic-Blackstone-and-Hellman-Friedman-Introduce-Ode-with-Anthropic-an-Enterprise-AI-Services-Firm</span></a>
+        <a class="source-card reveal" href="https://www.businesswire.com/news/home/20260520809828/en/The-AI-Native-Enterprise-Services-Firm-Backed-by-Anthropic-Blackstone-and-Hellman-Friedman-Announces-Acquisition-of-Fractional-AI" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>BusinessWire — Fractional AI acquisition</strong><span>https://www.businesswire.com/news/home/20260520809828/en/The-AI-Native-Enterprise-Services-Firm-Backed-by-Anthropic-Blackstone-and-Hellman-Friedman-Announces-Acquisition-of-Fractional-AI</span></a>
+        <a class="source-card reveal" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>CNBC</strong><span>https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html</span></a>
+        <a class="source-card reveal" href="https://fortune.com/2026/05/04/anthropic-claude-consulting-industry-joint-venture-blackstone-goldman-sachs/" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>Fortune — Anthropic takes shot at consulting industry</strong><span>https://fortune.com/2026/05/04/anthropic-claude-consulting-industry-joint-venture-blackstone-goldman-sachs/</span></a>
+        <a class="source-card reveal" href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>TechCrunch — Anthropic and OpenAI both launching JVs</strong><span>https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/</span></a>
+        <a class="source-card reveal" href="https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>Fortune — Big Four consulting has 2 AI nightmares</strong><span>https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/</span></a>
+        <a class="source-card reveal" href="https://techcrunch.com/2026/07/15/anthropic-blackstone-bet-the-next-trillion-dollar-ai-business-is-implementation-not-models/" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>TechCrunch — Anthropic, Blackstone bet on implementation</strong><span>https://techcrunch.com/2026/07/15/anthropic-blackstone-bet-the-next-trillion-dollar-ai-business-is-implementation-not-models/</span></a>
+        <a class="source-card reveal" href="https://www.cooley.com/news/coverage/2026/2026-05-12-openai-forms-new-joint-venture-openai-deployment-company-and-acquires-tomoro" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>Cooley — OpenAI Deployment Company / Tomoro</strong><span>https://www.cooley.com/news/coverage/2026/2026-05-12-openai-forms-new-joint-venture-openai-deployment-company-and-acquires-tomoro</span></a>
+        <a class="source-card reveal" href="https://www.bain.com/about/media-center/press-releases/2026/bain--company-announces-expansion-of-lead-global-management-consulting-partnership-with-palantir-to-bring-world-industry-leading-ai-transformation-capabilities-to-clients/" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>Bain &amp; Company — Palantir partnership expansion</strong><span>https://www.bain.com/about/media-center/press-releases/2026/bain--company-announces-expansion-of-lead-global-management-consulting-partnership-with-palantir-to-bring-world-industry-leading-ai-transformation-capabilities-to-clients/</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>KPMG — Global alliance with Anthropic, Digital Gateway</strong><span>https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html</span></a>
+        <a class="source-card reveal" href="https://www.blackstone.com/the-firm/" target="_blank" rel="noopener"><span class="source-type">Financial</span><strong>Blackstone — About the firm (AUM)</strong><span>https://www.blackstone.com/the-firm/</span></a>
+        <a class="source-card reveal" href="https://tracxn.com/d/private-equity/hellman-friedman/__LY7qaf6b7AC5zL6hgjaNIjEcpXi9JivE57kDm9niLxs" target="_blank" rel="noopener"><span class="source-type">Financial</span><strong>Tracxn — Hellman &amp; Friedman investor profile</strong><span>https://tracxn.com/d/private-equity/hellman-friedman/__LY7qaf6b7AC5zL6hgjaNIjEcpXi9JivE57kDm9niLxs</span></a>
+        <a class="source-card reveal" href="https://www.bloomberg.com/news/articles/2026-01-21/anthropic-s-revenue-run-rate-tops-9-billion-as-vcs-pile-in" target="_blank" rel="noopener"><span class="source-type">Financial</span><strong>Bloomberg — Anthropic revenue run rate tops $9B</strong><span>https://www.bloomberg.com/news/articles/2026-01-21/anthropic-s-revenue-run-rate-tops-9-billion-as-vcs-pile-in</span></a>
+        <a class="source-card reveal" href="https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation" target="_blank" rel="noopener"><span class="source-type">Financial</span><strong>Anthropic — Series G, $380B post-money valuation</strong><span>https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation</span></a>
+        <a class="source-card reveal" href="https://jobs.ashbyhq.com/odewithanthropic/5e655487-e0f9-4471-96fd-355b1f5e0185" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>Ode with Anthropic careers page (hiring, Sep 2026)</strong><span>https://jobs.ashbyhq.com/odewithanthropic/5e655487-e0f9-4471-96fd-355b1f5e0185</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><strong>Data integrity note:</strong> This dashboard reports only publicly disclosed commitments, dates and structure; it does not estimate undisclosed equity splits, deal economics, or unaudited performance claims. Figures are drawn from public reporting; where outlets disagree, the range or the more conservative figure is shown.</p>
+  </footer>
+
+  <button class="icon-button back-to-top tooltip-wrap" id="backToTop" type="button" aria-label="Back to top" data-tip="Back to top">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const sourceColors = {
+      text: () => getComputedStyle(document.documentElement).getPropertyValue("--card-text").trim() || "#092d53",
+      muted: () => getComputedStyle(document.documentElement).getPropertyValue("--card-muted").trim() || "#47556a",
+      line: () => "rgba(9, 45, 83, 0.12)",
+      kpmg: () => getComputedStyle(document.documentElement).getPropertyValue("--kpmg").trim(),
+      anthropic: () => getComputedStyle(document.documentElement).getPropertyValue("--anthropic").trim(),
+      cyan: () => getComputedStyle(document.documentElement).getPropertyValue("--cyan").trim()
+    };
+
+    if (window.lucide) {
+      lucide.createIcons({ attrs: { width: 18, height: 18, strokeWidth: 2 } });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", (event) => {
+        const target = document.querySelector(anchor.getAttribute("href"));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+      });
+    });
+
+    const progressBar = document.getElementById("progressBar");
+    const backToTop = document.getElementById("backToTop");
+    const navLinks = [...document.querySelectorAll(".nav-links a")];
+    const sections = navLinks.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+
+    function updateScrollState() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      backToTop.classList.toggle("visible", scrollTop > 700);
+
+      let current = sections[0]?.id;
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= 130) current = section.id;
+      });
+      navLinks.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === `#${current}`));
+    }
+
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+    updateScrollState();
+
+    backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" }));
+
+    const themeToggle = document.getElementById("themeToggle");
+    document.documentElement.removeAttribute("data-theme");
+
+    function refreshCharts() {
+      Object.values(window.dashboardCharts || {}).forEach((chart) => {
+        if (!chart || !chart.options) {
+          renderFallbackCharts();
+          return;
+        }
+        chart.options.plugins.legend.labels.color = sourceColors.text();
+        chart.options.scales && Object.values(chart.options.scales).forEach((scale) => {
+          if (scale.ticks) scale.ticks.color = sourceColors.text();
+          if (scale.grid) scale.grid.color = sourceColors.line();
+          if (scale.pointLabels) scale.pointLabels.color = sourceColors.text();
+        });
+        chart.update();
+      });
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "light" ? "" : "light";
+      if (next) {
+        document.documentElement.dataset.theme = next;
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      refreshCharts();
+    });
+
+    const printModeToggle = document.getElementById("printModeToggle");
+    printModeToggle.addEventListener("click", () => {
+      window.print();
+    });
+
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.55 });
+
+    document.querySelectorAll(".counter").forEach((counter) => counterObserver.observe(counter));
+
+    function animateCounter(el) {
+      const target = Number(el.dataset.target);
+      const decimals = Number(el.dataset.decimals || 0);
+      const format = el.dataset.format || "";
+      const duration = prefersReducedMotion ? 0 : 1300;
+      const start = performance.now();
+
+      function formatValue(value) {
+        if (format === "compact-plus") return `${Math.round(value).toLocaleString()}+`;
+        return value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      }
+
+      function frame(now) {
+        const pct = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - pct, 3);
+        el.textContent = formatValue(target * eased);
+        if (pct < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    if (window.gsap && window.ScrollTrigger && !prefersReducedMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.to(".hero-media", { scale: 1, duration: 1.8, ease: "power2.out" });
+      gsap.from(".heading-logo", { y: 18, scale: 0.98, duration: 0.7, stagger: 0.12, ease: "power3.out" });
+      gsap.from(".heading-logo-separator", { opacity: 0, scale: 0.7, rotate: -90, duration: 0.6, ease: "back.out(1.8)", delay: 0.25 });
+      gsap.utils.toArray(".reveal").forEach((el) => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 88%" }
+        });
+      });
+      gsap.utils.toArray(".dashboard-grid, .stakeholder-grid, .takeaway-grid, .source-grid").forEach((grid) => {
+        gsap.from(grid.children, {
+          opacity: 0,
+          y: 18,
+          duration: 0.55,
+          stagger: 0.045,
+          ease: "power2.out",
+          scrollTrigger: { trigger: grid, start: "top 86%" }
+        });
+      });
+      gsap.utils.toArray(".impact-bar").forEach((bar) => {
+        gsap.to(bar, {
+          scaleX: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: bar, start: "top 90%" }
+        });
+      });
+    } else {
+      document.querySelectorAll(".reveal").forEach((el) => {
+        el.style.opacity = 1;
+        el.style.transform = "none";
+      });
+      document.querySelectorAll(".impact-bar").forEach((bar) => {
+        bar.style.transform = "scaleX(1)";
+      });
+    }
+
+    function setupCanvas(canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, width: rect.width, height: rect.height };
+    }
+
+    function drawFallbackBar(canvasId, labels, values, suffix = "") {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvas(canvas);
+      const max = Math.max(...values) * 1.25;
+      const left = 42;
+      const bottom = 42;
+      const top = 28;
+      const plotH = height - top - bottom;
+      const barW = (width - left - 20) / values.length * 0.58;
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(9,45,83,0.14)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = top + (plotH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(left, y);
+        ctx.lineTo(width - 12, y);
+        ctx.stroke();
+      }
+      values.forEach((value, i) => {
+        const x = left + i * ((width - left - 20) / values.length) + 14;
+        const h = (value / max) * plotH;
+        const y = top + plotH - h;
+        ctx.fillStyle = [sourceColors.anthropic(), sourceColors.cyan(), sourceColors.kpmg()][i % 3];
+        ctx.fillRect(x, y, barW, h);
+        ctx.fillStyle = sourceColors.text();
+        ctx.font = "800 13px Inter, Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${value}${suffix}`, x + barW / 2, y - 10);
+        ctx.font = "700 11px Inter, Arial";
+        ctx.fillText(labels[i], x + barW / 2, height - 16);
+      });
+    }
+
+    function drawFallbackDoughnut() {
+      const canvas = document.getElementById("revenueChart");
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvas(canvas);
+      const values = [16.4, 14.1, 9.3];
+      const colors = [sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic()];
+      const total = values.reduce((a, b) => a + b, 0);
+      const cx = width / 2;
+      const cy = height / 2;
+      const r = Math.min(width, height) * 0.34;
+      let start = -Math.PI / 2;
+      ctx.clearRect(0, 0, width, height);
+      values.forEach((value, i) => {
+        const angle = (value / total) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, start + angle);
+        ctx.closePath();
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+        const mid = start + angle / 2;
+        ctx.fillStyle = sourceColors.text();
+        ctx.font = "800 12px Inter, Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${Math.round(value / total * 100)}%`, cx + Math.cos(mid) * r * 0.66, cy + Math.sin(mid) * r * 0.66);
+        start += angle;
+      });
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.58, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = sourceColors.text();
+      ctx.font = "900 20px Inter, Arial";
+      ctx.fillText("$39.8B", cx, cy - 4);
+      ctx.font = "700 11px Inter, Arial";
+      ctx.fillText("total", cx, cy + 18);
+    }
+
+    function drawFallbackRadar() {
+      const canvas = document.getElementById("riskProfileChart");
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvas(canvas);
+      const labels = ["Output", "Data", "Vendor", "Ind.", "Adopt.", "Security"];
+      const values = [5, 4, 3, 4, 4, 4];
+      const cx = width / 2;
+      const cy = height / 2 + 6;
+      const r = Math.min(width, height) * 0.32;
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(9,45,83,0.16)";
+      ctx.fillStyle = sourceColors.text();
+      ctx.font = "700 11px Inter, Arial";
+      ctx.textAlign = "center";
+      for (let level = 1; level <= 5; level++) {
+        ctx.beginPath();
+        labels.forEach((_, i) => {
+          const a = -Math.PI / 2 + i * Math.PI * 2 / labels.length;
+          const rr = r * level / 5;
+          const x = cx + Math.cos(a) * rr;
+          const y = cy + Math.sin(a) * rr;
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.stroke();
+      }
+      const points = values.map((value, i) => {
+        const a = -Math.PI / 2 + i * Math.PI * 2 / labels.length;
+        return { x: cx + Math.cos(a) * r * value / 5, y: cy + Math.sin(a) * r * value / 5, a };
+      });
+      ctx.beginPath();
+      points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.fillStyle = "rgba(52,98,252,0.2)";
+      ctx.fill();
+      ctx.strokeStyle = sourceColors.cyan();
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      labels.forEach((label, i) => {
+        const a = -Math.PI / 2 + i * Math.PI * 2 / labels.length;
+        ctx.fillStyle = sourceColors.text();
+        ctx.fillText(label, cx + Math.cos(a) * (r + 26), cy + Math.sin(a) * (r + 22));
+      });
+    }
+
+    function renderFallbackCharts() {
+      window.dashboardCharts = { fallback: true };
+      drawFallbackDoughnut();
+      drawFallbackBar("growthChart", ["Tax", "Audit", "Advisory"], [7.5, 6.0, 2.9], "%");
+      drawFallbackBar("visibilityChart", ["Known", "Undisclosed"], [8, 12], "");
+      drawFallbackRadar();
+    }
+
+    function createCharts() {
+      if (!window.Chart) {
+        renderFallbackCharts();
+        return;
+      }
+      const valueLabelPlugin = {
+        id: "valueLabelPlugin",
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx;
+          const chartType = chart.config.type;
+          ctx.save();
+          ctx.fillStyle = sourceColors.text();
+          ctx.font = "700 12px Inter, Arial, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+
+          if (chartType === "bar") {
+            chart.data.datasets.forEach((dataset, datasetIndex) => {
+              const meta = chart.getDatasetMeta(datasetIndex);
+              meta.data.forEach((bar, index) => {
+                const value = dataset.data[index];
+                const suffix = chart.canvas.id === "visibilityChart" ? "" : "%";
+                ctx.fillText(`${value}${suffix}`, bar.x, bar.y - 12);
+              });
+            });
+          }
+
+          if (chartType === "doughnut") {
+            const total = chart.data.datasets[0].data.reduce((sum, value) => sum + value, 0);
+            ctx.font = "700 13px Inter, Arial, sans-serif";
+            chart.getDatasetMeta(0).data.forEach((arc, index) => {
+              const value = chart.data.datasets[0].data[index];
+              const pct = Math.round((value / total) * 100);
+              const point = arc.tooltipPosition();
+              ctx.fillText(`${pct}%`, point.x, point.y);
+            });
+            ctx.font = "800 18px Inter, Arial, sans-serif";
+            ctx.fillText("$39.8B", chart.chartArea.left + chart.chartArea.width / 2, chart.chartArea.top + chart.chartArea.height / 2 - 8);
+            ctx.font = "700 11px Inter, Arial, sans-serif";
+            ctx.fillText("total", chart.chartArea.left + chart.chartArea.width / 2, chart.chartArea.top + chart.chartArea.height / 2 + 14);
+          }
+          ctx.restore();
+        }
+      };
+
+      const commonPlugins = {
+        legend: { labels: { color: sourceColors.text(), boxWidth: 12, boxHeight: 12, font: { family: "Inter", weight: 700 } } },
+        tooltip: {
+          backgroundColor: "rgba(7, 17, 31, 0.95)",
+          borderColor: "rgba(171, 206, 255, 0.25)",
+          borderWidth: 1,
+          titleFont: { family: "Inter", weight: 700 },
+          bodyFont: { family: "Inter", weight: 600 },
+          padding: 12
+        }
+      };
+
+      window.dashboardCharts = {};
+
+      window.dashboardCharts.revenue = new Chart(document.getElementById("revenueChart"), {
+        type: "doughnut",
+        data: { labels: ["Anthropic", "Blackstone", "Hellman & Friedman", "Goldman Sachs", "General Atlantic"], datasets: [{ data: [300, 300, 300, 150, 150], backgroundColor: [sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic(), sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic()], borderColor: "rgba(255,255,255,0.12)", borderWidth: 2, hoverOffset: 10 }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: "64%",
+          plugins: { ...commonPlugins, valueLabelPlugin: {}, tooltip: { ...commonPlugins.tooltip, callbacks: { label: (c) => `${c.label}: $${c.raw}M` } } } },
+        plugins: [valueLabelPlugin]
+      });
+
+      window.dashboardCharts.growth = new Chart(document.getElementById("growthChart"), {
+        type: "bar",
+        data: { labels: ["Ode with Anthropic", "OpenAI Deployment Co."], datasets: [{ label: "Comparable AI-services JVs: total committed capital", data: [1.5, 4], borderRadius: 8, backgroundColor: [sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic(), sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic()], borderColor: "rgba(255,255,255,0.12)", borderWidth: 1 }] },
+        options: { responsive: true, maintainAspectRatio: false,
+          scales: { x: { ticks: { color: sourceColors.text(), font: { family: "Inter", weight: 700 } }, grid: { display: false } },
+                    y: { beginAtZero: true, ticks: { color: sourceColors.text(), callback: (v) => `$${v}B` }, grid: { color: sourceColors.line() } } },
+          plugins: { ...commonPlugins, legend: { display: false }, valueLabelPlugin: {}, tooltip: { ...commonPlugins.tooltip, callbacks: { label: (c) => `$${c.raw}B` } } } },
+        plugins: [valueLabelPlugin]
+      });
+
+      window.dashboardCharts.visibility = new Chart(document.getElementById("visibilityChart"), {
+        type: "bar",
+        data: { labels: ["Known", "Not disclosed"], datasets: [{ label: "Diligence items", data: [9, 10], borderRadius: 8, backgroundColor: [sourceColors.cyan(), sourceColors.anthropic()], borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false,
+          scales: { x: { ticks: { color: sourceColors.text(), font: { family: "Inter", weight: 700 } }, grid: { display: false } },
+                    y: { beginAtZero: true, suggestedMax: 12, ticks: { color: sourceColors.text(), precision: 0 }, grid: { color: sourceColors.line() } } },
+          plugins: { ...commonPlugins, valueLabelPlugin: {}, tooltip: { ...commonPlugins.tooltip, callbacks: { label: (c) => `${c.raw} items` } } } },
+        plugins: [valueLabelPlugin]
+      });
+
+      window.dashboardCharts.riskProfile = new Chart(document.getElementById("riskProfileChart"), {
+        type: "radar",
+        data: { labels: ["Channel conflict w/ KPMG deal", "Execution/talent risk", "Client concentration (PE-owned)", "Governance ambiguity", "Competitive response (OpenAI)", "Model-vendor lock-in for clients"], datasets: [{ label: "Analytical exposure score", data: [4, 3, 4, 4, 5, 3], backgroundColor: "rgba(52, 98, 252, 0.18)", borderColor: sourceColors.cyan(), pointBackgroundColor: sourceColors.anthropic(), pointBorderColor: "#ffffff", pointRadius: 4, borderWidth: 2 }] },
+        options: { responsive: true, maintainAspectRatio: false,
+          scales: { r: { min: 0, max: 5, ticks: { color: sourceColors.text(), backdropColor: "transparent", stepSize: 1 }, grid: { color: sourceColors.line() }, angleLines: { color: sourceColors.line() }, pointLabels: { color: sourceColors.text(), font: { family: "Inter", weight: 700, size: 12 } } } },
+          plugins: { ...commonPlugins, tooltip: { ...commonPlugins.tooltip, callbacks: { label: (c) => `${c.raw}/5 analytical score` } } } }
+      });
+    }
+    createCharts();
+
+    const sourceSearch = document.getElementById("sourceSearch");
+    const sourceCards = [...document.querySelectorAll(".source-card")];
+    sourceSearch.addEventListener("input", () => {
+      const query = sourceSearch.value.trim().toLowerCase();
+      sourceCards.forEach((card) => {
+        card.style.display = card.textContent.toLowerCase().includes(query) ? "" : "none";
+      });
+    });
+
+    document.querySelectorAll(".glossary-grid details").forEach((item) => item.setAttribute("name", "glossary"));
+    document.querySelectorAll(".risk-details-grid details").forEach((item) => item.setAttribute("name", "risk-details"));
+    document.querySelectorAll(".glossary-grid, .risk-details-grid").forEach((group) => {
+      group.querySelectorAll("details").forEach((item) => {
+        item.addEventListener("toggle", () => {
+          if (!item.open) return;
+          group.querySelectorAll("details").forEach((other) => {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+    });
+
+    function runParticles() {
+      const canvas = document.getElementById("particle-canvas");
+      if (!canvas || prefersReducedMotion) return;
+      const ctx = canvas.getContext("2d");
+      let width = 0;
+      let height = 0;
+      let nodes = [];
+
+      function resize() {
+        const cssWidth = document.documentElement.clientWidth;
+        const cssHeight = window.innerHeight;
+        width = canvas.width = cssWidth * window.devicePixelRatio;
+        height = canvas.height = cssHeight * window.devicePixelRatio;
+        canvas.style.width = `${cssWidth}px`;
+        canvas.style.height = `${cssHeight}px`;
+        const count = Math.min(92, Math.max(38, Math.floor(cssWidth / 18)));
+        nodes = Array.from({ length: count }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.22 * window.devicePixelRatio,
+          vy: (Math.random() - 0.5) * 0.22 * window.devicePixelRatio,
+          r: (Math.random() * 1.5 + 0.65) * window.devicePixelRatio
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        nodes.forEach((node, i) => {
+          node.x += node.vx;
+          node.y += node.vy;
+          if (node.x < 0 || node.x > width) node.vx *= -1;
+          if (node.y < 0 || node.y > height) node.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+          ctx.fillStyle = i % 3 === 0 ? "rgba(201,167,108,0.24)" : "rgba(143,166,181,0.2)";
+          ctx.fill();
+
+          for (let j = i + 1; j < nodes.length; j++) {
+            const other = nodes[j];
+            const dx = node.x - other.x;
+            const dy = node.y - other.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const maxDist = 130 * window.devicePixelRatio;
+            if (dist < maxDist) {
+              ctx.beginPath();
+              ctx.moveTo(node.x, node.y);
+              ctx.lineTo(other.x, other.y);
+              ctx.strokeStyle = `rgba(143,166,181,${0.055 * (1 - dist / maxDist)})`;
+              ctx.lineWidth = 1 * window.devicePixelRatio;
+              ctx.stroke();
+            }
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener("resize", resize);
+      draw();
+    }
+    runParticles();
+  </script>
+</body>
+</html>

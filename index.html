@@ -4592,6 +4592,855 @@
             }
         }
     </style>
+    <style>
+        /* ─── PREMIUM LAYER: reviews slideshow, glyphs, motion, accents ─── */
+
+        /* Hero reviews slideshow (replaces the cover card) */
+        .hero-card--reviews {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: clamp(16px, 1.6vw, 24px);
+            background: #0e1a4f;
+            isolation: isolate;
+        }
+
+        .reviews-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 82% 8%, rgba(104, 136, 255, 0.62), transparent 52%),
+                radial-gradient(circle at 8% 108%, rgba(185, 163, 132, 0.26), transparent 48%),
+                linear-gradient(rgba(170, 188, 255, 0.08) 1px, transparent 1px) 0 0 / 22px 22px,
+                linear-gradient(90deg, rgba(170, 188, 255, 0.08) 1px, transparent 1px) 0 0 / 22px 22px,
+                linear-gradient(165deg, #1c3494 0%, #10205e 48%, #121934 100%);
+            animation: gridDrift 18s linear infinite;
+        }
+
+        .hero-card--reviews::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 16px;
+            border: 1px solid rgba(170, 188, 255, 0.14);
+            pointer-events: none;
+        }
+
+        .reviews-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .reviews-count {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            color: rgba(239, 228, 210, 0.6);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .reviews-count b {
+            color: var(--cream);
+            font-weight: 600;
+        }
+
+        .reviews-stage {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .reviews-quote-mark {
+            position: absolute;
+            top: 0;
+            left: -2px;
+            width: 30px;
+            height: auto;
+            color: var(--blue-soft);
+            opacity: 0.85;
+            animation: floatSoft 5s ease-in-out infinite;
+        }
+
+        .review-slide {
+            position: absolute;
+            inset: 34px 0 0 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.7s ease, transform 0.9s var(--hero-ease);
+            pointer-events: none;
+        }
+
+        .review-slide.is-active {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .review-slide.is-leaving {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .review-slide blockquote {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: var(--q, 20px);
+            line-height: 1.18;
+            color: var(--cream);
+        }
+
+        .review-slide figcaption {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(239, 228, 210, 0.72);
+            line-height: 1.35;
+        }
+
+        .review-slide figcaption::before {
+            content: '';
+            flex: 0 0 18px;
+            height: 1px;
+            background: var(--blue-soft);
+        }
+
+        .reviews-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .reviews-dot {
+            position: relative;
+            height: 14px;
+            padding: 0;
+            border: 0;
+            background: none;
+            cursor: pointer;
+        }
+
+        .reviews-dot::before,
+        .reviews-dot i {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 6px;
+            height: 2px;
+            border-radius: 2px;
+            background: rgba(239, 228, 210, 0.22);
+        }
+
+        .reviews-dot i {
+            background: var(--cream);
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .reviews-dot.is-done i {
+            transform: scaleX(1);
+            background: rgba(239, 228, 210, 0.55);
+        }
+
+        .reviews-dot.is-active i {
+            animation: reviewProgress var(--review-dur, 6s) linear forwards;
+        }
+
+        .hero-card--reviews:hover .reviews-dot.is-active i {
+            animation-play-state: paused;
+        }
+
+        @keyframes reviewProgress {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes gridDrift {
+            from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+            to { background-position: 0 0, 0 0, 0 22px, 22px 0, 0 0; }
+        }
+
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(-3deg); }
+        }
+
+        /* Card glyphs: small themed motion marks, top-right */
+        .card-glyph {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            color: var(--tan);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .card-glyph svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .card-glyph .g-blue {
+            color: var(--blue-soft);
+        }
+
+        .card-glyph [class^="g-anim"],
+        .card-glyph [class*=" g-anim"] {
+            transform-box: fill-box;
+        }
+
+        .hwh-card,
+        .comparison-card,
+        .partner-card,
+        .founder-card {
+            position: relative;
+        }
+
+        .hwh-card {
+            padding-right: 56px;
+            padding-left: 56px;
+        }
+
+        /* compass */
+        .g-anim-needle {
+            transform-origin: center;
+            animation: needleSeek 6s ease-in-out infinite;
+        }
+
+        @keyframes needleSeek {
+            0%, 100% { transform: rotate(-24deg); }
+            30% { transform: rotate(28deg); }
+            52% { transform: rotate(-6deg); }
+            70% { transform: rotate(10deg); }
+            85% { transform: rotate(4deg); }
+        }
+
+        /* megaphone waves */
+        .g-anim-wave {
+            opacity: 0;
+            animation: waveOut 2.4s ease-out infinite;
+        }
+
+        .g-anim-wave.w2 { animation-delay: 0.4s; }
+        .g-anim-wave.w3 { animation-delay: 0.8s; }
+
+        @keyframes waveOut {
+            0% { opacity: 0; transform: translateX(-2px); }
+            30% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(3px); }
+        }
+
+        .g-anim-horn {
+            transform-origin: 20% 50%;
+            animation: hornNudge 2.4s ease-in-out infinite;
+        }
+
+        @keyframes hornNudge {
+            0%, 100% { transform: rotate(0deg); }
+            12% { transform: rotate(-5deg); }
+            24% { transform: rotate(2deg); }
+            34% { transform: rotate(0deg); }
+        }
+
+        /* eye */
+        .g-anim-iris {
+            animation: irisLook 7s ease-in-out infinite;
+        }
+
+        @keyframes irisLook {
+            0%, 18%, 100% { transform: translateX(0); }
+            28%, 44% { transform: translateX(-4px); }
+            54%, 70% { transform: translateX(4px); }
+            80% { transform: translateX(0); }
+        }
+
+        .g-anim-lid {
+            transform-origin: center;
+            animation: blink 7s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 46%, 50%, 100% { transform: scaleY(1); }
+            48% { transform: scaleY(0.08); }
+        }
+
+        /* rising bars + coin */
+        .g-anim-bar {
+            transform-origin: bottom;
+            animation: barRise 3.6s cubic-bezier(0.34, 1.4, 0.64, 1) infinite;
+        }
+
+        .g-anim-bar.b2 { animation-delay: 0.18s; }
+        .g-anim-bar.b3 { animation-delay: 0.36s; }
+
+        @keyframes barRise {
+            0% { transform: scaleY(0.25); }
+            35%, 80% { transform: scaleY(1); }
+            100% { transform: scaleY(0.25); }
+        }
+
+        .g-anim-coin {
+            transform-origin: center;
+            animation: coinSpin 3.6s ease-in-out infinite;
+        }
+
+        @keyframes coinSpin {
+            0%, 20% { transform: translateY(0) scaleX(1); }
+            35% { transform: translateY(-3px) scaleX(0.15); }
+            50% { transform: translateY(-4px) scaleX(1); }
+            65% { transform: translateY(-3px) scaleX(0.15); }
+            80%, 100% { transform: translateY(0) scaleX(1); }
+        }
+
+        /* hourglass */
+        .g-anim-hourglass {
+            transform-origin: center;
+            animation: hourFlip 5s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+        }
+
+        @keyframes hourFlip {
+            0%, 78% { transform: rotate(0deg); }
+            92% { transform: rotate(186deg); }
+            96% { transform: rotate(177deg); }
+            100% { transform: rotate(180deg); }
+        }
+
+        .g-anim-sand-top {
+            transform-origin: bottom;
+            animation: sandTop 5s linear infinite;
+        }
+
+        .g-anim-sand-bottom {
+            transform-origin: bottom;
+            animation: sandBottom 5s linear infinite;
+        }
+
+        @keyframes sandTop {
+            0% { transform: scaleY(1); }
+            78%, 100% { transform: scaleY(0.1); }
+        }
+
+        @keyframes sandBottom {
+            0% { transform: scaleY(0.1); }
+            78%, 100% { transform: scaleY(1); }
+        }
+
+        /* gauge */
+        .g-anim-gauge {
+            transform-origin: 50% 100%;
+            animation: gaugeSweep 4.5s cubic-bezier(0.34, 1.3, 0.64, 1) infinite;
+        }
+
+        @keyframes gaugeSweep {
+            0%, 10% { transform: rotate(-70deg); }
+            40%, 80% { transform: rotate(58deg); }
+            46% { transform: rotate(50deg); }
+            100% { transform: rotate(-70deg); }
+        }
+
+        /* growth arrow line */
+        .g-anim-draw {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: drawLine 4s ease-in-out infinite;
+        }
+
+        @keyframes drawLine {
+            0% { stroke-dashoffset: 60; }
+            45%, 80% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -60; }
+        }
+
+        /* pen nib */
+        .g-anim-nib {
+            transform-origin: 80% 80%;
+            animation: nibWrite 4s ease-in-out infinite;
+        }
+
+        @keyframes nibWrite {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(-3px, 1px) rotate(-6deg); }
+            40% { transform: translate(-1px, -1px) rotate(3deg); }
+            60% { transform: translate(-4px, 1px) rotate(-4deg); }
+        }
+
+        /* Section accents */
+        .accent {
+            font-style: italic;
+            color: var(--blue-soft);
+        }
+
+        .testimonials .accent {
+            color: var(--blue-deep);
+        }
+
+        .hwh-label,
+        .partners-inner .section-label,
+        .insights-label,
+        .founder-label {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hwh-label::before,
+        .partners-inner .section-label::before,
+        .insights-label::before,
+        .founder-label::before {
+            content: '';
+            width: 22px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--blue-soft), transparent);
+        }
+
+        .our-services,
+        .comparison,
+        .team-section,
+        .insights-section,
+        .partners-section,
+        .founder-section {
+            position: relative;
+        }
+
+        .insights-section::before,
+        .partners-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 50% 40% at 85% 10%, rgba(47, 79, 209, 0.16), transparent 70%),
+                radial-gradient(ellipse 40% 40% at 5% 90%, rgba(185, 163, 132, 0.07), transparent 70%);
+            pointer-events: none;
+        }
+
+        .insights-inner,
+        .partners-inner {
+            position: relative;
+        }
+
+        .diag-panel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diag-panel::before {
+            content: '';
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blue-soft), transparent);
+            opacity: 0.8;
+        }
+
+        /* Scroll reveal */
+        .js-reveal .reveal-up {
+            opacity: 0;
+            transform: translateY(28px) rotate(-0.4deg);
+            transition: opacity 0.9s ease, transform 1.1s var(--hero-ease);
+            transition-delay: var(--rd, 0s);
+        }
+
+        .js-reveal .reveal-up.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Testimonials now live in the conveyor, in the partners' old slot */
+        .conveyor-container .testimonials {
+            margin: 40px 0 100px;
+            padding: 72px 0 60px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+        }
+
+        .conveyor-container .testimonials-header {
+            margin-bottom: 40px;
+        }
+
+        .conveyor-container .testimonial-card {
+            width: 400px;
+        }
+
+        /* Partners at the bottom */
+        .partners-section {
+            background: var(--coffee-deep);
+        }
+
+        /* Case study covers */
+        .insights-grid {
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .case-cover {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 380px;
+            padding: 18px;
+            border-radius: 20px;
+            overflow: hidden;
+            isolation: isolate;
+            color: var(--cream);
+            text-decoration: none;
+            border: 1px solid rgba(170, 188, 255, 0.14);
+            box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.85);
+            transition: translate 0.6s var(--hero-ease), border-color 0.4s ease, box-shadow 0.6s var(--hero-ease);
+        }
+
+        .case-cover:hover {
+            translate: 0 -6px;
+            border-color: rgba(157, 176, 255, 0.5);
+            box-shadow: 0 40px 70px -30px rgba(29, 53, 147, 0.6);
+        }
+
+        .case-cover-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 80% 12%, var(--glow, rgba(84, 118, 255, 0.5)), transparent 55%),
+                radial-gradient(circle at 10% 110%, rgba(185, 163, 132, 0.25), transparent 50%),
+                linear-gradient(rgba(157, 176, 255, 0.07) 1px, transparent 1px) 0 0 / 20px 20px,
+                linear-gradient(90deg, rgba(157, 176, 255, 0.07) 1px, transparent 1px) 0 0 / 20px 20px,
+                linear-gradient(165deg, var(--c1, #13214d) 0%, var(--c2, #0b1330) 58%, #151312 100%);
+            transition: transform 1.2s var(--hero-ease);
+        }
+
+        .case-cover:hover .case-cover-bg {
+            transform: scale(1.06);
+        }
+
+        .case-cover::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            z-index: -1;
+            border-radius: 14px;
+            border: 1px solid rgba(170, 188, 255, 0.12);
+            pointer-events: none;
+        }
+
+        .case-orbit {
+            position: absolute;
+            right: -46px;
+            top: 70px;
+            width: 170px;
+            height: 170px;
+            z-index: -1;
+            border-radius: 50%;
+            border: 1px dashed rgba(170, 188, 255, 0.28);
+            animation: heroSpin 40s linear infinite;
+        }
+
+        .case-orbit::before,
+        .case-orbit::after {
+            content: '';
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--blue-soft);
+            box-shadow: 0 0 12px 2px rgba(157, 176, 255, 0.7);
+            top: 50%;
+            left: -4px;
+        }
+
+        .case-orbit::after {
+            left: auto;
+            right: 18px;
+            top: 16px;
+            width: 5px;
+            height: 5px;
+            background: var(--tan);
+            box-shadow: 0 0 10px 2px rgba(185, 163, 132, 0.6);
+        }
+
+        .case-marks {
+            position: absolute;
+            inset: 16px;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                linear-gradient(var(--tan), var(--tan)) 0 0 / 10px 1px no-repeat,
+                linear-gradient(var(--tan), var(--tan)) 0 0 / 1px 10px no-repeat,
+                linear-gradient(var(--tan), var(--tan)) 100% 100% / 10px 1px no-repeat,
+                linear-gradient(var(--tan), var(--tan)) 100% 100% / 1px 10px no-repeat;
+            opacity: 0.6;
+        }
+
+        .case-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .case-issue {
+            font-size: 10.5px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(239, 228, 210, 0.6);
+        }
+
+        .case-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(239, 228, 210, 0.1);
+            border: 1px solid rgba(239, 228, 210, 0.18);
+            white-space: nowrap;
+        }
+
+        .case-date::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--blue-soft);
+            box-shadow: 0 0 8px rgba(157, 176, 255, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(0.7); }
+        }
+
+        .case-parties {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 18px;
+        }
+
+        .case-party {
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .case-party img {
+            height: 22px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .case-x {
+            font-family: var(--font-display);
+            font-size: 22px;
+            line-height: 1;
+            color: var(--tan);
+        }
+
+        .case-spark {
+            width: 100%;
+            height: 36px;
+            margin: 14px 0 6px;
+            color: var(--blue-soft);
+            opacity: 0.85;
+        }
+
+        .case-spark path {
+            stroke-dasharray: 260;
+            stroke-dashoffset: 260;
+            animation: sparkDraw 4.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkDraw {
+            0% { stroke-dashoffset: 260; }
+            50%, 85% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -260; }
+        }
+
+        .case-kind {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--tan);
+            margin-bottom: 8px;
+        }
+
+        .case-title {
+            font-family: var(--font-display);
+            font-size: clamp(22px, 1.8vw, 28px);
+            line-height: 1.05;
+        }
+
+        .case-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(239, 228, 210, 0.12);
+            font-size: 12px;
+            color: rgba(239, 228, 210, 0.72);
+        }
+
+        .case-foot svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.5s var(--hero-ease);
+        }
+
+        .case-cover:hover .case-foot svg {
+            transform: translate(3px, -3px);
+            color: var(--blue-soft);
+        }
+
+        @media (max-width: 1100px) {
+            .insights-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-card--reviews {
+                min-height: 300px;
+            }
+
+            .conveyor-container .testimonials {
+                margin: 20px 0 60px;
+                padding: 50px 0 40px !important;
+            }
+
+            .conveyor-container .testimonial-card {
+                width: 290px;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .case-cover {
+                min-height: 330px;
+            }
+
+            .card-glyph {
+                width: 28px;
+                height: 28px;
+                top: 12px;
+                right: 12px;
+            }
+
+            .hwh-card {
+                padding-left: 44px;
+                padding-right: 44px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-glyph *,
+            .reviews-bg,
+            .case-orbit,
+            .case-spark path {
+                animation: none !important;
+            }
+
+            .case-spark path {
+                stroke-dashoffset: 0;
+            }
+
+            .js-reveal .reveal-up {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .g-anim-ring {
+            transform-origin: center;
+            animation: ringPulse 3.2s ease-in-out infinite;
+        }
+
+        .g-anim-ring.r2 { animation-delay: 0.3s; }
+
+        @keyframes ringPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.9); opacity: 0.55; }
+        }
+
+        .g-anim-dart {
+            animation: dartHit 3.2s cubic-bezier(0.34, 1.5, 0.64, 1) infinite;
+        }
+
+        @keyframes dartHit {
+            0%, 15% { transform: translate(6px, -6px); opacity: 0; }
+            35%, 85% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(0, 0); opacity: 0; }
+        }
+
+        .comparison-card.old .card-glyph {
+            color: #e0907f;
+        }
+
+        .comparison-card .card-glyph,
+        .partner-card .card-glyph,
+        .founder-card .card-glyph {
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+        }
+
+        .cta .accent {
+            color: var(--tan);
+        }
+
+        .case-cover:hover {
+            translate: none;
+            transform: translateY(-6px);
+        }
+
+        .case-cover {
+            transition: transform 0.6s var(--hero-ease), border-color 0.4s ease, box-shadow 0.6s var(--hero-ease), opacity 0.9s ease, translate 1.1s var(--hero-ease), rotate 1.1s var(--hero-ease);
+        }
+
+        .js-reveal .reveal-up {
+            opacity: 0;
+            translate: 0 28px;
+            rotate: -0.4deg;
+            transform: none;
+        }
+
+        .js-reveal .reveal-up.is-visible {
+            opacity: 1;
+            translate: 0 0;
+            rotate: 0deg;
+        }
+
+        .js-reveal .reveal-up:not(.case-cover) {
+            transition: opacity 0.9s ease var(--rd, 0s), translate 1.1s var(--hero-ease) var(--rd, 0s), rotate 1.1s var(--hero-ease) var(--rd, 0s), transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+    </style>
   <script type="module" crossorigin src="/assets/main-gallery-v2.js"></script>
 </head>
 
@@ -4637,19 +5486,21 @@
                         </svg>
                         <h1 class="hero-headline">Operational <em>direction</em> grounded in clarity and <em>consumer psychology</em></h1>
                     </div>
-                    <a class="hero-card hero-card--cover" href="case-studies/kpmg-anthropic-alliance/" style="--d:0.12s">
-                        <span class="cover-bg" aria-hidden="true"></span>
-                        <span class="cover-top">
-                            <span class="cover-tag">Case Study</span>
-                            <svg class="cover-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-                        </span>
-                        <span class="cover-logos">
-                            <img src="/assets/kpmg-logo-Z5pPbUqp.svg" alt="KPMG">
-                            <span class="cover-x" aria-hidden="true">&times;</span>
-                            <span class="cover-anthropic">ANTHROPIC</span>
-                        </span>
-                        <span class="cover-title">The KPMG&ndash;Anthropic Alliance<span class="cover-sub">Strategic partnership analysis</span></span>
-                    </a>
+                    <div class="hero-card hero-card--reviews" style="--d:0.12s" role="region" aria-roledescription="carousel" aria-label="What our clients say">
+                        <span class="reviews-bg" aria-hidden="true"></span>
+                        <div class="reviews-top">
+                            <span class="cover-tag">Client Voices</span>
+                            <span class="reviews-count" aria-live="polite"><b>01</b> / 04</span>
+                        </div>
+                        <div class="reviews-stage">
+                            <svg class="reviews-quote-mark" viewBox="0 0 32 24" aria-hidden="true"><path fill="currentColor" d="M0 24V14C0 6 4 1.5 12 0l1.5 3C8.5 4.5 6.5 7.5 6.5 11H12v13zm18 0V14c0-8 4-12.5 12-14l1.5 3c-5 1.5-7 4.5-7 8H30v13z"/></svg>
+                            <figure class="review-slide is-active" aria-hidden="false"><blockquote>“UpForge changed how we look at our consumers, they allowed us to position our business for higher brand trust and more conversions.”</blockquote><figcaption>Founder, Finland-Based Jewellery Company</figcaption></figure>
+                            <figure class="review-slide" aria-hidden="true"><blockquote>“Gen Z doesn't move like any other generation. Instead of trying to decode them from the outside, UpForge gave us helpful insights that we could apply to our business.”</blockquote><figcaption>Founder, Dubai-Based B2B Services Firm</figcaption></figure>
+                            <figure class="review-slide" aria-hidden="true"><blockquote>“I admire what your team is building, rare clarity and execution at this stage.”</blockquote><figcaption>Former CFO, Leading FMCG Brand</figcaption></figure>
+                            <figure class="review-slide" aria-hidden="true"><blockquote>“They helped us lean into new tech and diversify before we got left behind. UpForge basically futureproofed our business so we're ready for whatever comes next.”</blockquote><figcaption>Founder, Security &amp; Logistics Firm</figcaption></figure>
+                        </div>
+                        <div class="reviews-nav"><button class="reviews-dot is-active" type="button" aria-label="Show review 1"><i></i></button><button class="reviews-dot" type="button" aria-label="Show review 2"><i></i></button><button class="reviews-dot" type="button" aria-label="Show review 3"><i></i></button><button class="reviews-dot" type="button" aria-label="Show review 4"><i></i></button></div>
+                    </div>
                 </div>
                 <div class="hero-row hero-row--bottom">
                     <div class="hero-stack">
@@ -4770,7 +5621,7 @@
         <section class="our-services" id="our-services">
         <div class="hwh-inner">
             <span class="hwh-label">How We Can Help</span>
-            <h2 class="hwh-heading">Explore our expertise.</h2>
+            <h2 class="hwh-heading">Explore our <em class="accent">expertise.</em></h2>
             <div class="hwh-grid" id="hwh-grid"></div>
             <div class="hwh-detail" id="hwh-detail">
                 <div class="hwh-subs" id="hwh-subs"></div>
@@ -4871,6 +5722,7 @@
 
             <div class="comparison-grid" id="comparison-boxes">
                 <article class="comparison-card old">
+                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><g class="g-anim-hourglass"><path d="M11 5h18M11 35h18"/><path d="M13 5c0 8 7 10 7 15s-7 7-7 15M27 5c0 8-7 10-7 15s7 7 7 15"/><path class="g-anim-sand-top" d="M15.5 10h9c-1 3-4 5-4.5 7c-.5-2-3.5-4-4.5-7z" fill="currentColor" stroke="none" opacity=".6"/><path class="g-anim-sand-bottom" d="M14.5 33c1-4 4.5-5 5.5-6 1 1 4.5 2 5.5 6z" fill="currentColor" stroke="none" opacity=".6"/></g></svg></span>
                     <img class="comparison-visual" src="/assets/tradconsultant2-VALvckRX.jpeg" alt="Traditional consultant at work">
                     <div class="card-label">Traditional Consultant</div>
                     <div class="rotating-feature-wrapper" id="trad-rotator-1">
@@ -4883,6 +5735,7 @@
                     </div>
                 </article>
                 <article class="comparison-card new">
+                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 28a14 14 0 0128 0"/><path d="M9.5 19l2 1.2M20 10v2.4M30.5 19l-2 1.2" stroke-opacity=".6"/><path class="g-blue" d="M26 16a14 14 0 018 12" stroke-width="2.4"/><line class="g-anim-gauge g-blue" x1="20" y1="28" x2="20" y2="15" stroke-width="2"/><circle cx="20" cy="28" r="2.2" fill="currentColor" stroke="none"/></svg></span>
                     <img class="comparison-visual" src="/assets/ourconsultant2-DiXMGY28.jpeg" alt="Our consultant working with a client">
                     <div class="card-label">Our Consultant</div>
                     <div class="rotating-feature-wrapper" id="our-rotator-1">
@@ -4903,87 +5756,11 @@
 
         </section>
 
-    <!-- Partners Section -->
-    <section class="partners-section" id="partners">
-        <div class="partners-inner">
-            <span class="section-label">Our Partners</span>
-            <h2 class="partners-heading">Trusted collaborations that extend our reach.</h2>
-            <div class="partners-grid">
-                <div class="partner-card">
-                    <div class="partner-logo-wrap">
-                        <img src="/assets/scoutline-4i7VW8R8.png" alt="Scoutline Capital">
-                    </div>
-                    <h3 class="partner-name">Scoutline Capital</h3>
-                    <span class="partner-type">Startup Advisory &bull; Fundraising</span>
-                    <p class="partner-desc">Our exclusive startup advisory partner for fundraising, financial modelling, and investor outreach. Together we deliver a 12-week joint programme that runs strategy and capital raising in parallel.</p>
-                    <div class="partner-actions">
-                        <a href="partners/scoutline-capital/index.html" class="partner-cta partner-cta-secondary">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-                        <a href="https://www.scoutlinecapital.in/" target="_blank" rel="noopener noreferrer" class="partner-cta">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="partner-card">
-                    <div class="partner-logo-wrap">
-                        <img src="/assets/bmm-logo-2-BrcPkZ7l.png" alt="Brown Men Marketing">
-                    </div>
-                    <h3 class="partner-name">Brown Men Marketing</h3>
-                    <span class="partner-type">Growth Marketing &bull; Brand Strategy</span>
-                    <p class="partner-desc">Our trusted marketing partner helping startups and growing businesses with performance marketing, brand positioning, content strategy, and customer acquisition to accelerate sustainable growth.</p>
-                    <a href="https://brownmenmarketing.com/about-bmm/" target="_blank" rel="noopener noreferrer" class="partner-cta">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-    </div>
-
-    <section class="team-section" id="team">
-        <div class="team-inner">
-            <div class="team-header">
-                <h2 class="team-title">Meet Your Consultants</h2>
-            </div>
-            <div class="team-gallery-shell">
-                <div class="team-gallery-note">Drag or Scroll to Explore</div>
-                <div class="team-gallery" id="team-gallery"></div>
-            </div>
-
-            <div class="team-mobile-gallery" style="display: none;">
-                <div class="team-member-card">
-                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
-                    <a href="https://www.linkedin.com/in/shardul-singh-b06671312/" target="_blank" class="member-name">Shardul Singh</a>
-                </div>
-                <div class="team-member-card">
-                    <img src="/assets/zaara-s-9l6WeW.jpeg" alt="Zaara Zaidi">
-                    <a href="https://www.linkedin.com/in/zaarazaidi/" target="_blank" class="member-name">Zaara Zaidi</a>
-                </div>
-                <div class="team-member-card">
-                    <img src="/assets/gaurav-EXv0WHD7.jpeg" alt="Gaurav Kalal">
-                    <a href="https://www.linkedin.com/in/-gauravkalal-/" target="_blank" class="member-name">Gaurav Kalal</a>
-                </div>
-                <div class="team-member-card">
-                    <img src="/assets/samar-EhR63goM.jpeg" alt="Samar Nasir">
-                    <a href="https://www.linkedin.com/in/samar-nasir-/" target="_blank" class="member-name">Samar Nasir</a>
-                </div>
-                <div class="team-member-card">
-                    <img src="/assets/ojas-CFzveMO7.jpeg" alt="Ojas Srivastava">
-                    <a href="https://www.linkedin.com/in/ojasri/" target="_blank" class="member-name">Ojas Srivastava</a>
-                </div>
-                <div class="team-member-card">
-                    <img src="/assets/tirth-HvDQWvtJ.jpeg" alt="Tirth Virkar">
-                    <a href="https://www.linkedin.com/in/tirthvirkar/" target="_blank" class="member-name">Tirth Virkar</a>
-                </div>
-                <div class="team-member-card">
-                    <img src="/assets/ajeet-75sbNhbw.jpeg" alt="Ajeet Verma">
-                    <a href="https://www.linkedin.com/in/ajeet-vermai/" target="_blank" class="member-name">Ajeet Verma</a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="testimonials-header">
             <h2 class="testimonials-title">Words of praise from <br class="mobile-br">others<br class="desktop-br">
-                about our <br class="mobile-br">presence.</h2>
+                about our <br class="mobile-br"><em class="accent">presence.</em></h2>
         </div>
 
         <div class="testimonials-marquee">
@@ -5085,12 +5862,57 @@
                 </div>
             </div>
         </div>
+    </section>
+    </div>
+
+    <section class="team-section" id="team">
+        <div class="team-inner">
+            <div class="team-header">
+                <h2 class="team-title">Meet Your <em class="accent">Consultants</em></h2>
+            </div>
+            <div class="team-gallery-shell">
+                <div class="team-gallery-note">Drag or Scroll to Explore</div>
+                <div class="team-gallery" id="team-gallery"></div>
+            </div>
+
+            <div class="team-mobile-gallery" style="display: none;">
+                <div class="team-member-card">
+                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
+                    <a href="https://www.linkedin.com/in/shardul-singh-b06671312/" target="_blank" class="member-name">Shardul Singh</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/zaara-s-9l6WeW.jpeg" alt="Zaara Zaidi">
+                    <a href="https://www.linkedin.com/in/zaarazaidi/" target="_blank" class="member-name">Zaara Zaidi</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/gaurav-EXv0WHD7.jpeg" alt="Gaurav Kalal">
+                    <a href="https://www.linkedin.com/in/-gauravkalal-/" target="_blank" class="member-name">Gaurav Kalal</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/samar-EhR63goM.jpeg" alt="Samar Nasir">
+                    <a href="https://www.linkedin.com/in/samar-nasir-/" target="_blank" class="member-name">Samar Nasir</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/ojas-CFzveMO7.jpeg" alt="Ojas Srivastava">
+                    <a href="https://www.linkedin.com/in/ojasri/" target="_blank" class="member-name">Ojas Srivastava</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/tirth-HvDQWvtJ.jpeg" alt="Tirth Virkar">
+                    <a href="https://www.linkedin.com/in/tirthvirkar/" target="_blank" class="member-name">Tirth Virkar</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/ajeet-75sbNhbw.jpeg" alt="Ajeet Verma">
+                    <a href="https://www.linkedin.com/in/ajeet-vermai/" target="_blank" class="member-name">Ajeet Verma</a>
+                </div>
+            </div>
+
         </div>
     </section>
 
+
     <!-- CTA Section -->
     <section class="cta" id="contact">
-        <h2 class="cta-title">READY TO STOP WASTING MONEY?</h2>
+        <h2 class="cta-title">READY TO STOP WASTING <em class="accent">MONEY?</em></h2>
         <button class="cta-button" onclick="window.location.href='https://calendly.com/shardulsingh166/30min'">
             <span>LET'S BUILD TOGETHER</span>
         </button>
@@ -5100,9 +5922,10 @@
     <section class="founder-section" id="who-we-are">
         <div class="founder-inner">
             <div class="founder-card">
+                <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path class="g-anim-draw g-blue" d="M4 34c4-3 7 2 10-1s5-2 7 0 4 1 6-1"/><g class="g-anim-nib"><path d="M24 6l10 10-9 9-7 1 1-7z"/><path d="M19 25l5-5"/><circle cx="25.5" cy="18.5" r="1.3"/></g></svg></span>
                 <div class="founder-content">
                     <h2 class="founder-label">Founder's Message</h2>
-                    <p class="founder-title">A consulting firm built for how business actually works today.</p>
+                    <p class="founder-title">A consulting firm built for how business <em class="accent">actually works</em> today.</p>
                     <p class="founder-desc">UpForge was founded on a simple belief: strategy without execution is just a deck. We combine sharp strategic thinking with hands-on delivery to help brands enter new markets, launch products, and grow with confidence — without the ego, the jargon, or the endless discovery cycles.</p>
                     <div class="founder-credit">
                         <span class="founder-credit-name">Shardul Singh</span>
@@ -5120,16 +5943,121 @@
     <section class="insights-section" id="insights">
         <div class="insights-inner">
             <span class="insights-label">Latest Research</span>
-            <h2 class="insights-heading">Insights &amp; Analysis from our team.</h2>
+            <h2 class="insights-heading"><em class="accent">Insights</em> &amp; Analysis from our team.</h2>
             <div class="insights-grid">
-                <a href="case-studies/kpmg-anthropic-alliance/" class="insight-card">
-                    <div class="insight-body">
-                        <span class="insight-tag">Partnership Analysis</span>
-                        <h3>KPMG–Anthropic Alliance: Strategic Partnership Analysis</h3>
-                        <p>A comprehensive dashboard exploring the KPMG-Anthropic global alliance and KPMG Digital Gateway Powered by Claude — covering deal structure, market rationale, competitive landscape, and risk assessment.</p>
-                        <span class="insight-read">Read the full analysis <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
+                <a href="case-studies/kpmg-anthropic-alliance/" class="case-cover" style="--c1:#13214d;--c2:#0b1330;--glow:rgba(84,118,255,0.5)">
+                    <span class="case-cover-bg" aria-hidden="true"></span>
+                    <span class="case-orbit" aria-hidden="true"></span>
+                    <span class="case-marks" aria-hidden="true"></span>
+                    <span class="case-top">
+                        <span class="case-issue">No. 01</span>
+                        <time class="case-date" datetime="2026-05-19">19 May 2026</time>
+                    </span>
+                    <span class="case-parties">
+                        <span class="case-party"><img src="/assets/kpmg-logo-Z5pPbUqp.svg" alt="KPMG"></span>
+                        <span class="case-x" aria-hidden="true">&times;</span>
+                        <span class="case-party">Anthropic</span>
+                    </span>
+                    <span>
+                        <svg class="case-spark" viewBox="0 0 180 36" preserveAspectRatio="none" aria-hidden="true"><path d="M2 30 C20 28 30 22 44 24 S70 12 86 14 S112 6 130 8 S160 4 178 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="case-kind">Global AI Alliance</span>
+                        <span class="case-title">KPMG–Anthropic Alliance</span>
+                        <span class="case-foot">Read the case study <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                    </span>
                 </a>
+                <a href="case-studies/openai-tomoro-deployment-company/" class="case-cover" style="--c1:#16285e;--c2:#0a1433;--glow:rgba(96,160,255,0.5)">
+                    <span class="case-cover-bg" aria-hidden="true"></span>
+                    <span class="case-orbit" aria-hidden="true"></span>
+                    <span class="case-marks" aria-hidden="true"></span>
+                    <span class="case-top">
+                        <span class="case-issue">No. 02</span>
+                        <time class="case-date" datetime="2026-05-11">11 May 2026</time>
+                    </span>
+                    <span class="case-parties">
+                        <span class="case-party">OpenAI</span>
+                        <span class="case-x" aria-hidden="true">&times;</span>
+                        <span class="case-party">Tomoro</span>
+                    </span>
+                    <span>
+                        <svg class="case-spark" viewBox="0 0 180 36" preserveAspectRatio="none" aria-hidden="true"><path d="M2 32 C18 31 28 26 40 27 S62 18 80 20 S104 10 124 12 S154 6 178 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="case-kind">Acquisition + Private-Equity Joint Venture</span>
+                        <span class="case-title">OpenAI–Tomoro Deployment Co.</span>
+                        <span class="case-foot">Read the case study <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                    </span>
+                </a>
+                <a href="case-studies/anthropic-blackstone-goldman-ai-venture/" class="case-cover" style="--c1:#1b2459;--c2:#0d1230;--glow:rgba(185,163,132,0.45)">
+                    <span class="case-cover-bg" aria-hidden="true"></span>
+                    <span class="case-orbit" aria-hidden="true"></span>
+                    <span class="case-marks" aria-hidden="true"></span>
+                    <span class="case-top">
+                        <span class="case-issue">No. 03</span>
+                        <time class="case-date" datetime="2026-05-04">4 May 2026</time>
+                    </span>
+                    <span class="case-parties">
+                        <span class="case-party">Anthropic</span>
+                        <span class="case-x" aria-hidden="true">&times;</span>
+                        <span class="case-party">Blackstone</span>
+                    </span>
+                    <span>
+                        <svg class="case-spark" viewBox="0 0 180 36" preserveAspectRatio="none" aria-hidden="true"><path d="M2 26 C16 30 30 20 46 22 S70 26 88 16 S116 12 134 10 S162 8 178 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="case-kind">Joint Venture</span>
+                        <span class="case-title">Anthropic&#x27;s PE AI Venture</span>
+                        <span class="case-foot">Read the case study <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                    </span>
+                </a>
+                <a href="case-studies/ibm-anthropic-alliance/" class="case-cover" style="--c1:#0f2c6b;--c2:#081a3d;--glow:rgba(70,120,255,0.55)">
+                    <span class="case-cover-bg" aria-hidden="true"></span>
+                    <span class="case-orbit" aria-hidden="true"></span>
+                    <span class="case-marks" aria-hidden="true"></span>
+                    <span class="case-top">
+                        <span class="case-issue">No. 04</span>
+                        <time class="case-date" datetime="2025-10-07">7 Oct 2025</time>
+                    </span>
+                    <span class="case-parties">
+                        <span class="case-party">IBM</span>
+                        <span class="case-x" aria-hidden="true">&times;</span>
+                        <span class="case-party">Anthropic</span>
+                    </span>
+                    <span>
+                        <svg class="case-spark" viewBox="0 0 180 36" preserveAspectRatio="none" aria-hidden="true"><path d="M2 30 C22 29 34 25 50 26 S76 20 94 21 S120 14 140 12 S164 9 178 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span class="case-kind">Strategic Alliance</span>
+                        <span class="case-title">IBM–Anthropic Alliance</span>
+                        <span class="case-foot">Read the case study <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section" id="partners">
+        <div class="partners-inner">
+            <span class="section-label">Our Partners</span>
+            <h2 class="partners-heading">Trusted collaborations that extend our <em class="accent">reach.</em></h2>
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 35h30M5 35V5" stroke-opacity=".5"/><path class="g-anim-draw g-blue" d="M8 29l8-8 6 5 11-13"/><path class="g-blue" d="M27 13h6v6"/></svg></span>
+                    <div class="partner-logo-wrap">
+                        <img src="/assets/scoutline-4i7VW8R8.png" alt="Scoutline Capital">
+                    </div>
+                    <h3 class="partner-name">Scoutline Capital</h3>
+                    <span class="partner-type">Startup Advisory &bull; Fundraising</span>
+                    <p class="partner-desc">Our exclusive startup advisory partner for fundraising, financial modelling, and investor outreach. Together we deliver a 12-week joint programme that runs strategy and capital raising in parallel.</p>
+                    <div class="partner-actions">
+                        <a href="partners/scoutline-capital/index.html" class="partner-cta partner-cta-secondary">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="https://www.scoutlinecapital.in/" target="_blank" rel="noopener noreferrer" class="partner-cta">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle class="g-anim-ring" cx="20" cy="20" r="15"/><circle class="g-anim-ring r2" cx="20" cy="20" r="9.5"/><circle class="g-blue" cx="20" cy="20" r="4" fill="currentColor" stroke="none"/><g class="g-anim-dart"><path class="g-blue" d="M20 20l12-12M28 7h5v5"/></g></svg></span>
+                    <div class="partner-logo-wrap">
+                        <img src="/assets/bmm-logo-2-BrcPkZ7l.png" alt="Brown Men Marketing">
+                    </div>
+                    <h3 class="partner-name">Brown Men Marketing</h3>
+                    <span class="partner-type">Growth Marketing &bull; Brand Strategy</span>
+                    <p class="partner-desc">Our trusted marketing partner helping startups and growing businesses with performance marketing, brand positioning, content strategy, and customer acquisition to accelerate sustainable growth.</p>
+                    <a href="https://brownmenmarketing.com/about-bmm/" target="_blank" rel="noopener noreferrer" class="partner-cta">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </section>
@@ -5314,6 +6242,8 @@
             }
         ];
 
+        const SERVICE_GLYPHS = {"market-entry": "<span class=\"card-glyph\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"20\" cy=\"20\" r=\"16\"/><circle cx=\"20\" cy=\"20\" r=\"12\" stroke-opacity=\".35\"/><path d=\"M20 4v3M20 33v3M4 20h3M33 20h3\"/><g class=\"g-anim-needle\"><path class=\"g-blue\" d=\"M20 9l3.2 11h-6.4z\" fill=\"currentColor\" stroke=\"none\"/><path d=\"M20 31l-3.2-11h6.4z\" fill=\"currentColor\" stroke=\"none\" opacity=\".7\"/></g><circle cx=\"20\" cy=\"20\" r=\"1.6\" fill=\"#171514\" stroke=\"none\"/></svg></span>", "gtm-branding": "<span class=\"card-glyph\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><g class=\"g-anim-horn\"><path d=\"M6 17v6h5l11 7V10l-11 7z\"/><path d=\"M11 23l2 7h3l-1.5-7\"/></g><path class=\"g-anim-wave g-blue\" d=\"M26 16a6 6 0 010 8\"/><path class=\"g-anim-wave w2 g-blue\" d=\"M29 13a10 10 0 010 14\"/><path class=\"g-anim-wave w3 g-blue\" d=\"M32 10a14 14 0 010 20\"/></svg></span>", "consumer-psychology": "<span class=\"card-glyph\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><g class=\"g-anim-lid\"><path d=\"M4 20s6-10 16-10 16 10 16 10-6 10-16 10S4 20 4 20z\"/><g class=\"g-anim-iris\"><circle class=\"g-blue\" cx=\"20\" cy=\"20\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"21.6\" cy=\"18.4\" r=\"1.4\" fill=\"#efe4d2\" stroke=\"none\"/></g></g></svg></span>", "fundraising": "<span class=\"card-glyph\" aria-hidden=\"true\"><svg viewBox=\"0 0 40 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M5 35h30\" stroke-linecap=\"round\"/><rect class=\"g-anim-bar\" x=\"8\" y=\"24\" width=\"5\" height=\"11\" rx=\"1\" fill=\"currentColor\" fill-opacity=\".25\"/><rect class=\"g-anim-bar b2\" x=\"16\" y=\"18\" width=\"5\" height=\"17\" rx=\"1\" fill=\"currentColor\" fill-opacity=\".25\"/><rect class=\"g-anim-bar b3 g-blue\" x=\"24\" y=\"12\" width=\"5\" height=\"23\" rx=\"1\" fill=\"currentColor\" fill-opacity=\".35\"/><g class=\"g-anim-coin\"><circle class=\"g-blue\" cx=\"32\" cy=\"7\" r=\"4.5\"/><path class=\"g-blue\" d=\"M32 5v4\" stroke-linecap=\"round\"/></g></svg></span>"};
+
         function initServiceExplorer() {
             const grid = document.getElementById('hwh-grid');
             const detail = document.getElementById('hwh-detail');
@@ -5325,7 +6255,7 @@
             serviceData.forEach((svc, idx) => {
                 const card = document.createElement('div');
                 card.className = 'hwh-card';
-                card.innerHTML = `<div class="hwh-card-title">${svc.title} <span class="hwh-card-arrow"><i class="fa-solid fa-chevron-right"></i></span></div>`;
+                card.innerHTML = (SERVICE_GLYPHS[svc.id] || '') + `<div class="hwh-card-title">${svc.title} <span class="hwh-card-arrow"><i class="fa-solid fa-chevron-right"></i></span></div>`;
                 card.addEventListener('click', () => selectService(idx));
                 grid.appendChild(card);
             });
@@ -5827,6 +6757,104 @@
         document.querySelectorAll('.stat-number').forEach(stat => {
             statsObserver.observe(stat);
         });
+
+
+        // Hero reviews slideshow
+        (function initReviews() {
+            const card = document.querySelector('.hero-card--reviews');
+            if (!card) return;
+            const stage = card.querySelector('.reviews-stage');
+            const slides = Array.from(card.querySelectorAll('.review-slide'));
+            const dots = Array.from(card.querySelectorAll('.reviews-dot'));
+            const count = card.querySelector('.reviews-count b');
+            const DUR = 6000;
+            card.style.setProperty('--review-dur', DUR + 'ms');
+            let index = 0, timer, remaining = DUR, startedAt = 0;
+
+            function fit() {
+                const avail = stage.clientHeight - 34;
+                slides.forEach(slide => {
+                    const q = slide.querySelector('blockquote');
+                    let size = Math.min(22, Math.max(14, stage.clientWidth / 12));
+                    slide.style.setProperty('--q', size + 'px');
+                    while (slide.scrollHeight > avail && size > 12) {
+                        size -= 0.5;
+                        slide.style.setProperty('--q', size + 'px');
+                    }
+                });
+            }
+
+            function show(next) {
+                if (next === index) return;
+                const prev = slides[index];
+                prev.classList.remove('is-active');
+                prev.classList.add('is-leaving');
+                prev.setAttribute('aria-hidden', 'true');
+                setTimeout(() => prev.classList.remove('is-leaving'), 700);
+                index = next;
+                slides[index].classList.add('is-active');
+                slides[index].setAttribute('aria-hidden', 'false');
+                dots.forEach((d, i) => {
+                    d.classList.toggle('is-done', i < index);
+                    d.classList.remove('is-active');
+                });
+                void dots[index].offsetWidth;
+                dots[index].classList.add('is-active');
+                count.textContent = String(index + 1).padStart(2, '0');
+                schedule(DUR);
+            }
+
+            function schedule(ms) {
+                clearTimeout(timer);
+                remaining = ms;
+                startedAt = performance.now();
+                timer = setTimeout(() => show((index + 1) % slides.length), ms);
+            }
+
+            dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+            card.addEventListener('mouseenter', () => {
+                clearTimeout(timer);
+                remaining = Math.max(0, remaining - (performance.now() - startedAt));
+            });
+            card.addEventListener('mouseleave', () => schedule(remaining));
+
+            fit();
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+            let rt;
+            window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(fit, 150); });
+
+            const begin = () => schedule(DUR);
+            if (document.documentElement.classList.contains('hero-in')) begin();
+            else new MutationObserver((m, obs) => {
+                if (document.documentElement.classList.contains('hero-in')) { obs.disconnect(); dots[0].classList.remove('is-active'); void dots[0].offsetWidth; dots[0].classList.add('is-active'); begin(); }
+            }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        })();
+
+        // Scroll reveal for below-the-fold sections
+        (function initReveal() {
+            if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const groups = [
+                '.hwh-label, .hwh-heading', '.comparison-card', '.testimonials-header',
+                '.team-header', '.cta-title, .cta-button', '.founder-card', '.insights-label, .insights-heading',
+                '.case-cover', '.partners-inner .section-label, .partners-heading', '.partner-card'
+            ];
+            const targets = [];
+            groups.forEach(sel => document.querySelectorAll(sel).forEach((el, i) => {
+                el.style.setProperty('--rd', (i * 0.08) + 's');
+                el.classList.add('reveal-up');
+                targets.push(el);
+            }));
+            document.documentElement.classList.add('js-reveal');
+            const io = new IntersectionObserver(entries => entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+            }), { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+            targets.forEach(el => io.observe(el));
+            const grid = document.getElementById('hwh-grid');
+            if (grid) new MutationObserver(() => grid.querySelectorAll('.hwh-card:not(.reveal-up)').forEach((el, i) => {
+                el.style.setProperty('--rd', (i * 0.08) + 's'); el.classList.add('reveal-up'); io.observe(el);
+            })).observe(grid, { childList: true });
+            if (grid) grid.querySelectorAll('.hwh-card').forEach((el, i) => { el.style.setProperty('--rd', (i * 0.08) + 's'); el.classList.add('reveal-up'); io.observe(el); });
+        })();
 
         // Conveyor: decks shred in the hero, the pile rides the belt on scroll through evenly spaced stations
         (function initConveyor() {
