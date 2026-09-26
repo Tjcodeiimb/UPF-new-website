@@ -1,7 +1,7 @@
 (function () {
   var KEY = 'upf-consent-v1';
   // Set your Google Analytics 4 measurement ID (e.g. 'G-XXXXXXXXXX') to enable analytics for visitors who opt in.
-  var GA4_ID = '';
+  var GA4_ID = 'G-82WPKRW3YT';
   var root = document.currentScript && document.currentScript.dataset.root || '/';
   var POLICY = root + 'legal/cookie-policy.html';
   var PRIVACY = root + 'legal/privacy-policy.html';
