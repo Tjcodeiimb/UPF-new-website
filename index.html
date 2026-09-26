@@ -6182,7 +6182,68 @@
             .site-footer { padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important; }
         }
     </style>
-  <script type="module" crossorigin src="/assets/main-gallery-v2.js"></script>
+    <style>
+        /* ─── Comparison motion scenes ─── */
+        .comparison-visual.comp-anim {
+            display: block;
+            background:
+                linear-gradient(rgba(239, 228, 210, 0.04) 1px, transparent 1px) 0 0 / 20px 20px,
+                linear-gradient(90deg, rgba(239, 228, 210, 0.04) 1px, transparent 1px) 0 0 / 20px 20px,
+                #121010;
+            filter: none;
+            overflow: hidden;
+        }
+        .comp-anim svg { display: block; width: 100%; height: 100%; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .comp-anim text { fill: rgba(239, 228, 210, 0.85); font-size: 14px; font-weight: 600; }
+        .comp-anim .ca-title { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 21px; fill: var(--cream); }
+        .comp-anim .ca-small { font-size: 12px; font-weight: 500; fill: rgba(239, 228, 210, 0.55); }
+        .comp-anim .ca-label { font-size: 13px; fill: rgba(239, 228, 210, 0.7); letter-spacing: .08em; text-transform: uppercase; }
+        .comp-anim .ca-track { fill: rgba(239, 228, 210, 0.08); }
+        .comp-anim .ca-fill { transform-box: fill-box; transform-origin: left; }
+        .comp-anim [class*="ca-"], .comp-anim .b, .comp-anim g { transform-box: fill-box; }
+
+        .comp-trad .ca-deck rect { fill: #efe4d2; stroke: rgba(61, 49, 40, .3); }
+        .comp-trad .ca-deck text { fill: #3d3128; font-family: 'Instrument Serif', serif; font-size: 15px; font-weight: 400; text-anchor: middle; }
+        .comp-trad .ca-deck { opacity: 0; animation: deckDrop 9s ease-in-out infinite; }
+        .comp-trad .ca-deck.d2 { animation-delay: 1.4s; }
+        .comp-trad .ca-deck.d3 { animation-delay: 2.8s; }
+        .comp-trad .ca-fill-slow { fill: #e0907f; animation: fillSlow 9s ease-in-out infinite; }
+        .comp-trad .ca-line, .comp-trad .ca-ticks line { stroke: rgba(239, 228, 210, 0.25); stroke-width: 2; }
+        .comp-trad .ca-crawler circle { fill: #e0907f; }
+        .comp-trad .ca-crawler text { font-size: 12px; fill: #f0b9ab; }
+        .comp-trad .ca-crawler { animation: crawl 9s linear infinite; }
+
+        .comp-ours .ca-step rect { fill: rgba(157, 176, 255, 0.08); stroke: rgba(157, 176, 255, 0.35); }
+        .comp-ours .ca-step text { text-anchor: middle; fill: rgba(239, 228, 210, 0.6); }
+        .comp-ours .ca-step { animation: stepOn 6s ease-in-out infinite; }
+        .comp-ours .ca-step.s2 { animation-delay: 1s; }
+        .comp-ours .ca-step.s3 { animation-delay: 2s; }
+        .comp-ours .b { fill: rgba(157, 176, 255, 0.55); transform-origin: bottom; animation: barUp 6s cubic-bezier(.34,1.4,.64,1) infinite; }
+        .comp-ours .b2 { animation-delay: .2s; } .comp-ours .b3 { animation-delay: .4s; } .comp-ours .b4 { animation-delay: .6s; fill: #9db0ff; }
+        .comp-ours .ca-arrow { fill: none; stroke: var(--tan); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 120; stroke-dashoffset: 120; animation: arrowDraw 6s ease-in-out infinite; }
+        .comp-ours .ca-fill-fast { fill: url(#none); fill: #4a66d8; animation: fillFast 6s cubic-bezier(.16,1,.3,1) infinite; }
+        .comp-ours .ca-shipped { fill: #9db0ff; font-size: 16px; opacity: 0; animation: shipped 6s ease infinite; }
+
+        @keyframes deckDrop { 0% { opacity: 0; transform: translateY(-24px); } 8%, 80% { opacity: 1; transform: translateY(0); } 92%, 100% { opacity: 0; transform: translateY(0); } }
+        @keyframes fillSlow { 0% { transform: scaleX(0.02); } 80% { transform: scaleX(0.12); } 100% { transform: scaleX(0.02); } }
+        @keyframes crawl { 0% { transform: translateX(0); } 88% { transform: translateX(225px); } 100% { transform: translateX(250px); opacity: 0; } }
+        @keyframes stepOn { 0%, 8% { opacity: .45; } 14%, 80% { opacity: 1; } 100% { opacity: .45; } }
+        @keyframes barUp { 0%, 10% { transform: scaleY(0.15); } 40%, 85% { transform: scaleY(1); } 100% { transform: scaleY(0.15); } }
+        @keyframes arrowDraw { 0%, 30% { stroke-dashoffset: 120; } 55%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 120; } }
+        @keyframes fillFast { 0%, 15% { transform: scaleX(0.04); } 55%, 88% { transform: scaleX(0.86); } 100% { transform: scaleX(0.04); } }
+        @keyframes shipped { 0%, 50% { opacity: 0; } 60%, 88% { opacity: 1; } 100% { opacity: 0; } }
+
+        @media (max-width: 768px) {
+            .comparison-visual.comp-anim { aspect-ratio: 7 / 3.4; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .comp-anim * { animation: none !important; }
+            .comp-trad .ca-deck { opacity: 1; }
+            .comp-ours .ca-arrow { stroke-dashoffset: 0; }
+            .comp-ours .ca-shipped { opacity: 1; }
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/main-gallery-v3.js"></script>
 </head>
 
 <body>
@@ -6470,7 +6531,23 @@
             <div class="comparison-grid" id="comparison-boxes">
                 <article class="comparison-card old">
                     <span class="card-halo" aria-hidden="true"></span>
-                    <img class="comparison-visual" src="/assets/tradconsultant2-VALvckRX.jpeg" alt="Traditional consultant at work">
+                    <div class="comparison-visual comp-anim comp-trad" role="img" aria-label="Animation: a traditional consultancy spends weeks in discovery producing slide decks while impact barely moves">
+                        <svg viewBox="0 0 420 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                            <text class="ca-title" x="18" y="28">Discovery → Deck → Handoff</text>
+                            <g class="ca-decks">
+                                <g class="ca-deck d1"><rect x="22" y="112" width="84" height="46" rx="4"/><text x="64" y="140">Deck v1</text></g>
+                                <g class="ca-deck d2"><rect x="28" y="92" width="84" height="46" rx="4"/><text x="70" y="120">Deck v2</text></g>
+                                <g class="ca-deck d3"><rect x="34" y="72" width="84" height="46" rx="4"/><text x="76" y="100">Deck v3</text></g>
+                            </g>
+                            <text class="ca-label" x="150" y="62">Impact</text>
+                            <rect class="ca-track" x="210" y="50" width="190" height="14" rx="7"/>
+                            <rect class="ca-fill ca-fill-slow" x="210" y="50" width="190" height="14" rx="7"/>
+                            <line class="ca-line" x1="150" y1="128" x2="400" y2="128"/>
+                            <g class="ca-ticks"><line x1="150" y1="122" x2="150" y2="134"/><line x1="233" y1="122" x2="233" y2="134"/><line x1="317" y1="122" x2="317" y2="134"/><line x1="400" y1="122" x2="400" y2="134"/></g>
+                            <text class="ca-small" x="150" y="154">Wk 1</text><text class="ca-small" x="233" y="154">Wk 4</text><text class="ca-small" x="317" y="154">Wk 8</text><text class="ca-small" x="400" y="154" text-anchor="end">Wk 12</text>
+                            <g class="ca-crawler"><circle cx="150" cy="128" r="7"/><text x="150" y="106" text-anchor="middle">still scoping…</text></g>
+                        </svg>
+                    </div>
                     <div class="card-label">Traditional Consultant</div>
                     <div class="rotating-feature-wrapper" id="trad-rotator-1">
                         <div class="rotating-item active">Long discovery cycles before anything practical ships</div>
@@ -6483,7 +6560,28 @@
                 </article>
                 <article class="comparison-card new">
                     <span class="card-halo" aria-hidden="true"></span>
-                    <img class="comparison-visual" src="/assets/ourconsultant2-DiXMGY28.jpeg" alt="Our consultant working with a client">
+                    <div class="comparison-visual comp-anim comp-ours" role="img" aria-label="Animation: our consultant diagnoses, plans and executes in quick cycles while impact rises">
+                        <svg viewBox="0 0 420 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                            <text class="ca-title" x="18" y="28">Diagnose → Plan → Execute</text>
+                            <g class="ca-steps">
+                                <g class="ca-step s1"><rect x="18" y="44" width="116" height="30" rx="15"/><text x="76" y="64">Diagnose</text></g>
+                                <g class="ca-step s2"><rect x="152" y="44" width="116" height="30" rx="15"/><text x="210" y="64">Plan</text></g>
+                                <g class="ca-step s3"><rect x="286" y="44" width="116" height="30" rx="15"/><text x="344" y="64">Execute</text></g>
+                            </g>
+                            <g class="ca-bars">
+                                <rect class="b b1" x="24" y="112" width="18" height="44" rx="3"/>
+                                <rect class="b b2" x="50" y="100" width="18" height="56" rx="3"/>
+                                <rect class="b b3" x="76" y="88" width="18" height="68" rx="3"/>
+                                <rect class="b b4" x="102" y="76" width="18" height="80" rx="3"/>
+                                <path class="ca-arrow" d="M24 104 L60 94 L86 80 L118 66"/>
+                            </g>
+                            <text class="ca-label" x="150" y="112">Impact</text>
+                            <rect class="ca-track" x="210" y="100" width="190" height="14" rx="7"/>
+                            <rect class="ca-fill ca-fill-fast" x="210" y="100" width="190" height="14" rx="7"/>
+                            <text class="ca-shipped" x="400" y="146" text-anchor="end">Shipped ✓</text>
+                            <text class="ca-small" x="210" y="146">Week 2</text>
+                        </svg>
+                    </div>
                     <div class="card-label">Our Consultant</div>
                     <div class="rotating-feature-wrapper" id="our-rotator-1">
                         <div class="rotating-item active">Fast diagnosis paired with a concrete plan tied to business
@@ -6624,7 +6722,7 @@
 
             <div class="team-mobile-gallery" style="display: none;">
                 <div class="team-member-card">
-                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
+                    <img src="/assets/shardul-2026.jpg" alt="Shardul Singh">
                     <a href="https://www.linkedin.com/in/shardul-singh-b06671312/" target="_blank" class="member-name">Shardul Singh</a>
                 </div>
                 <div class="team-member-card">
@@ -6680,7 +6778,7 @@
                     </div>
                 </div>
                 <div class="founder-image-wrap">
-                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
+                    <img src="/assets/shardul-2026.jpg" alt="Shardul Singh">
                 </div>
             </div>
         </div>
