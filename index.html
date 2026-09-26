@@ -6115,6 +6115,57 @@
             }
         }
     </style>
+    <style>
+        /* ─── MOBILE HERO: headline + client voices + socials fit the first screen ─── */
+        @media (max-width: 768px) {
+            .hero-row--top {
+                --hero-fold: calc(100vh - 88px - 16px - 12px - 60px - 12px);
+                height: var(--hero-fold);
+                height: calc(100svh - 88px - 16px - 12px - 60px - 12px);
+                min-height: 470px;
+                max-height: 720px;
+            }
+
+            .hero-card--headline {
+                flex: 0 0 auto;
+                min-height: 0 !important;
+                padding: 84px 22px 24px;
+            }
+
+            .hero-card--headline .hero-screw {
+                top: 18px;
+                right: 18px;
+                width: 52px;
+            }
+
+            .hero-headline {
+                font-size: clamp(33px, 9.6vw, 44px);
+                line-height: 1.03;
+            }
+
+            .hero-card--reviews {
+                flex: 1 1 auto;
+                min-height: 220px !important;
+            }
+
+            .hero-card--reviews .review-slide {
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .hero-card--social {
+                min-height: 60px !important;
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+
+            .hero-card--social .hero-social {
+                width: 42px;
+                height: 42px;
+                font-size: 17px;
+            }
+        }
+    </style>
   <script type="module" crossorigin src="/assets/main-gallery-v2.js"></script>
 </head>
 
@@ -6784,7 +6835,9 @@
                 const vw = window.innerWidth, vh = window.innerHeight;
                 const dx = vw / 2 - (r.left + r.width / 2);
                 const dy = vh / 2 - (r.top + r.height / 2);
-                const big = Math.min(1.5, (vw * 0.92) / r.width, (vh * 0.86) / r.height);
+                const big = vw <= 768
+                    ? Math.max(1, Math.min(1.1, (vw - 8) / r.width, (vh * 0.8) / r.height))
+                    : Math.min(1.5, (vw * 0.92) / r.width, (vh * 0.86) / r.height);
                 const at = (x, y, sc, rot) => 'translate(' + x + 'px,' + y + 'px) scale(' + sc + ') rotate(' + rot + 'deg)';
                 const glide = 'cubic-bezier(0.16, 1, 0.3, 1)';
                 const soft = 'cubic-bezier(0.45, 0, 0.55, 1)';
@@ -7620,11 +7673,14 @@
 
             function fit() {
                 const avail = stage.clientHeight - 34;
+                const cap = window.innerWidth <= 768 ? 25 : 22;
                 slides.forEach(slide => {
                     const q = slide.querySelector('blockquote');
-                    let size = Math.min(22, Math.max(14, stage.clientWidth / 12));
+                    const cap2 = slide.querySelector('figcaption');
+                    const need = () => q.offsetHeight + cap2.offsetHeight + 12;
+                    let size = Math.min(cap, Math.max(14, stage.clientWidth / 12));
                     slide.style.setProperty('--q', size + 'px');
-                    while (slide.scrollHeight > avail && size > 12) {
+                    while (need() > avail && size > 12) {
                         size -= 0.5;
                         slide.style.setProperty('--q', size + 'px');
                     }
