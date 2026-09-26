@@ -4794,8 +4794,8 @@
             animation: reviewProgress var(--review-dur, 6s) linear forwards;
         }
 
-        .hero-card--reviews:hover .reviews-dot.is-active i {
-            animation-play-state: paused;
+        .hero-card--reviews {
+            cursor: pointer;
         }
 
         @keyframes reviewProgress {
@@ -6243,6 +6243,139 @@
             .comp-ours .ca-shipped { opacity: 1; }
         }
     </style>
+    <style>
+        /* ─── Headline lock, mobile nav, refined scenes, disclosure motion ─── */
+        html {
+            scrollbar-gutter: stable;
+            overflow-x: clip;
+        }
+
+        body {
+            overflow-x: clip;
+        }
+
+        .hero-headline .hl-line {
+            display: block;
+            white-space: nowrap;
+        }
+
+        .hero-card--headline {
+            container-type: inline-size;
+        }
+
+        @media (min-width: 769px) {
+            .hero-headline {
+                font-size: min(clamp(32px, 3.3vw, 58px), calc(100cqw / 8.6));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-headline {
+                font-size: min(clamp(33px, 9.6vw, 44px), calc(100cqw / 8.6));
+            }
+
+            .navbar,
+            .navbar.visible {
+                position: absolute;
+            }
+        }
+
+        .comp-trad .ca-tray {
+            fill: rgba(239, 228, 210, 0.03);
+            stroke: rgba(239, 228, 210, 0.12);
+            stroke-dasharray: 4 4;
+        }
+
+        .comp-trad .ca-crawler,
+        .comp-trad .ca-fill-slow {
+            animation-duration: 7s;
+        }
+
+        .ca-pile .ca-slap rect {
+            fill: #efe4d2;
+            stroke: rgba(61, 49, 40, 0.35);
+        }
+
+        .ca-pile .ca-slap text {
+            fill: #3d3128;
+            font-family: 'Instrument Serif', serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-anchor: middle;
+        }
+
+        .comp-ours .ca-step {
+            animation: none;
+            opacity: 1;
+        }
+
+        .comp-ours .ca-step rect {
+            transition: fill 0.35s ease, stroke 0.35s ease;
+        }
+
+        .comp-ours .ca-step text {
+            transition: fill 0.35s ease;
+        }
+
+        .comp-ours .ca-step.is-on rect {
+            fill: #2f4fd1;
+            stroke: #4a66d8;
+        }
+
+        .comp-ours .ca-step.is-on text {
+            fill: #ffffff;
+        }
+
+        .comp-ours .ca-line,
+        .comp-ours .ca-ticks line {
+            stroke: rgba(239, 228, 210, 0.25);
+            stroke-width: 2;
+        }
+
+        .comp-ours .ca-runner circle {
+            fill: #9db0ff;
+        }
+
+        .comp-ours .ca-runner {
+            animation: runner 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+
+        .comp-ours .ca-fill-fast {
+            animation: fillFast2 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+
+        .comp-ours .ca-shipped {
+            animation: shipped2 6s ease infinite;
+        }
+
+        .comp-ours .b,
+        .comp-ours .ca-arrow {
+            animation-duration: 6s;
+        }
+
+        @keyframes runner {
+            0%, 5% { transform: translateX(0); }
+            80%, 92% { transform: translateX(244px); }
+            100% { transform: translateX(244px); opacity: 0; }
+        }
+
+        @keyframes fillFast2 {
+            0%, 5% { transform: scaleX(0.04); }
+            80%, 92% { transform: scaleX(0.86); }
+            100% { transform: scaleX(0.04); }
+        }
+
+        @keyframes shipped2 {
+            0%, 72% { opacity: 0; }
+            80%, 94% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .hwh-detail.is-animating,
+        .hwh-content.is-animating {
+            overflow: hidden;
+        }
+    </style>
   <script type="module" crossorigin src="/assets/main-gallery-v3.js"></script>
 </head>
 
@@ -6287,7 +6420,7 @@
                                 <rect x="47.5" y="24" width="2.5" height="52" fill="rgba(255,255,255,0.18)"/>
                             </g>
                         </svg>
-                        <h1 class="hero-headline">Operational <em>direction</em> grounded in clarity and <em>consumer psychology</em></h1>
+                        <h1 class="hero-headline"><span class="hl-line">Operational <em>direction</em></span> <span class="hl-line">grounded in clarity and</span> <span class="hl-line"><em>consumer psychology</em></span></h1>
                     </div>
                     <div class="hero-card hero-card--reviews" style="--d:0.12s" role="region" aria-roledescription="carousel" aria-label="What our clients say">
                         <span class="reviews-bg" aria-hidden="true"></span>
@@ -6531,21 +6664,18 @@
             <div class="comparison-grid" id="comparison-boxes">
                 <article class="comparison-card old">
                     <span class="card-halo" aria-hidden="true"></span>
-                    <div class="comparison-visual comp-anim comp-trad" role="img" aria-label="Animation: a traditional consultancy spends weeks in discovery producing slide decks while impact barely moves">
+                    <div class="comparison-visual comp-anim comp-trad" role="img" aria-label="Animation: a traditional consultancy piles up slide decks over twelve weeks of discovery while impact barely moves">
                         <svg viewBox="0 0 420 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                             <text class="ca-title" x="18" y="28">Discovery → Deck → Handoff</text>
-                            <g class="ca-decks">
-                                <g class="ca-deck d1"><rect x="22" y="112" width="84" height="46" rx="4"/><text x="64" y="140">Deck v1</text></g>
-                                <g class="ca-deck d2"><rect x="28" y="92" width="84" height="46" rx="4"/><text x="70" y="120">Deck v2</text></g>
-                                <g class="ca-deck d3"><rect x="34" y="72" width="84" height="46" rx="4"/><text x="76" y="100">Deck v3</text></g>
-                            </g>
-                            <text class="ca-label" x="150" y="62">Impact</text>
-                            <rect class="ca-track" x="210" y="50" width="190" height="14" rx="7"/>
-                            <rect class="ca-fill ca-fill-slow" x="210" y="50" width="190" height="14" rx="7"/>
-                            <line class="ca-line" x1="150" y1="128" x2="400" y2="128"/>
-                            <g class="ca-ticks"><line x1="150" y1="122" x2="150" y2="134"/><line x1="233" y1="122" x2="233" y2="134"/><line x1="317" y1="122" x2="317" y2="134"/><line x1="400" y1="122" x2="400" y2="134"/></g>
-                            <text class="ca-small" x="150" y="154">Wk 1</text><text class="ca-small" x="233" y="154">Wk 4</text><text class="ca-small" x="317" y="154">Wk 8</text><text class="ca-small" x="400" y="154" text-anchor="end">Wk 12</text>
-                            <g class="ca-crawler"><circle cx="150" cy="128" r="7"/><text x="150" y="106" text-anchor="middle">still scoping…</text></g>
+                            <rect class="ca-tray" x="14" y="44" width="124" height="124" rx="10"/>
+                            <g class="ca-pile"></g>
+                            <text class="ca-label" x="156" y="62">Impact</text>
+                            <rect class="ca-track" x="216" y="50" width="186" height="14" rx="7"/>
+                            <rect class="ca-fill ca-fill-slow" x="216" y="50" width="186" height="14" rx="7"/>
+                            <line class="ca-line" x1="156" y1="128" x2="400" y2="128"/>
+                            <g class="ca-ticks"><line x1="156" y1="122" x2="156" y2="134"/><line x1="237" y1="122" x2="237" y2="134"/><line x1="319" y1="122" x2="319" y2="134"/><line x1="400" y1="122" x2="400" y2="134"/></g>
+                            <text class="ca-small" x="156" y="154">Wk 1</text><text class="ca-small" x="237" y="154">Wk 4</text><text class="ca-small" x="319" y="154">Wk 8</text><text class="ca-small" x="400" y="154" text-anchor="end">Wk 12</text>
+                            <g class="ca-crawler"><circle cx="156" cy="128" r="7"/><text x="156" y="106" text-anchor="middle">still scoping…</text></g>
                         </svg>
                     </div>
                     <div class="card-label">Traditional Consultant</div>
@@ -6560,26 +6690,29 @@
                 </article>
                 <article class="comparison-card new">
                     <span class="card-halo" aria-hidden="true"></span>
-                    <div class="comparison-visual comp-anim comp-ours" role="img" aria-label="Animation: our consultant diagnoses, plans and executes in quick cycles while impact rises">
+                    <div class="comparison-visual comp-anim comp-ours" role="img" aria-label="Animation: our consultant moves through diagnose, plan and execute, shipping within weeks while impact rises">
                         <svg viewBox="0 0 420 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                             <text class="ca-title" x="18" y="28">Diagnose → Plan → Execute</text>
                             <g class="ca-steps">
-                                <g class="ca-step s1"><rect x="18" y="44" width="116" height="30" rx="15"/><text x="76" y="64">Diagnose</text></g>
-                                <g class="ca-step s2"><rect x="152" y="44" width="116" height="30" rx="15"/><text x="210" y="64">Plan</text></g>
-                                <g class="ca-step s3"><rect x="286" y="44" width="116" height="30" rx="15"/><text x="344" y="64">Execute</text></g>
+                                <g class="ca-step s1"><rect x="18" y="42" width="116" height="30" rx="15"/><text x="76" y="62">Diagnose</text></g>
+                                <g class="ca-step s2"><rect x="152" y="42" width="116" height="30" rx="15"/><text x="210" y="62">Plan</text></g>
+                                <g class="ca-step s3"><rect x="286" y="42" width="116" height="30" rx="15"/><text x="344" y="62">Execute</text></g>
                             </g>
                             <g class="ca-bars">
-                                <rect class="b b1" x="24" y="112" width="18" height="44" rx="3"/>
-                                <rect class="b b2" x="50" y="100" width="18" height="56" rx="3"/>
-                                <rect class="b b3" x="76" y="88" width="18" height="68" rx="3"/>
-                                <rect class="b b4" x="102" y="76" width="18" height="80" rx="3"/>
-                                <path class="ca-arrow" d="M24 104 L60 94 L86 80 L118 66"/>
+                                <rect class="b b1" x="24" y="132" width="18" height="30" rx="3"/>
+                                <rect class="b b2" x="50" y="120" width="18" height="42" rx="3"/>
+                                <rect class="b b3" x="76" y="108" width="18" height="54" rx="3"/>
+                                <rect class="b b4" x="102" y="96" width="18" height="66" rx="3"/>
+                                <path class="ca-arrow" d="M24 124 L60 113 L86 101 L118 89"/>
                             </g>
-                            <text class="ca-label" x="150" y="112">Impact</text>
-                            <rect class="ca-track" x="210" y="100" width="190" height="14" rx="7"/>
-                            <rect class="ca-fill ca-fill-fast" x="210" y="100" width="190" height="14" rx="7"/>
-                            <text class="ca-shipped" x="400" y="146" text-anchor="end">Shipped ✓</text>
-                            <text class="ca-small" x="210" y="146">Week 2</text>
+                            <text class="ca-label" x="156" y="104">Impact</text>
+                            <rect class="ca-track" x="216" y="92" width="186" height="14" rx="7"/>
+                            <rect class="ca-fill ca-fill-fast" x="216" y="92" width="186" height="14" rx="7"/>
+                            <line class="ca-line" x1="156" y1="140" x2="400" y2="140"/>
+                            <g class="ca-ticks"><line x1="156" y1="134" x2="156" y2="146"/><line x1="237" y1="134" x2="237" y2="146"/><line x1="319" y1="134" x2="319" y2="146"/><line x1="400" y1="134" x2="400" y2="146"/></g>
+                            <text class="ca-small" x="156" y="166">Wk 1</text><text class="ca-small" x="237" y="166">Wk 2</text><text class="ca-small" x="319" y="166">Wk 3</text><text class="ca-small" x="400" y="166" text-anchor="end">Wk 4</text>
+                            <g class="ca-runner"><circle cx="156" cy="140" r="7"/></g>
+                            <text class="ca-shipped" x="400" y="126" text-anchor="end">Shipped ✓</text>
                         </svg>
                     </div>
                     <div class="card-label">Our Consultant</div>
@@ -7141,10 +7274,9 @@
 
             function closeService() {
                 grid.querySelectorAll('.hwh-card').forEach(c => c.classList.remove('active'));
-                detail.classList.remove('open');
                 activeService = null;
                 activeSub = null;
-                placeDetail();
+                upfSlide(detail, false, () => { detail.classList.remove('open'); placeDetail(); });
             }
 
             function selectService(idx) {
@@ -7153,10 +7285,12 @@
                 cards.forEach((c, i) => c.classList.toggle('active', i === idx));
                 activeService = idx;
                 activeSub = null;
+                const wasOpen = detail.classList.contains('open');
                 renderSubs();
                 detail.classList.add('open');
                 placeDetail();
                 placeContent();
+                if (!wasOpen || mqMobile.matches) upfSlide(detail, true);
                 if (mqMobile.matches && typeof lenis !== 'undefined') lenis.scrollTo(cards[idx], { offset: -110 });
             }
 
@@ -7177,17 +7311,17 @@
                         if (mqMobile.matches && idx === activeSub) {
                             el.classList.remove('active');
                             activeSub = null;
-                            home.contentParent.appendChild(contentEl);
+                            upfSlide(contentEl, false, () => home.contentParent.appendChild(contentEl));
                             return;
                         }
-                        selectSub(idx);
+                        selectSub(idx, true);
                     });
                 });
 
                 if (svc.subs.length) selectSub(0);
             }
 
-            function selectSub(idx) {
+            function selectSub(idx, animate) {
                 activeSub = idx;
                 subsEl.querySelectorAll('.hwh-sub-item').forEach(el => {
                     el.classList.toggle('active', parseInt(el.dataset.sub) === idx);
@@ -7197,12 +7331,19 @@
                 if (!sub) return;
                 contentEl.innerHTML = `<div class="hwh-content-title">${sub.title}</div><div class="hwh-content-main">${sub.content}</div><button type="button" class="hwh-read-more" aria-expanded="false">Read more</button>`;
                 placeContent();
+                if (animate) {
+                    if (mqMobile.matches) upfSlide(contentEl, true);
+                    else if (contentEl.animate) contentEl.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+                }
                 const main = contentEl.querySelector('.hwh-content-main');
                 const more = contentEl.querySelector('.hwh-read-more');
                 requestAnimationFrame(() => { more.hidden = !(mqMobile.matches && main.scrollHeight > main.clientHeight + 2); });
                 more.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    const before = main.offsetHeight;
                     const open = contentEl.classList.toggle('is-expanded');
+                    const after = main.offsetHeight;
+                    if (main.animate) main.animate([{ height: before + 'px' }, { height: after + 'px' }], { duration: 380, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
                     more.textContent = open ? 'Read less' : 'Read more';
                     more.setAttribute('aria-expanded', String(open));
                 });
@@ -7773,6 +7914,54 @@
             });
         })();
 
+
+        // Comparison scenes: slapping decks + one-at-a-time steps
+        (function initCompScenes() {
+            const NS = 'http://www.w3.org/2000/svg';
+            const pile = document.querySelector('.comp-trad .ca-pile');
+            const steps = Array.from(document.querySelectorAll('.comp-ours .ca-step'));
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (steps.length) {
+                let k = 0;
+                steps[0].classList.add('is-on');
+                if (!reduce) setInterval(() => { steps[k].classList.remove('is-on'); k = (k + 1) % steps.length; steps[k].classList.add('is-on'); }, 2000);
+            }
+            if (!pile) return;
+            let n = 0;
+            const W = 66, H = 42, X0 = 20, Y0 = 50, XR = 124 - W - 12, YR = 124 - H - 12;
+            function slap() {
+                n += 1;
+                const x = X0 + Math.random() * XR, y = Y0 + Math.random() * YR, r = (Math.random() - 0.5) * 22;
+                const g = document.createElementNS(NS, 'g');
+                g.setAttribute('class', 'ca-slap');
+                g.setAttribute('transform', 'translate(' + (x + W / 2) + ' ' + (y + H / 2) + ') rotate(' + r.toFixed(1) + ')');
+                g.innerHTML = '<g class="ca-slap-in"><rect x="' + (-W / 2) + '" y="' + (-H / 2) + '" width="' + W + '" height="' + H + '" rx="3"/><text x="0" y="5">Deck v' + n + '</text></g>';
+                pile.appendChild(g);
+                const inner = g.firstChild;
+                if (!reduce) inner.animate([
+                    { transform: 'scale(1.45) translateY(-10px)', opacity: 0 },
+                    { transform: 'scale(0.94)', opacity: 1, offset: 0.55 },
+                    { transform: 'scale(1.03)', offset: 0.78 },
+                    { transform: 'scale(1)' }
+                ], { duration: 380, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' });
+                if (n === 5) setTimeout(() => { pile.innerHTML = ''; n = 0; }, 650);
+            }
+            slap();
+            if (!reduce) setInterval(slap, 1400);
+        })();
+
+        // Smooth open/close helpers
+        function upfSlide(el, open, done) {
+            if (!el.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { if (done) done(); return; }
+            const h = el.scrollHeight;
+            el.classList.add('is-animating');
+            const a = el.animate(open
+                ? [{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }]
+                : [{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
+                { duration: open ? 420 : 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+            a.onfinish = () => { el.classList.remove('is-animating'); if (done) done(); };
+        }
+
         // Hero reviews slideshow
         (function initReviews() {
             const card = document.querySelector('.hero-card--reviews');
@@ -7829,11 +8018,10 @@
             }
 
             dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
-            card.addEventListener('mouseenter', () => {
-                clearTimeout(timer);
-                remaining = Math.max(0, remaining - (performance.now() - startedAt));
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.reviews-dot')) return;
+                show((index + 1) % slides.length);
             });
-            card.addEventListener('mouseleave', () => schedule(remaining));
 
             fit();
             if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
