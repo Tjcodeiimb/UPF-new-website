@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /thank-you.html
+Disallow: /mobile/
+Disallow: /loading-screen-v2.html
+
+Sitemap: https://upforgeconsulting.com/sitemap.xml

@@ -16,6 +16,28 @@
         })();
     </script> -->
     <title>UpForge - We Hate Traditional Consulting</title>
+  <!-- SEO / social -->
+  <meta name="description" content="UpForge embeds founders and operators into your team: market entry, GTM and branding, consumer psychology research, and fundraising support. Take the 2-minute diagnostic.">
+  <link rel="canonical" href="https://upforgeconsulting.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="UpForge Consulting">
+  <meta property="og:title" content="UpForge - We Hate Traditional Consulting">
+  <meta property="og:description" content="UpForge embeds founders and operators into your team: market entry, GTM and branding, consumer psychology research, and fundraising support. Take the 2-minute diagnostic.">
+  <meta property="og:url" content="https://upforgeconsulting.com/">
+  <meta property="og:image" content="https://upforgeconsulting.com/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UpForge - We Hate Traditional Consulting">
+  <meta name="twitter:description" content="UpForge embeds founders and operators into your team: market entry, GTM and branding, consumer psychology research, and fundraising support. Take the 2-minute diagnostic.">
+  <meta name="twitter:image" content="https://upforgeconsulting.com/assets/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#271d17">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -5660,6 +5682,423 @@
             }
         }
     </style>
+    <style>
+        /* ─── CARD HALOS, LOADING/ERROR STATES, MOBILE REFINEMENTS ─── */
+        @property --halo-a {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        .card-halo {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            pointer-events: none;
+            z-index: 0;
+            background: conic-gradient(from var(--halo-a), transparent 0deg, rgba(157, 176, 255, 0.85) 40deg, transparent 90deg, transparent 180deg, rgba(185, 163, 132, 0.6) 220deg, transparent 270deg);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+            animation: haloSpin 9s linear infinite;
+        }
+
+        .card-halo::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(47, 79, 209, 0.16), transparent 65%);
+            top: -20%;
+            left: -10%;
+            animation: haloGlow 14s ease-in-out infinite alternate;
+        }
+
+        .comparison-card.old .card-halo {
+            background: conic-gradient(from var(--halo-a), transparent 0deg, rgba(224, 144, 127, 0.75) 40deg, transparent 90deg, transparent 180deg, rgba(185, 163, 132, 0.5) 220deg, transparent 270deg);
+        }
+
+        .partner-card:nth-child(2) .card-halo {
+            animation-delay: -4.5s;
+        }
+
+        .comparison-card > :not(.card-halo),
+        .partner-card > :not(.card-halo) {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes haloSpin {
+            to { --halo-a: 360deg; }
+        }
+
+        @keyframes haloGlow {
+            to { transform: translate(90%, 110%); }
+        }
+
+        /* Services read-more (mobile) */
+        .hwh-read-more {
+            display: none;
+        }
+
+        /* Loading + error states */
+        .diag-skeleton {
+            display: grid;
+            gap: 14px;
+            justify-items: center;
+            padding: 48px 36px;
+        }
+
+        .diag-skeleton span {
+            display: block;
+            height: 14px;
+            width: 60%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, rgba(239, 228, 210, 0.06) 0%, rgba(239, 228, 210, 0.16) 50%, rgba(239, 228, 210, 0.06) 100%) 0 0 / 200% 100%;
+            animation: skeleton 1.4s linear infinite;
+        }
+
+        .diag-skeleton span:first-child { height: 34px; width: 46%; }
+        .diag-skeleton span:last-child { height: 44px; width: 30%; border-radius: 999px; margin-top: 10px; }
+
+        @keyframes skeleton {
+            from { background-position: 100% 0; }
+            to { background-position: -100% 0; }
+        }
+
+        .diag-error {
+            text-align: center;
+            color: rgba(239, 228, 210, 0.7);
+        }
+
+        .diag-error p {
+            margin-bottom: 16px;
+        }
+
+        .diag-error .diag-btn-back {
+            margin: 0 auto;
+        }
+
+        .diag-text-input.is-invalid,
+        .diag-textarea.is-invalid {
+            border-color: #e0907f !important;
+            box-shadow: 0 0 0 4px rgba(224, 144, 127, 0.14) !important;
+        }
+
+        .diag-field-error {
+            display: block;
+            margin: 6px 2px 10px;
+            text-align: left;
+            font-size: 12.5px;
+            color: #f0b9ab;
+        }
+
+        .team-gallery:empty {
+            background: linear-gradient(90deg, rgba(239, 228, 210, 0.03) 0%, rgba(239, 228, 210, 0.08) 50%, rgba(239, 228, 210, 0.03) 100%) 0 0 / 200% 100%;
+            animation: skeleton 1.8s linear infinite;
+        }
+
+        .m-shredder,
+        .m-shreds,
+        .m-sticky-cta {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            /* Equal side gutters inside the conveyor section */
+            .conveyor-container {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            /* Belt: decks → shredder → shreds */
+            .hero-belt {
+                overflow: visible;
+            }
+
+            .hero-belt-run {
+                overflow: hidden;
+            }
+
+            .hero-decks.is-mobile-lane {
+                position: absolute;
+                inset: auto;
+                top: 50%;
+                left: 0;
+                bottom: auto;
+                height: 64px;
+                margin-top: -32px;
+                overflow: hidden;
+            }
+
+            .hero-decks.is-mobile-lane .hero-deck {
+                top: 0;
+                left: 0;
+                margin-left: 0;
+            }
+
+            .m-shredder {
+                display: block;
+                position: absolute;
+                top: -12px;
+                bottom: -12px;
+                left: 60%;
+                width: 15.4%;
+                min-width: 54px;
+                z-index: 4;
+            }
+
+            .m-shredder-body {
+                position: absolute;
+                inset: 0;
+                border-radius: 8px;
+                border: 3px solid #000;
+                background: linear-gradient(180deg, #091540 0%, #1f3b99 30%, #1f3b99 70%, #091540 100%);
+                box-shadow: inset 0 0 12px rgba(0, 102, 204, 0.4), 0 8px 20px rgba(0, 0, 0, 0.6);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .m-shredder .shredder-gear {
+                position: relative;
+                left: auto;
+                top: auto;
+                width: 34px;
+                height: 34px;
+            }
+
+            .m-shredder .shredder-gear::after {
+                inset: 10px;
+            }
+
+            .m-shredder-light {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #00ffcc;
+                box-shadow: 0 0 8px #00ffcc;
+                animation: blinkFast 0.9s infinite;
+            }
+
+            .m-shredder-teeth {
+                position: absolute;
+                top: 10px;
+                bottom: 10px;
+                right: -8px;
+                width: 8px;
+                background: conic-gradient(from 45deg at left, #9aa3b5 90deg, transparent 0) 0 0 / 8px 8px repeat-y;
+                filter: drop-shadow(2px 0 1px rgba(0, 0, 0, 0.6));
+            }
+
+            .m-shredder.is-shredding .m-shredder-teeth {
+                animation: teethJitterY 0.1s linear infinite;
+            }
+
+            @keyframes teethJitterY {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(1px); }
+            }
+
+            .m-shreds {
+                display: block;
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                z-index: 3;
+                pointer-events: none;
+            }
+
+            .m-shreds i {
+                position: absolute;
+                height: 2px;
+                border-radius: 1px;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+            }
+
+            /* Services: accordion under the tapped card */
+            .hwh-detail.open {
+                margin: 10px 0 4px;
+            }
+
+            .hwh-detail .hwh-subs {
+                padding: 8px 0;
+            }
+
+            .hwh-subs .hwh-content {
+                margin: 4px 12px 12px;
+                padding: 18px 16px;
+                border-radius: 14px;
+                background: #121010;
+            }
+
+            .hwh-subs .hwh-content-title {
+                font-size: 22px;
+            }
+
+            .hwh-content-main {
+                font-size: 15px;
+                line-height: 1.6;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .hwh-content.is-expanded .hwh-content-main {
+                display: block;
+                -webkit-line-clamp: unset;
+            }
+
+            .hwh-read-more {
+                display: inline-block;
+                margin-top: 8px;
+                padding: 0;
+                background: none;
+                border: 0;
+                font: 600 13px 'Plus Jakarta Sans', sans-serif;
+                color: var(--blue-soft);
+                cursor: pointer;
+            }
+
+            .hwh-read-more[hidden] {
+                display: none;
+            }
+
+            /* Testimonials: one review per screen */
+            .testimonials-marquee.is-slider {
+                animation: none;
+                width: 100%;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none;
+                padding: 10px 20px 4px;
+                gap: 14px;
+            }
+
+            .testimonials-marquee.is-slider::-webkit-scrollbar {
+                display: none;
+            }
+
+            .testimonials-marquee.is-slider .testimonial-card {
+                flex: 0 0 100%;
+                width: auto;
+                scroll-snap-align: center;
+            }
+
+            .testimonials-marquee.is-slider .testimonial-card:nth-child(n+5) {
+                display: none;
+            }
+
+            .testimonials-marquee.is-slider .testimonial-card:hover {
+                transform: none;
+            }
+
+            .t-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 18px;
+            }
+
+            .t-dots button {
+                width: 22px;
+                height: 4px;
+                padding: 0;
+                border: 0;
+                border-radius: 4px;
+                background: rgba(33, 25, 19, 0.2);
+                transition: width 0.4s var(--hero-ease), background 0.3s;
+            }
+
+            .t-dots button.is-active {
+                width: 40px;
+                background: var(--blue-deep);
+            }
+
+            /* Team: portrait frames */
+            .team-mobile-gallery {
+                gap: 14px !important;
+            }
+
+            .team-member-card {
+                padding: 8px 8px 12px !important;
+                border-radius: 16px !important;
+                border: 1px solid rgba(185, 163, 132, 0.18) !important;
+                background: linear-gradient(180deg, #1e1b19, #151312) !important;
+            }
+
+            .team-member-card img {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 4 / 5;
+                object-fit: cover;
+                border-radius: 10px !important;
+                border: 0 !important;
+                margin-bottom: 10px !important;
+                filter: saturate(0.92) contrast(1.02);
+            }
+
+            .team-mobile-gallery .team-member-card:last-child:nth-child(2n+1) {
+                max-width: calc(50% - 7px) !important;
+            }
+
+            /* Sticky mobile CTA */
+            .m-sticky-cta {
+                display: flex;
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                bottom: calc(12px + env(safe-area-inset-bottom));
+                z-index: 900;
+                gap: 8px;
+                padding: 8px;
+                border-radius: 999px;
+                background: rgba(23, 21, 20, 0.92);
+                border: 1px solid rgba(239, 228, 210, 0.1);
+                backdrop-filter: blur(12px);
+                box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.8);
+                transform: translateY(140%);
+                transition: transform 0.6s var(--hero-ease);
+            }
+
+            .m-sticky-cta.is-visible {
+                transform: none;
+            }
+
+            .m-sticky-cta a {
+                flex: 1;
+                text-align: center;
+                padding: 12px 10px;
+                border-radius: 999px;
+                font: 600 13px 'Plus Jakarta Sans', sans-serif;
+                text-decoration: none;
+            }
+
+            .m-cta-secondary {
+                color: var(--cream);
+                border: 1px solid rgba(239, 228, 210, 0.18);
+            }
+
+            .m-cta-primary {
+                background: var(--accent);
+                color: #fff;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-halo,
+            .card-halo::after,
+            .diag-skeleton span,
+            .team-gallery:empty {
+                animation: none;
+            }
+        }
+    </style>
   <script type="module" crossorigin src="/assets/main-gallery-v2.js"></script>
 </head>
 
@@ -5753,6 +6192,11 @@
         <div class="hero-belt" aria-hidden="true">
             <div class="hero-belt-run">
                 <div class="hero-decks"></div>
+            </div>
+            <div class="m-shreds"></div>
+            <div class="m-shredder">
+                <div class="m-shredder-body"><div class="shredder-gear"></div><div class="m-shredder-light"></div></div>
+                <div class="m-shredder-teeth"></div>
             </div>
         </div>
         <div class="hero-shredder" aria-hidden="true">
@@ -5936,13 +6380,13 @@
         <!-- Comparison Section -->
         <section class="comparison" id="difference">
             <!-- STARTUP DIAGNOSTIC QUESTIONNAIRE -->
-            <div class="diagnostic-system" id="diagnostic-system"></div>
+            <div class="diagnostic-system" id="diagnostic-system"><div class="diag-panel diag-skeleton" aria-busy="true" aria-label="Loading the diagnostic"><span></span><span></span><span></span></div></div>
 
 
 
             <div class="comparison-grid" id="comparison-boxes">
                 <article class="comparison-card old">
-                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><g class="g-anim-hourglass"><path d="M11 5h18M11 35h18"/><path d="M13 5c0 8 7 10 7 15s-7 7-7 15M27 5c0 8-7 10-7 15s7 7 7 15"/><path class="g-anim-sand-top" d="M15.5 10h9c-1 3-4 5-4.5 7c-.5-2-3.5-4-4.5-7z" fill="currentColor" stroke="none" opacity=".6"/><path class="g-anim-sand-bottom" d="M14.5 33c1-4 4.5-5 5.5-6 1 1 4.5 2 5.5 6z" fill="currentColor" stroke="none" opacity=".6"/></g></svg></span>
+                    <span class="card-halo" aria-hidden="true"></span>
                     <img class="comparison-visual" src="/assets/tradconsultant2-VALvckRX.jpeg" alt="Traditional consultant at work">
                     <div class="card-label">Traditional Consultant</div>
                     <div class="rotating-feature-wrapper" id="trad-rotator-1">
@@ -5955,7 +6399,7 @@
                     </div>
                 </article>
                 <article class="comparison-card new">
-                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 28a14 14 0 0128 0"/><path d="M9.5 19l2 1.2M20 10v2.4M30.5 19l-2 1.2" stroke-opacity=".6"/><path class="g-blue" d="M26 16a14 14 0 018 12" stroke-width="2.4"/><line class="g-anim-gauge g-blue" x1="20" y1="28" x2="20" y2="15" stroke-width="2"/><circle cx="20" cy="28" r="2.2" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="card-halo" aria-hidden="true"></span>
                     <img class="comparison-visual" src="/assets/ourconsultant2-DiXMGY28.jpeg" alt="Our consultant working with a client">
                     <div class="card-label">Our Consultant</div>
                     <div class="rotating-feature-wrapper" id="our-rotator-1">
@@ -6256,7 +6700,7 @@
             <h2 class="partners-heading">Trusted collaborations that extend our <em class="accent">reach.</em></h2>
             <div class="partners-grid">
                 <div class="partner-card">
-                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 35h30M5 35V5" stroke-opacity=".5"/><path class="g-anim-draw g-blue" d="M8 29l8-8 6 5 11-13"/><path class="g-blue" d="M27 13h6v6"/></svg></span>
+                    <span class="card-halo" aria-hidden="true"></span>
                     <div class="partner-logo-wrap">
                         <img src="/assets/scoutline-4i7VW8R8.png" alt="Scoutline Capital">
                     </div>
@@ -6269,7 +6713,7 @@
                     </div>
                 </div>
                 <div class="partner-card">
-                    <span class="card-glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle class="g-anim-ring" cx="20" cy="20" r="15"/><circle class="g-anim-ring r2" cx="20" cy="20" r="9.5"/><circle class="g-blue" cx="20" cy="20" r="4" fill="currentColor" stroke="none"/><g class="g-anim-dart"><path class="g-blue" d="M20 20l12-12M28 7h5v5"/></g></svg></span>
+                    <span class="card-halo" aria-hidden="true"></span>
                     <div class="partner-logo-wrap">
                         <img src="/assets/bmm-logo-2-BrcPkZ7l.png" alt="Brown Men Marketing">
                     </div>
@@ -6283,6 +6727,11 @@
     </section>
 
     <!-- Footer Strip -->
+    <div class="m-sticky-cta" role="region" aria-label="Quick actions">
+        <a href="#diagnostic-system" class="m-cta-secondary">Take the 2-min diagnostic</a>
+        <a href="https://calendly.com/shardulsingh166/30min" target="_blank" rel="noopener" class="m-cta-primary">Book a call</a>
+    </div>
+
     <footer class="site-footer">
         <div>&copy;2026 UpForge. All rights reserved</div>
         <nav aria-label="Legal">
@@ -6492,18 +6941,46 @@
                 grid.appendChild(card);
             });
 
+            const mqMobile = window.matchMedia('(max-width: 768px)');
+            const home = { detailAfter: grid, contentParent: detail };
+
+            function placeDetail() {
+                const cards = grid.querySelectorAll('.hwh-card');
+                if (mqMobile.matches && activeService !== null) cards[activeService].after(detail);
+                else home.detailAfter.after(detail);
+            }
+
+            function placeContent() {
+                const activeEl = subsEl.querySelector('.hwh-sub-item.active');
+                if (mqMobile.matches && activeEl) activeEl.after(contentEl);
+                else home.contentParent.appendChild(contentEl);
+            }
+
+            function closeService() {
+                grid.querySelectorAll('.hwh-card').forEach(c => c.classList.remove('active'));
+                detail.classList.remove('open');
+                activeService = null;
+                activeSub = null;
+                placeDetail();
+            }
+
             function selectService(idx) {
+                if (activeService === idx && detail.classList.contains('open')) { closeService(); return; }
                 const cards = grid.querySelectorAll('.hwh-card');
                 cards.forEach((c, i) => c.classList.toggle('active', i === idx));
                 activeService = idx;
                 activeSub = null;
                 renderSubs();
                 detail.classList.add('open');
+                placeDetail();
+                placeContent();
+                if (mqMobile.matches && typeof lenis !== 'undefined') lenis.scrollTo(cards[idx], { offset: -110 });
             }
 
             function renderSubs() {
                 const svc = serviceData[activeService];
                 if (!svc) return;
+                home.contentParent.appendChild(contentEl);
                 let html = '';
                 svc.subs.forEach((sub, i) => {
                     const badge = i < 2 ? ' <span class="hwh-sub-badge">Popular</span>' : '';
@@ -6514,6 +6991,12 @@
                 subsEl.querySelectorAll('.hwh-sub-item').forEach(el => {
                     el.addEventListener('click', () => {
                         const idx = parseInt(el.dataset.sub);
+                        if (mqMobile.matches && idx === activeSub) {
+                            el.classList.remove('active');
+                            activeSub = null;
+                            home.contentParent.appendChild(contentEl);
+                            return;
+                        }
                         selectSub(idx);
                     });
                 });
@@ -6529,8 +7012,20 @@
                 const svc = serviceData[activeService];
                 const sub = svc.subs[idx];
                 if (!sub) return;
-                contentEl.innerHTML = `<div class="hwh-content-title">${sub.title}</div><div class="hwh-content-main">${sub.content}</div>`;
+                contentEl.innerHTML = `<div class="hwh-content-title">${sub.title}</div><div class="hwh-content-main">${sub.content}</div><button type="button" class="hwh-read-more" aria-expanded="false">Read more</button>`;
+                placeContent();
+                const main = contentEl.querySelector('.hwh-content-main');
+                const more = contentEl.querySelector('.hwh-read-more');
+                requestAnimationFrame(() => { more.hidden = !(mqMobile.matches && main.scrollHeight > main.clientHeight + 2); });
+                more.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const open = contentEl.classList.toggle('is-expanded');
+                    more.textContent = open ? 'Read less' : 'Read more';
+                    more.setAttribute('aria-expanded', String(open));
+                });
             }
+
+            mqMobile.addEventListener('change', () => { placeDetail(); placeContent(); });
 
             subsEl.addEventListener('wheel', (e) => {
                 const { scrollTop, scrollHeight, clientHeight } = subsEl;
@@ -6553,13 +7048,16 @@
         let diagAnswers = { stage: null, problem: null, roadblock: null, customAnswer: '' };
         let diagCustomInputs = {};
 
+        const DIAG_SKELETON = '<div class="diag-panel diag-skeleton" aria-busy="true" aria-label="Loading the diagnostic"><span></span><span></span><span></span></div>';
+
         function initDiagnostic() {
             fetch('questionnaire.json')
                 .then(r => { if (!r.ok) throw new Error('Failed to load'); return r.json(); })
                 .then(data => { diagQ = data; renderScreen(); })
                 .catch(() => {
                     document.getElementById('diagnostic-system').innerHTML =
-                        '<p style="text-align:center;color:rgba(239,228,210,0.5);padding:40px">Could not load questionnaire.</p>';
+                        '<div class="diag-panel diag-error"><p>We couldn\'t load the diagnostic. Check your connection and try again.</p><button type="button" class="diag-btn-back" id="diag-retry"><i class="fa-solid fa-rotate-right"></i> Try again</button></div>';
+                    document.getElementById('diag-retry').addEventListener('click', () => { document.getElementById('diagnostic-system').innerHTML = DIAG_SKELETON; initDiagnostic(); });
                 });
         }
 
@@ -7010,6 +7508,88 @@
             update();
         })();
 
+
+        // Mobile: testimonials as a one-per-screen slideshow
+        (function initMobileTestimonials() {
+            if (!window.matchMedia('(max-width: 768px)').matches) return;
+            const track = document.querySelector('.testimonials-marquee');
+            if (!track) return;
+            const cards = Array.from(track.querySelectorAll('.testimonial-card')).slice(0, 4);
+            track.classList.add('is-slider');
+            const dots = document.createElement('div');
+            dots.className = 't-dots';
+            dots.innerHTML = cards.map((c, i) => '<button type="button" aria-label="Show review ' + (i + 1) + '"></button>').join('');
+            track.after(dots);
+            const btns = Array.from(dots.children);
+            let current = 0, paused = 0;
+            const go = (i) => {
+                current = i;
+                track.scrollTo({ left: cards[i].offsetLeft - track.offsetLeft - (track.clientWidth - cards[i].offsetWidth) / 2, behavior: 'smooth' });
+            };
+            const mark = () => btns.forEach((b, i) => b.classList.toggle('is-active', i === current));
+            btns.forEach((b, i) => b.addEventListener('click', () => { paused = Date.now(); go(i); }));
+            let st;
+            track.addEventListener('scroll', () => {
+                clearTimeout(st);
+                st = setTimeout(() => {
+                    const mid = track.scrollLeft + track.clientWidth / 2 + track.offsetLeft;
+                    let best = 0, bd = Infinity;
+                    cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } });
+                    current = best; mark();
+                }, 80);
+            }, { passive: true });
+            track.addEventListener('touchstart', () => { paused = Date.now(); }, { passive: true });
+            mark();
+            setInterval(() => { if (Date.now() - paused > 9000) go((current + 1) % cards.length); }, 6000);
+        })();
+
+        // Mobile sticky CTA: shows after the hero, hides at the diagnostic and footer
+        (function initStickyCta() {
+            const bar = document.querySelector('.m-sticky-cta');
+            if (!bar || !('IntersectionObserver' in window)) return;
+            const hero = document.querySelector('.hero');
+            const hide = [document.getElementById('diagnostic-system'), document.querySelector('.site-footer')].filter(Boolean);
+            let pastHero = false, blocked = new Set();
+            const sync = () => bar.classList.toggle('is-visible', pastHero && blocked.size === 0);
+            new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe(hero);
+            const io = new IntersectionObserver(entries => { entries.forEach(e => e.isIntersecting ? blocked.add(e.target) : blocked.delete(e.target)); sync(); });
+            hide.forEach(el => io.observe(el));
+        })();
+
+        // Inline form errors
+        (function initFormErrors() {
+            const root = document.getElementById('diagnostic-system');
+            if (!root) return;
+            const msg = (el) => {
+                if (el.type === 'email') return el.value ? 'Please enter a valid email address.' : 'Please enter your work email.';
+                if (el.type === 'checkbox') return 'Please confirm to continue.';
+                return 'Please enter your name.';
+            };
+            root.addEventListener('invalid', (e) => {
+                const el = e.target;
+                el.classList.add('is-invalid');
+                el.setAttribute('aria-invalid', 'true');
+                const host = el.type === 'checkbox' ? el.closest('label') : el;
+                let m = host.nextElementSibling;
+                if (!m || !m.classList.contains('diag-field-error')) {
+                    m = document.createElement('span');
+                    m.className = 'diag-field-error';
+                    m.setAttribute('role', 'alert');
+                    host.after(m);
+                }
+                m.textContent = msg(el);
+            }, true);
+            root.addEventListener('input', (e) => {
+                const el = e.target;
+                if (!el.classList.contains('is-invalid') || !el.checkValidity()) return;
+                el.classList.remove('is-invalid');
+                el.removeAttribute('aria-invalid');
+                const host = el.type === 'checkbox' ? el.closest('label') : el;
+                const m = host.nextElementSibling;
+                if (m && m.classList.contains('diag-field-error')) m.remove();
+            });
+        })();
+
         // Hero reviews slideshow
         (function initReviews() {
             const card = document.querySelector('.hero-card--reviews');
@@ -7142,9 +7722,77 @@
             }
 
             if (isMobile) {
-                lane.classList.add('is-marquee');
-                WORDS.concat(WORDS).forEach(makeDeck);
+                initMobileBelt();
                 return;
+            }
+
+            function initMobileBelt() {
+                const belt = document.querySelector('.hero-belt');
+                const mShred = document.querySelector('.m-shredder');
+                const shredLane = document.querySelector('.m-shreds');
+                if (!belt || !mShred || !shredLane) return;
+                lane.classList.add('is-mobile-lane');
+                const DW = 52, GAP = 26, V = 38;
+                let W = 0, sLeft = 0, sRight = 0;
+                const measure = () => {
+                    W = belt.clientWidth;
+                    sLeft = mShred.offsetLeft;
+                    sRight = sLeft + mShred.offsetWidth;
+                    lane.style.width = (sLeft + mShred.offsetWidth / 2) + 'px';
+                };
+                measure();
+                window.addEventListener('resize', measure);
+                const items = [];
+                const add = (x) => {
+                    const el = makeDeck();
+                    el.style.transform = 'translate3d(' + x + 'px,0,0)';
+                    items.push({ el, x, done: false });
+                };
+                for (let x = sLeft - DW * 0.5; x > -DW; x -= DW + GAP) add(x);
+                function burst() {
+                    mShred.classList.add('is-shredding');
+                    clearTimeout(burst.t);
+                    burst.t = setTimeout(() => mShred.classList.remove('is-shredding'), 600);
+                    const run = W - sRight + 24;
+                    for (let i = 0; i < 6; i++) {
+                        const st = document.createElement('i');
+                        const y = (Math.random() - 0.5) * 60;
+                        st.style.left = sRight + 'px';
+                        st.style.top = 'calc(50% + ' + y + 'px)';
+                        st.style.width = (9 + Math.random() * 9) + 'px';
+                        st.style.background = SHRED_COLORS[i % SHRED_COLORS.length];
+                        shredLane.appendChild(st);
+                        const r = (Math.random() - 0.5) * 50;
+                        st.animate([
+                            { transform: 'translate(-6px,0) rotate(' + r + 'deg)', opacity: 1 },
+                            { transform: 'translate(' + run * 0.85 + 'px,' + (Math.random() - 0.5) * 8 + 'px) rotate(' + (r + (Math.random() - 0.5) * 30) + 'deg)', opacity: 1, offset: 0.85 },
+                            { transform: 'translate(' + run + 'px,0) rotate(' + r + 'deg)', opacity: 0 }
+                        ], { duration: run / V * 1000, delay: i * 90, easing: 'linear' }).onfinish = () => st.remove();
+                    }
+                }
+                let last = null;
+                function step(t) {
+                    const dt = last === null ? 0 : Math.min((t - last) / 1000, 0.05);
+                    last = t;
+                    let left = Infinity;
+                    for (let i = items.length - 1; i >= 0; i--) {
+                        const d = items[i];
+                        d.x += V * dt;
+                        if (!d.done && d.x + DW >= sLeft + 12) { d.done = true; burst(); }
+                        if (d.x > sLeft + 6) { d.el.remove(); items.splice(i, 1); continue; }
+                        d.el.style.transform = 'translate3d(' + d.x + 'px,0,0)';
+                        left = Math.min(left, d.x);
+                    }
+                    if (left === Infinity) add(-DW);
+                    else if (left > 0) add(left - DW - GAP);
+                    requestAnimationFrame(step);
+                }
+                if (reduceMotion) return;
+                const go = () => requestAnimationFrame(step);
+                if (document.documentElement.classList.contains('hero-in')) go();
+                else new MutationObserver((m, obs) => {
+                    if (document.documentElement.classList.contains('hero-in')) { obs.disconnect(); go(); }
+                }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
             }
 
             const stations = Array.from(container.querySelectorAll('.station-wrapper'));

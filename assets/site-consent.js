@@ -1,5 +1,7 @@
 (function () {
   var KEY = 'upf-consent-v1';
+  // Set your Google Analytics 4 measurement ID (e.g. 'G-XXXXXXXXXX') to enable analytics for visitors who opt in.
+  var GA4_ID = '';
   var root = document.currentScript && document.currentScript.dataset.root || '/';
   var POLICY = root + 'legal/cookie-policy.html';
   var PRIVACY = root + 'legal/privacy-policy.html';
@@ -36,7 +38,7 @@
     '.upf-pref strong{display:block;font-weight:600}' +
     '.upf-pref span{color:rgba(239,228,210,.6);font-size:12.5px}' +
     '.upf-pref input{margin-top:4px;width:18px;height:18px;accent-color:#2f4fd1}' +
-    '@media (max-width:520px){.upf-consent{left:10px;right:10px;bottom:10px;padding:16px}.upf-consent button{flex:1 1 auto}}';
+    '@media (max-width:520px){.upf-consent{left:10px;right:10px;bottom:10px;padding:14px 14px 12px;border-radius:16px;font-size:12.5px;line-height:1.45}.upf-consent h2{font-size:18px;margin-bottom:4px}.upf-consent p{margin-bottom:10px}.upf-consent .upf-long{display:none}.upf-consent .upf-row{flex-wrap:nowrap;gap:6px}.upf-consent button{flex:1 1 0;padding:9px 6px;font-size:12px}}';
 
   function build(existing) {
     if (document.querySelector('.upf-consent')) return document.querySelector('.upf-consent');
@@ -53,7 +55,7 @@
     box.innerHTML =
       '<h2>Your privacy, your call.</h2>' +
       '<p>We use only essential browser storage to run this site and remember this choice. We do not run advertising trackers. ' +
-      'Some content (fonts, scripts, our scheduling partner Calendly when you book) is served by third parties who may see your IP address. ' +
+      '<span class="upf-long">Some content (fonts, scripts, our scheduling partner Calendly when you book) is served by third parties who may see your IP address. </span>' +
       'Read our <a href="' + POLICY + '">Cookie Policy</a> and <a href="' + PRIVACY + '">Privacy Policy</a>.</p>' +
       '<div class="upf-prefs">' +
       '<label class="upf-pref"><span><strong>Essential</strong><span>Needed for the site to work and to store your consent. Always on.</span></span><input type="checkbox" checked disabled></label>' +
@@ -96,6 +98,20 @@
     setTimeout(function () { box.remove(); }, 600);
   }
 
+  function loadAnalytics(c) {
+    if (!GA4_ID || !c || !c.analytics || window.__upfGa) return;
+    window.__upfGa = true;
+    var sc = document.createElement('script');
+    sc.async = true;
+    sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA4_ID);
+    document.head.appendChild(sc);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA4_ID, { anonymize_ip: true });
+  }
+  document.addEventListener('upf:consent', function (e) { loadAnalytics(e.detail); });
+
   window.upfConsent = { get: read, open: function () { open(read()); } };
 
   document.addEventListener('click', function (e) {
@@ -103,7 +119,7 @@
   });
 
   function init() {
-    if (read()) return;
+    if (read()) { loadAnalytics(read()); return; }
     if (navigator.globalPrivacyControl) { save({}); return; }
     var html = document.documentElement;
     if (html.classList.contains('intro-lock')) {
